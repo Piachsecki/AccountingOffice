@@ -1,4 +1,4 @@
-package org.example.port.in.customer;
+package org.example.port.in.invoice;
 
 import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;

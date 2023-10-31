@@ -6,7 +6,7 @@ import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
-import org.example.port.in.customer.CreateInvoiceUseCase;
+import org.example.port.in.invoice.CreateInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 
 import java.time.OffsetDateTime;

@@ -6,7 +6,7 @@ import java.util.Random;
 public record NIP(String value) {
     public NIP{
         Objects.requireNonNull(value, "You passed the wrong value format for NIP");
-        if (value.isEmpty()){
+        if (value.length() != 10){
             throw new RuntimeException("The given value for NIP id cannot be empty!");
         }
     }

@@ -1,14 +1,19 @@
 package org.example.adapter.out;
 
+import lombok.Getter;
+import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
 import org.example.port.out.CustomerRepository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+@Getter
 public class InMemoryCustomerRepo implements CustomerRepository {
-    Map<CustomerId, Customer> customers = new HashMap<>();
+    private final Map<CustomerId, Customer> customers = new HashMap<>();
+
 
     @Override
     public void addCustomer(Customer customer) {
@@ -27,8 +32,16 @@ public class InMemoryCustomerRepo implements CustomerRepository {
 
     @Override
     public void deleteAllCustomers() {
-        for (CustomerId customerId : customers.keySet()) {
-            customers.remove(customerId);
+            customers.clear();
+    }
+
+    @Override
+    public Customer findCustomerByNIP(NIP nip) {
+        for (Map.Entry<CustomerId, Customer> customerIdCustomerEntry : customers.entrySet()) {
+            if(customerIdCustomerEntry.getValue().getNip().equals(nip));{
+                return customerIdCustomerEntry.getValue();
+            }
         }
+        return null;
     }
 }

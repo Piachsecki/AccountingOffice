@@ -10,7 +10,7 @@ public record CustomerId(String value) {
     private  static final int LENGTH = 8;
 
     public CustomerId {
-        if (Objects.isNull(value) || value.isEmpty()){
+        if (Objects.isNull(value) || value.length() > LENGTH + 1){
             throw new CustomerIdException(
                     String.format("Given value:[%s] cannot be used as CustomerId!", value));
         }
