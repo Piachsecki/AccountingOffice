@@ -38,14 +38,8 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     }
 
     @Override
-    public void deleteInvoice(InvoiceId invoiceId) {
-        for (HashSet<Invoice> value : invoices.values()) {
-            for (Invoice invoice : value) {
-                if (invoice.getInvoiceId().equals(invoiceId)){
-                    invoices.get(invoice.getCustomer().getCustomerId()).remove(invoice);
-                }
-            }
-        }
+    public void deleteInvoice(CustomerId customerId, InvoiceId invoiceId) {
+        invoices.get(customerId).removeIf(invoice -> invoice.getInvoiceId().equals(invoiceId));
     }
 
     @Override

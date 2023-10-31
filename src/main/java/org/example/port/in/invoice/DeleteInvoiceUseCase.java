@@ -4,7 +4,7 @@ import org.example.domain.customer.CustomerId;
 import org.example.domain.invoice.InvoiceId;
 
 public interface DeleteInvoiceUseCase {
-    void deleteInvoice(InvoiceId invoiceId);
+    void deleteInvoice(CustomerId customerId, InvoiceId invoiceId);
 
     void deleteAll(CustomerId customerId);
 }

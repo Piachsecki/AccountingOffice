@@ -8,8 +8,8 @@ import org.example.port.out.InvoiceRepository;
 public class DeleteInvoiceService implements DeleteInvoiceUseCase {
     private InvoiceRepository invoiceRepository;
     @Override
-    public void deleteInvoice(InvoiceId invoiceId) {
-        invoiceRepository.deleteInvoice(invoiceId);
+    public void deleteInvoice(CustomerId customerId, InvoiceId invoiceId) {
+        invoiceRepository.deleteInvoice(customerId, invoiceId);
     }
 
     @Override

@@ -89,7 +89,7 @@ class InMemoryInvoiceTest {
         inMemoryInvoiceRepo.createInvoice(invoice2);
         inMemoryInvoiceRepo.createInvoice(invoice3);
         Assertions.assertEquals(3, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
-        inMemoryInvoiceRepo.deleteInvoice(invoice2.getInvoiceId());
+        inMemoryInvoiceRepo.deleteInvoice(customer1.getCustomerId(), invoice2.getInvoiceId());
 
         //then
         Assertions.assertEquals(2, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
