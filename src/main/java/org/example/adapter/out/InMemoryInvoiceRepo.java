@@ -17,7 +17,7 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     private Map<CustomerId, HashSet<Invoice>> invoices = new HashMap<>();
 
     @Override
-    public void createInvoice(Invoice invoice) {
+    public void sendInvoice(Invoice invoice) {
         if(!invoices.containsKey(invoice.getCustomer().getCustomerId())){
             invoices.put(invoice.getCustomer().getCustomerId(), new HashSet<>(Set.of(invoice)));
         }else {
@@ -33,17 +33,17 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     }
 
     @Override
-    public HashSet<Invoice> listAllInvoices(CustomerId customerId) {
+    public HashSet<Invoice> listAllInvoicesForCustomerId(CustomerId customerId) {
         return invoices.get(customerId);
     }
 
     @Override
-    public void deleteInvoice(CustomerId customerId, InvoiceId invoiceId) {
+    public void deleteInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
         invoices.get(customerId).removeIf(invoice -> invoice.getInvoiceId().equals(invoiceId));
     }
 
     @Override
-    public void deleteAll(CustomerId customerId) {
+    public void deleteAllInvoicesForCustomerId(CustomerId customerId) {
         invoices.get(customerId).clear();
     }
 }

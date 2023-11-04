@@ -1,13 +1,16 @@
 package org.example.application;
 
 import org.example.adapter.out.InMemoryCustomerRepo;
+import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
 import org.example.domain.exceptions.CustomerIdException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.crypto.Data;
 import java.util.HashMap;
+import java.util.Optional;
 
 class InMemoryCustomerRepoTest {
 
@@ -101,6 +104,40 @@ class InMemoryCustomerRepoTest {
 
         //then
         Assertions.assertEquals(0, repo.getCustomers().size());
+    }
+
+
+    @Test
+    void shouldFindCertainUser(){
+        //given
+        Customer customer1 = DataCreator.createCustomer1();
+        Customer customer2 = DataCreator.createCustomer2();
+        Customer customer3 = DataCreator.createCustomer3();
+        Customer customer4 = DataCreator.createCustomer4();
+        Customer customer5 = DataCreator.createCustomer5();
+
+        //when
+        repo.addCustomer(customer1);
+        repo.addCustomer(customer2);
+        repo.addCustomer(customer3);
+        repo.addCustomer(customer4);
+        repo.addCustomer(customer5);
+
+        Optional<Customer> customer1ByNip = repo.findCustomerByNIP(new NIP("1462693747"));
+        Optional<Customer> customer2ByNip = repo.findCustomerByNIP(new NIP("9527816928"));
+        Optional<Customer> customer3ByNip = repo.findCustomerByNIP(new NIP("0003768420"));
+        Optional<Customer> customer4ByNip = repo.findCustomerByNIP(new NIP("1461113747"));
+        Optional<Customer> customer5ByNip = repo.findCustomerByNIP(new NIP("4627890357"));
+        Optional<Customer> empty = repo.findCustomerByNIP(new NIP("1111111111"));
+
+        //then
+
+        Assertions.assertEquals(customer1, customer1ByNip.get());
+        Assertions.assertEquals(customer2, customer2ByNip.get());
+        Assertions.assertEquals(customer3, customer3ByNip.get());
+        Assertions.assertEquals(customer4, customer4ByNip.get());
+        Assertions.assertEquals(customer5, customer5ByNip.get());
+        Assertions.assertEquals(Optional.empty(),empty);
     }
 
 }

@@ -5,6 +5,6 @@ import org.example.domain.customer.Customer;
 
 import java.util.Optional;
 
-public interface FIndCustomerUseCase {
+public interface FindCustomerUseCase {
     Optional<Customer> findUserByNIP(NIP nip);
 }

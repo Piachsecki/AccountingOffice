@@ -6,7 +6,6 @@ import org.example.domain.invoice.Invoice;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 class InMemoryInvoiceTest {
@@ -22,11 +21,11 @@ class InMemoryInvoiceTest {
         Invoice invoice5 = DataCreator.createInvoice5();
 
         //when
-        inMemoryInvoiceRepo.createInvoice(invoice1);
-        inMemoryInvoiceRepo.createInvoice(invoice2);
-        inMemoryInvoiceRepo.createInvoice(invoice3);
-        inMemoryInvoiceRepo.createInvoice(invoice4);
-        inMemoryInvoiceRepo.createInvoice(invoice5);
+        inMemoryInvoiceRepo.sendInvoice(invoice1);
+        inMemoryInvoiceRepo.sendInvoice(invoice2);
+        inMemoryInvoiceRepo.sendInvoice(invoice3);
+        inMemoryInvoiceRepo.sendInvoice(invoice4);
+        inMemoryInvoiceRepo.sendInvoice(invoice5);
 
         //then
         Assertions.assertTrue(inMemoryInvoiceRepo.getInvoices().containsKey(invoice1.getCustomer().getCustomerId()));
@@ -46,8 +45,8 @@ class InMemoryInvoiceTest {
         Invoice invoice2 = DataCreator.createInvoice2().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.createInvoice(invoice1);
-        inMemoryInvoiceRepo.createInvoice(invoice2);
+        inMemoryInvoiceRepo.sendInvoice(invoice1);
+        inMemoryInvoiceRepo.sendInvoice(invoice2);
 
         //then
         Assertions.assertEquals(2, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
@@ -65,15 +64,15 @@ class InMemoryInvoiceTest {
         Invoice invoice5 = DataCreator.createInvoice5().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.createInvoice(invoice1);
-        inMemoryInvoiceRepo.createInvoice(invoice2);
-        inMemoryInvoiceRepo.createInvoice(invoice3);
-        inMemoryInvoiceRepo.createInvoice(invoice4);
-        inMemoryInvoiceRepo.createInvoice(invoice5);
+        inMemoryInvoiceRepo.sendInvoice(invoice1);
+        inMemoryInvoiceRepo.sendInvoice(invoice2);
+        inMemoryInvoiceRepo.sendInvoice(invoice3);
+        inMemoryInvoiceRepo.sendInvoice(invoice4);
+        inMemoryInvoiceRepo.sendInvoice(invoice5);
 
         //then
         Assertions.assertEquals(5,
-                inMemoryInvoiceRepo.listAllInvoices(customer1.getCustomerId()).size());
+                inMemoryInvoiceRepo.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
     }
 
     @Test
@@ -85,11 +84,11 @@ class InMemoryInvoiceTest {
         Invoice invoice3 = DataCreator.createInvoice3().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.createInvoice(invoice1);
-        inMemoryInvoiceRepo.createInvoice(invoice2);
-        inMemoryInvoiceRepo.createInvoice(invoice3);
+        inMemoryInvoiceRepo.sendInvoice(invoice1);
+        inMemoryInvoiceRepo.sendInvoice(invoice2);
+        inMemoryInvoiceRepo.sendInvoice(invoice3);
         Assertions.assertEquals(3, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
-        inMemoryInvoiceRepo.deleteInvoice(customer1.getCustomerId(), invoice2.getInvoiceId());
+        inMemoryInvoiceRepo.deleteInvoiceForCustomerId(customer1.getCustomerId(), invoice2.getInvoiceId());
 
         //then
         Assertions.assertEquals(2, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
@@ -104,14 +103,14 @@ class InMemoryInvoiceTest {
         Invoice invoice3 = DataCreator.createInvoice3().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.createInvoice(invoice1);
-        inMemoryInvoiceRepo.createInvoice(invoice2);
-        inMemoryInvoiceRepo.createInvoice(invoice3);
+        inMemoryInvoiceRepo.sendInvoice(invoice1);
+        inMemoryInvoiceRepo.sendInvoice(invoice2);
+        inMemoryInvoiceRepo.sendInvoice(invoice3);
         Assertions.assertEquals(3, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
-        inMemoryInvoiceRepo.deleteAll(customer1.getCustomerId());
+        inMemoryInvoiceRepo.deleteAllInvoicesForCustomerId(customer1.getCustomerId());
 
         //then
-        Assertions.assertEquals(new HashSet<>(), inMemoryInvoiceRepo.listAllInvoices(customer1.getCustomerId()));
+        Assertions.assertEquals(new HashSet<>(), inMemoryInvoiceRepo.listAllInvoicesForCustomerId(customer1.getCustomerId()));
     }
 
 

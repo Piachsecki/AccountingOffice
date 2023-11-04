@@ -9,11 +9,11 @@ public class DeleteInvoiceService implements DeleteInvoiceUseCase {
     private InvoiceRepository invoiceRepository;
     @Override
     public void deleteInvoice(CustomerId customerId, InvoiceId invoiceId) {
-        invoiceRepository.deleteInvoice(customerId, invoiceId);
+        invoiceRepository.deleteInvoiceForCustomerId(customerId, invoiceId);
     }
 
     @Override
     public void deleteAll(CustomerId customerId) {
-        invoiceRepository.deleteAll(customerId);
+        invoiceRepository.deleteAllInvoicesForCustomerId(customerId);
     }
 }

@@ -7,11 +7,11 @@ import org.example.domain.invoice.InvoiceId;
 import java.util.HashSet;
 
 public interface InvoiceRepository {
-    void createInvoice(Invoice invoice);
+    void sendInvoice(Invoice invoice);
 
-    HashSet<Invoice> listAllInvoices(CustomerId customerId);
+    HashSet<Invoice> listAllInvoicesForCustomerId(CustomerId customerId);
 
-    void deleteInvoice(CustomerId customerId, InvoiceId invoiceId);
+    void deleteInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId);
 
-    void deleteAll(CustomerId customerId);
+    void deleteAllInvoicesForCustomerId(CustomerId customerId);
 }

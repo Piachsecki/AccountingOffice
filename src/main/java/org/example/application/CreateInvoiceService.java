@@ -24,7 +24,7 @@ public class CreateInvoiceService implements CreateInvoiceUseCase {
                 product,
                 date
         );
-        invoiceRepository.createInvoice(invoice);
+        invoiceRepository.sendInvoice(invoice);
 
         return invoice;
     }

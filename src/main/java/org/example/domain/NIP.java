@@ -1,18 +1,21 @@
 package org.example.domain;
 
+import lombok.EqualsAndHashCode;
+
 import java.util.Objects;
 import java.util.Random;
 
 public record NIP(String value) {
-    public NIP{
+    private static final int LENGTH = 10;
+
+    public NIP {
         Objects.requireNonNull(value, "You passed the wrong value format for NIP");
-        if (value.length() != 10){
+        if (value.length() != 10) {
             throw new RuntimeException("The given value for NIP id cannot be empty!");
         }
     }
-    private static final int LENGTH = 10;
 
-    public static String createNIP(){
+    public static String createNIP() {
         Random random = new Random();
         var table = new String[LENGTH];
         StringBuilder sb = new StringBuilder();

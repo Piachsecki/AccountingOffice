@@ -36,12 +36,12 @@ public class InMemoryCustomerRepo implements CustomerRepository {
     }
 
     @Override
-    public Customer findCustomerByNIP(NIP nip) {
+    public Optional<Customer> findCustomerByNIP(NIP nip) {
         for (Map.Entry<CustomerId, Customer> customerIdCustomerEntry : customers.entrySet()) {
-            if(customerIdCustomerEntry.getValue().getNip().equals(nip));{
-                return customerIdCustomerEntry.getValue();
+            if(customerIdCustomerEntry.getValue().getNip().equals(nip)){
+                return Optional.of(customerIdCustomerEntry.getValue());
             }
         }
-        return null;
+        return Optional.empty();
     }
 }
