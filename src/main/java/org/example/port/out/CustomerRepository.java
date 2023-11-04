@@ -15,6 +15,6 @@ public interface CustomerRepository {
 
     void deleteAllCustomers();
 
-    Customer findCustomerByNIP(NIP nip);
+    Optional <Customer> findCustomerByNIP(NIP nip);
 
 }

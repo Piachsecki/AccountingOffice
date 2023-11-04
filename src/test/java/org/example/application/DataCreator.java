@@ -86,7 +86,7 @@ public class DataCreator {
                 new CustomerId("1111-1111"),
                 "Kacper",
                 "Piasecki",
-                new NIP("1462693747"),
+                new NIP("1461113747"),
                 createAddress4()
 
         );
@@ -123,7 +123,9 @@ public class DataCreator {
                         15, 17, 2, 4,
                         ZoneOffset.UTC)
         );
-    }public static Invoice createInvoice2() {
+    }
+
+    public static Invoice createInvoice2() {
         return new Invoice(
                 new InvoiceId("ANP--444-A2"),
                 createCustomer2(),
@@ -134,7 +136,9 @@ public class DataCreator {
                         15, 17, 2, 4,
                         ZoneOffset.UTC)
         );
-    }public static Invoice createInvoice3() {
+    }
+
+    public static Invoice createInvoice3() {
         return new Invoice(
                 new InvoiceId("PPP--001-A2"),
                 createCustomer3(),
@@ -145,7 +149,9 @@ public class DataCreator {
                         15, 17, 2, 4,
                         ZoneOffset.UTC)
         );
-    }public static Invoice createInvoice4() {
+    }
+
+    public static Invoice createInvoice4() {
         return new Invoice(
                 new InvoiceId("LLL--777-00"),
                 createCustomer4(),
@@ -156,7 +162,9 @@ public class DataCreator {
                         15, 17, 2, 4,
                         ZoneOffset.UTC)
         );
-    }public static Invoice createInvoice5() {
+    }
+
+    public static Invoice createInvoice5() {
         return new Invoice(
                 new InvoiceId("AZG--421-A5"),
                 createCustomer5(),
