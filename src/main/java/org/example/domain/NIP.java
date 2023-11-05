@@ -1,7 +1,5 @@
 package org.example.domain;
 
-import lombok.EqualsAndHashCode;
-
 import java.util.Objects;
 import java.util.Random;
 

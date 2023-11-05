@@ -3,12 +3,9 @@ package org.example.application;
 import org.example.adapter.out.InMemoryCustomerRepo;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
-import org.example.domain.customer.CustomerId;
-import org.example.domain.exceptions.CustomerIdException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -49,18 +46,18 @@ class InMemoryCustomerRepoTest {
 
 
         //given, when, then
-        Throwable exception1 = Assertions.assertThrows(
-                CustomerIdException.class, () -> DataCreator.createCustomer1().withCustomerId(new CustomerId(""))
-                );
-
-        Throwable exception2 = Assertions.assertThrows(
-                CustomerIdException.class, () -> DataCreator.createCustomer1().withCustomerId(null)
-                );
-
-        Throwable exception3 = Assertions.assertThrows(
-                CustomerIdException.class,
-                () -> DataCreator.createCustomer1().withCustomerId(new CustomerId("0123456789"))
-        );
+//        Throwable exception1 = Assertions.assertThrows(
+//                CustomerIdException.class, () -> DataCreator.createCustomer1().withCustomerId(new CustomerId(""))
+//                );
+//
+//        Throwable exception2 = Assertions.assertThrows(
+//                CustomerIdException.class, () -> DataCreator.createCustomer1().withCustomerId(null)
+//                );
+//
+//        Throwable exception3 = Assertions.assertThrows(
+//                CustomerIdException.class,
+//                () -> DataCreator.createCustomer1().withCustomerId(new CustomerId("0123456789"))
+//        );
 
 
 

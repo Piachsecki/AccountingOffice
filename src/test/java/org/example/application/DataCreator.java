@@ -5,9 +5,16 @@ import org.example.domain.NIP;
 import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
+import org.example.domain.customer.Entrepreneurship;
+import org.example.domain.customer.EntrepreneurshipForm;
+import org.example.domain.customer.TaxPayments.IndustryType;
+import org.example.domain.customer.TaxPayments.LumpSumTax;
+import org.example.domain.invoice.CostInvoice;
+import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
 import org.example.domain.money.Currency;
+import org.example.domain.money.Income;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
 import org.example.domain.product.ProductId;
@@ -15,6 +22,7 @@ import org.example.domain.product.ProductId;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 
 public class DataCreator {
     public static Customer createCustomer1() {
@@ -23,7 +31,18 @@ public class DataCreator {
                 "Kacper",
                 "Piasecki",
                 new NIP("1462693747"),
-                createAddress1()
+                createAddress1(),
+                OffsetDateTime.of(
+                        2021,
+                        12, 17, 23, 40, 12, 23, ZoneOffset.UTC
+                ),
+                new Entrepreneurship(
+                        EntrepreneurshipForm.SOLE_PROPRIETORSHIP,
+                        new LumpSumTax(IndustryType.SOFTWARE_DEVELOPER)
+                ),
+                new ArrayList<>(),
+                new ArrayList<>()
+
         );
     }
 
@@ -65,7 +84,16 @@ public class DataCreator {
                 "Kacper",
                 "Maslany",
                 new NIP("9527816928"),
-                createAddress2()
+                createAddress2(),
+                OffsetDateTime.of(
+                        2022, 12, 17, 23, 40, 12, 23, ZoneOffset.UTC
+                ),
+                new Entrepreneurship(
+                        EntrepreneurshipForm.SOLE_PROPRIETORSHIP,
+                        new LumpSumTax(IndustryType.SOFTWARE_DEVELOPER)
+                ),
+                new ArrayList<>(),
+                new ArrayList<>()
         );
     }
 
@@ -75,7 +103,16 @@ public class DataCreator {
                 "Karolina",
                 "Koralowa",
                 new NIP("0003768420"),
-                createAddress3()
+                createAddress3(),
+                OffsetDateTime.of(
+                        2023, 12, 17, 23, 40, 12, 23, ZoneOffset.UTC
+                ),
+                new Entrepreneurship(
+                        EntrepreneurshipForm.SOLE_PROPRIETORSHIP,
+                        new LumpSumTax(IndustryType.SOFTWARE_DEVELOPER)
+                ),
+                new ArrayList<>(),
+                new ArrayList<>()
 
         );
     }
@@ -87,7 +124,16 @@ public class DataCreator {
                 "Kacper",
                 "Piasecki",
                 new NIP("1461113747"),
-                createAddress4()
+                createAddress4(),
+                OffsetDateTime.of(
+                        2024, 12, 17, 23, 40, 12, 23, ZoneOffset.UTC
+                ),
+                new Entrepreneurship(
+                        EntrepreneurshipForm.SOLE_PROPRIETORSHIP,
+                        new LumpSumTax(IndustryType.SOFTWARE_DEVELOPER)
+                ),
+                new ArrayList<>(),
+                new ArrayList<>()
 
         );
     }
@@ -99,7 +145,16 @@ public class DataCreator {
                 "Wojtek",
                 "Marciniak",
                 new NIP("4627890357"),
-                createAddress5()
+                createAddress5(),
+                OffsetDateTime.of(
+                        2025, 12, 17, 23, 40, 12, 23, ZoneOffset.UTC
+                ),
+                new Entrepreneurship(
+                        EntrepreneurshipForm.SOLE_PROPRIETORSHIP,
+                        new LumpSumTax(IndustryType.SOFTWARE_DEVELOPER)
+                ),
+                new ArrayList<>(),
+                new ArrayList<>()
         );
     }
 
@@ -112,8 +167,8 @@ public class DataCreator {
     }
 
 
-    public static Invoice createInvoice1() {
-        return new Invoice(
+    public static Invoice createCostInvoice1() {
+        return new CostInvoice(
                 new InvoiceId("AZG--421-A5"),
                 createCustomer1(),
                 createCompany1(),
@@ -121,25 +176,27 @@ public class DataCreator {
                 OffsetDateTime.of(
                         2020, 12, 12,
                         15, 17, 2, 4,
-                        ZoneOffset.UTC)
+                        ZoneOffset.UTC),
+                new Price(new BigDecimal("152.23"), Currency.PLN)
         );
     }
 
-    public static Invoice createInvoice2() {
-        return new Invoice(
+    public static Invoice createCostInvoice2() {
+        return new CostInvoice(
                 new InvoiceId("ANP--444-A2"),
                 createCustomer2(),
-                createCompany2(),
-                createProduct2(),
                 OffsetDateTime.of(
                         2021, 12, 12,
                         15, 17, 2, 4,
-                        ZoneOffset.UTC)
+                        ZoneOffset.UTC),
+                new Price(new BigDecimal("222.23"), Currency.PLN),
+                createCompany2(),
+                createProduct2()
         );
     }
 
-    public static Invoice createInvoice3() {
-        return new Invoice(
+    public static Invoice createCostInvoice3() {
+        return new CostInvoice(
                 new InvoiceId("PPP--001-A2"),
                 createCustomer3(),
                 createCompany3(),
@@ -147,12 +204,14 @@ public class DataCreator {
                 OffsetDateTime.of(
                         2022, 12, 12,
                         15, 17, 2, 4,
-                        ZoneOffset.UTC)
+                        ZoneOffset.UTC),
+                new Price(new BigDecimal("333.23"), Currency.PLN)
+
         );
     }
 
-    public static Invoice createInvoice4() {
-        return new Invoice(
+    public static Invoice createCostInvoice4() {
+        return new CostInvoice(
                 new InvoiceId("LLL--777-00"),
                 createCustomer4(),
                 createCompany4(),
@@ -160,12 +219,14 @@ public class DataCreator {
                 OffsetDateTime.of(
                         2023, 12, 12,
                         15, 17, 2, 4,
-                        ZoneOffset.UTC)
+                        ZoneOffset.UTC),
+                new Price(new BigDecimal("444.23"), Currency.PLN)
+
         );
     }
 
-    public static Invoice createInvoice5() {
-        return new Invoice(
+    public static Invoice createCostInvoice5() {
+        return new CostInvoice(
                 new InvoiceId("AZG--421-A5"),
                 createCustomer5(),
                 createCompany5(),
@@ -173,7 +234,10 @@ public class DataCreator {
                 OffsetDateTime.of(
                         2024, 12, 12,
                         15, 17, 2, 4,
-                        ZoneOffset.UTC)
+                        ZoneOffset.UTC),
+                new Price(new BigDecimal("555.23"), Currency.PLN)
+
+
         );
     }
 
@@ -255,6 +319,19 @@ public class DataCreator {
                 "Edifier",
                 new NIP("2200997452"),
                 createAddress1()
+        );
+    }
+
+
+    public static Invoice createIncomeInvoice1() {
+        return new IncomeInvoice(
+                new InvoiceId("III--111-A5"),
+                createCustomer1(),
+                OffsetDateTime.of(
+                        2020, 12, 12,
+                        15, 17, 2, 4,
+                        ZoneOffset.UTC),
+                new Income(new BigDecimal("15000"), Currency.PLN)
         );
     }
 

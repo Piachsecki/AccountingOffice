@@ -8,6 +8,12 @@ import org.example.domain.product.Product;
 
 import java.time.OffsetDateTime;
 
-public interface CreateInvoiceUseCase {
-    Invoice createInvoice(Customer customer, Price price, Product product, Company company, OffsetDateTime date);
+public interface InsertCostInvoiceUseCase {
+    Invoice insertCostInvoice(
+            Customer customer,
+            OffsetDateTime date,
+            Price price,
+            Company company,
+            Product product
+    );
 }

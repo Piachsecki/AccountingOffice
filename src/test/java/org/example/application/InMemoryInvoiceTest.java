@@ -14,18 +14,18 @@ class InMemoryInvoiceTest {
     @Test
     void shouldCreateInvoicesCorrectly() {
         //given
-        Invoice invoice1 = DataCreator.createInvoice1();
-        Invoice invoice2 = DataCreator.createInvoice2();
-        Invoice invoice3 = DataCreator.createInvoice3();
-        Invoice invoice4 = DataCreator.createInvoice4();
-        Invoice invoice5 = DataCreator.createInvoice5();
+        Invoice invoice1 = DataCreator.createCostInvoice1();
+        Invoice invoice2 = DataCreator.createCostInvoice2();
+        Invoice invoice3 = DataCreator.createCostInvoice3();
+        Invoice invoice4 = DataCreator.createCostInvoice4();
+        Invoice invoice5 = DataCreator.createCostInvoice5();
 
         //when
-        inMemoryInvoiceRepo.sendInvoice(invoice1);
-        inMemoryInvoiceRepo.sendInvoice(invoice2);
-        inMemoryInvoiceRepo.sendInvoice(invoice3);
-        inMemoryInvoiceRepo.sendInvoice(invoice4);
-        inMemoryInvoiceRepo.sendInvoice(invoice5);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice1);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice2);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice3);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice4);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice5);
 
         //then
         Assertions.assertTrue(inMemoryInvoiceRepo.getInvoices().containsKey(invoice1.getCustomer().getCustomerId()));
@@ -41,12 +41,12 @@ class InMemoryInvoiceTest {
     void shouldAddInvoiceToAlreadyExistingCustomer() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
-        Invoice invoice1 = DataCreator.createInvoice1();
-        Invoice invoice2 = DataCreator.createInvoice2().withCustomer(customer1);
+        Invoice invoice1 = DataCreator.createCostInvoice1();
+        Invoice invoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.sendInvoice(invoice1);
-        inMemoryInvoiceRepo.sendInvoice(invoice2);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice1);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice2);
 
         //then
         Assertions.assertEquals(2, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
@@ -57,20 +57,21 @@ class InMemoryInvoiceTest {
     void shouldListAllOfTheInvoicesForCustomer() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
-        Invoice invoice1 = DataCreator.createInvoice1().withCustomer(customer1);
-        Invoice invoice2 = DataCreator.createInvoice2().withCustomer(customer1);
-        Invoice invoice3 = DataCreator.createInvoice3().withCustomer(customer1);
-        Invoice invoice4 = DataCreator.createInvoice4().withCustomer(customer1);
-        Invoice invoice5 = DataCreator.createInvoice5().withCustomer(customer1);
+        Invoice invoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
+        Invoice invoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
+        Invoice invoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
+        Invoice invoice4 = DataCreator.createCostInvoice4().withCustomer(customer1);
+        Invoice invoice5 = DataCreator.createCostInvoice5().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.sendInvoice(invoice1);
-        inMemoryInvoiceRepo.sendInvoice(invoice2);
-        inMemoryInvoiceRepo.sendInvoice(invoice3);
-        inMemoryInvoiceRepo.sendInvoice(invoice4);
-        inMemoryInvoiceRepo.sendInvoice(invoice5);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice1);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice2);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice3);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice4);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice5);
 
         //then
+        System.out.println(inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()));
         Assertions.assertEquals(5,
                 inMemoryInvoiceRepo.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
     }
@@ -79,14 +80,14 @@ class InMemoryInvoiceTest {
     void deleteInvoice() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
-        Invoice invoice1 = DataCreator.createInvoice1().withCustomer(customer1);
-        Invoice invoice2 = DataCreator.createInvoice2().withCustomer(customer1);
-        Invoice invoice3 = DataCreator.createInvoice3().withCustomer(customer1);
+        Invoice invoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
+        Invoice invoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
+        Invoice invoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.sendInvoice(invoice1);
-        inMemoryInvoiceRepo.sendInvoice(invoice2);
-        inMemoryInvoiceRepo.sendInvoice(invoice3);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice1);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice2);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice3);
         Assertions.assertEquals(3, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
         inMemoryInvoiceRepo.deleteInvoiceForCustomerId(customer1.getCustomerId(), invoice2.getInvoiceId());
 
@@ -98,14 +99,14 @@ class InMemoryInvoiceTest {
     void deleteAllInvoices(){
         //given
         Customer customer1 = DataCreator.createCustomer1();
-        Invoice invoice1 = DataCreator.createInvoice1();
-        Invoice invoice2 = DataCreator.createInvoice2().withCustomer(customer1);
-        Invoice invoice3 = DataCreator.createInvoice3().withCustomer(customer1);
+        Invoice invoice1 = DataCreator.createCostInvoice1();
+        Invoice invoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
+        Invoice invoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
 
         //when
-        inMemoryInvoiceRepo.sendInvoice(invoice1);
-        inMemoryInvoiceRepo.sendInvoice(invoice2);
-        inMemoryInvoiceRepo.sendInvoice(invoice3);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice1);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice2);
+        inMemoryInvoiceRepo.insertCostInvoice(invoice3);
         Assertions.assertEquals(3, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
         inMemoryInvoiceRepo.deleteAllInvoicesForCustomerId(customer1.getCustomerId());
 

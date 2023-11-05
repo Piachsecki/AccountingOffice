@@ -17,7 +17,7 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     private Map<CustomerId, HashSet<Invoice>> invoices = new HashMap<>();
 
     @Override
-    public void sendInvoice(Invoice invoice) {
+    public void insertCostInvoice(Invoice invoice) {
         if(!invoices.containsKey(invoice.getCustomer().getCustomerId())){
             invoices.put(invoice.getCustomer().getCustomerId(), new HashSet<>(Set.of(invoice)));
         }else {
@@ -45,5 +45,15 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     @Override
     public void deleteAllInvoicesForCustomerId(CustomerId customerId) {
         invoices.get(customerId).clear();
+    }
+
+
+
+    // czy taka praktyka jest dobra? - mamy 2 metody insert cost i income invoice
+    // aby miec rozdzielenie w kodzie, ale koniec koncow bedziemy uzywac jednej mapy,
+    // gdzie wystarczy metoda insertCostInvoice
+    @Override
+    public void insertIncomeInvoice(Invoice invoice) {
+        insertCostInvoice(invoice);
     }
 }

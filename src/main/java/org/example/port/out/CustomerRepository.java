@@ -3,6 +3,7 @@ package org.example.port.out;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
+import org.example.domain.invoice.Invoice;
 
 import java.util.Optional;
 
@@ -17,4 +18,7 @@ public interface CustomerRepository {
 
     Optional <Customer> findCustomerByNIP(NIP nip);
 
+    void insertIncomeInvoiceToCustomer(Invoice invoice);
+
+    void insertCostInvoiceToCustomer(Invoice invoice);
 }
