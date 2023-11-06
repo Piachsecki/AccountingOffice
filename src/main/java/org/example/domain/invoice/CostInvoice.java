@@ -2,6 +2,7 @@ package org.example.domain.invoice;
 
 import lombok.Getter;
 import lombok.ToString;
+import lombok.With;
 import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;
 import org.example.domain.money.Price;
@@ -32,9 +33,9 @@ public class CostInvoice extends Invoice{
     }
 
     @Override
-    public Invoice withCustomer(Customer customer) {
+    public CostInvoice withCustomer(Customer customer) {
         super.customer = customer;
-        return this;
+        return (CostInvoice)this;
     }
 
     @Override

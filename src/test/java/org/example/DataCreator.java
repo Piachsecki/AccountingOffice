@@ -1,4 +1,4 @@
-package org.example.application;
+package org.example;
 
 import org.example.domain.Address;
 import org.example.domain.NIP;
@@ -167,7 +167,7 @@ public class DataCreator {
     }
 
 
-    public static Invoice createCostInvoice1() {
+    public static CostInvoice createCostInvoice1() {
         return new CostInvoice(
                 new InvoiceId("AZG--421-A5"),
                 createCustomer1(),
@@ -181,7 +181,7 @@ public class DataCreator {
         );
     }
 
-    public static Invoice createCostInvoice2() {
+    public static CostInvoice createCostInvoice2() {
         return new CostInvoice(
                 new InvoiceId("ANP--444-A2"),
                 createCustomer2(),
@@ -195,7 +195,7 @@ public class DataCreator {
         );
     }
 
-    public static Invoice createCostInvoice3() {
+    public static CostInvoice createCostInvoice3() {
         return new CostInvoice(
                 new InvoiceId("PPP--001-A2"),
                 createCustomer3(),
@@ -210,7 +210,7 @@ public class DataCreator {
         );
     }
 
-    public static Invoice createCostInvoice4() {
+    public static CostInvoice createCostInvoice4() {
         return new CostInvoice(
                 new InvoiceId("LLL--777-00"),
                 createCustomer4(),
@@ -225,7 +225,7 @@ public class DataCreator {
         );
     }
 
-    public static Invoice createCostInvoice5() {
+    public static CostInvoice createCostInvoice5() {
         return new CostInvoice(
                 new InvoiceId("AZG--421-A5"),
                 createCustomer5(),
@@ -323,17 +323,65 @@ public class DataCreator {
     }
 
 
-    public static Invoice createIncomeInvoice1() {
+    public static IncomeInvoice createIncomeInvoice1() {
         return new IncomeInvoice(
-                new InvoiceId("III--111-A5"),
+                new InvoiceId("EEE--111-A5"),
                 createCustomer1(),
                 OffsetDateTime.of(
-                        2020, 12, 12,
+                        2021, 12, 12,
+                        15, 17, 2, 4,
+                        ZoneOffset.UTC),
+                new Income(new BigDecimal("8000"), Currency.PLN)
+        );
+    }
+    public static IncomeInvoice createIncomeInvoice2() {
+        return new IncomeInvoice(
+                new InvoiceId("DDD--111-A5"),
+                createCustomer2(),
+                OffsetDateTime.of(
+                        2022, 12, 12,
+                        15, 17, 2, 4,
+                        ZoneOffset.UTC),
+                new Income(new BigDecimal("10000"), Currency.PLN)
+        );
+
+    }
+    public static IncomeInvoice createIncomeInvoice3() {
+        return new IncomeInvoice(
+                new InvoiceId("CCC--111-A5"),
+                createCustomer3(),
+                OffsetDateTime.of(
+                        2023, 12, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
                 new Income(new BigDecimal("15000"), Currency.PLN)
         );
+
+    }
+    public static IncomeInvoice createIncomeInvoice4() {
+        return new IncomeInvoice(
+                new InvoiceId("BBB--111-A5"),
+                createCustomer4(),
+                OffsetDateTime.of(
+                        2024, 12, 12,
+                        15, 17, 2, 4,
+                        ZoneOffset.UTC),
+                new Income(new BigDecimal("20000"), Currency.PLN)
+        );
+
     }
 
 
+    public static IncomeInvoice createIncomeInvoice5() {
+        return new IncomeInvoice(
+                new InvoiceId("AAA--111-A5"),
+                createCustomer5(),
+                OffsetDateTime.of(
+                        2025, 12, 12,
+                        15, 17, 2, 4,
+                        ZoneOffset.UTC),
+                new Income(new BigDecimal("30000"), Currency.PLN)
+        );
+
+    }
 }

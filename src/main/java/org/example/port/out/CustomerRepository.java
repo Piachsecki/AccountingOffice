@@ -18,7 +18,4 @@ public interface CustomerRepository {
 
     Optional <Customer> findCustomerByNIP(NIP nip);
 
-    void insertIncomeInvoiceToCustomer(Invoice invoice);
-
-    void insertCostInvoiceToCustomer(Invoice invoice);
 }

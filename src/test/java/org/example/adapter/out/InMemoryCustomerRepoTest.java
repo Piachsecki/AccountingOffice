@@ -1,6 +1,7 @@
-package org.example.application;
+package org.example.adapter.out;
 
-import org.example.adapter.out.InMemoryCustomerRepo;
+import org.example.DataCreator;
+import org.example.application.InsertCostInvoiceService;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +14,8 @@ class InMemoryCustomerRepoTest {
 
     //this seems to be mocked, but I am using the official implementation of this interface,
     //to check its behaviour
-    private final InMemoryCustomerRepo repo = new InMemoryCustomerRepo();
+    private final InMemoryCustomerRepo customerRepo = new InMemoryCustomerRepo();
+    private final InsertCostInvoiceService insertCostInvoiceService = new InsertCostInvoiceService();
     private final DataCreator dataCreator = new DataCreator();
 
 
@@ -27,18 +29,18 @@ class InMemoryCustomerRepoTest {
         var customer5 = DataCreator.createCustomer5();
 
         //when
-        repo.addCustomer(customer1);
-        repo.addCustomer(customer2);
-        repo.addCustomer(customer3);
-        repo.addCustomer(customer4);
-        repo.addCustomer(customer5);
+        customerRepo.addCustomer(customer1);
+        customerRepo.addCustomer(customer2);
+        customerRepo.addCustomer(customer3);
+        customerRepo.addCustomer(customer4);
+        customerRepo.addCustomer(customer5);
 
         //then
-        Assertions.assertTrue(repo.getCustomers().containsKey(customer1.getCustomerId()));
-        Assertions.assertTrue(repo.getCustomers().containsKey(customer2.getCustomerId()));
-        Assertions.assertTrue(repo.getCustomers().containsKey(customer3.getCustomerId()));
-        Assertions.assertTrue(repo.getCustomers().containsKey(customer4.getCustomerId()));
-        Assertions.assertTrue(repo.getCustomers().containsKey(customer5.getCustomerId()));
+        Assertions.assertTrue(customerRepo.getCustomers().containsKey(customer1.getCustomerId()));
+        Assertions.assertTrue(customerRepo.getCustomers().containsKey(customer2.getCustomerId()));
+        Assertions.assertTrue(customerRepo.getCustomers().containsKey(customer3.getCustomerId()));
+        Assertions.assertTrue(customerRepo.getCustomers().containsKey(customer4.getCustomerId()));
+        Assertions.assertTrue(customerRepo.getCustomers().containsKey(customer5.getCustomerId()));
     }
 
     @Test
@@ -73,12 +75,12 @@ class InMemoryCustomerRepoTest {
         Customer customer1 = DataCreator.createCustomer1();
 
         //when
-        repo.addCustomer(customer1);
-        Assertions.assertEquals(1, repo.getCustomers().size());
-        repo.deleteCustomer(customer1.getCustomerId());
+        customerRepo.addCustomer(customer1);
+        Assertions.assertEquals(1, customerRepo.getCustomers().size());
+        customerRepo.deleteCustomer(customer1.getCustomerId());
 
         //then
-        Assertions.assertEquals(new HashMap<>(), repo.getCustomers());
+        Assertions.assertEquals(new HashMap<>(), customerRepo.getCustomers());
     }
 
     @Test
@@ -91,16 +93,16 @@ class InMemoryCustomerRepoTest {
         Customer customer5 = DataCreator.createCustomer5();
 
         //when
-        repo.addCustomer(customer1);
-        repo.addCustomer(customer2);
-        repo.addCustomer(customer3);
-        repo.addCustomer(customer4);
-        repo.addCustomer(customer5);
-        Assertions.assertEquals(5, repo.getCustomers().size());
-        repo.deleteAllCustomers();
+        customerRepo.addCustomer(customer1);
+        customerRepo.addCustomer(customer2);
+        customerRepo.addCustomer(customer3);
+        customerRepo.addCustomer(customer4);
+        customerRepo.addCustomer(customer5);
+        Assertions.assertEquals(5, customerRepo.getCustomers().size());
+        customerRepo.deleteAllCustomers();
 
         //then
-        Assertions.assertEquals(0, repo.getCustomers().size());
+        Assertions.assertEquals(0, customerRepo.getCustomers().size());
     }
 
 
@@ -114,18 +116,18 @@ class InMemoryCustomerRepoTest {
         Customer customer5 = DataCreator.createCustomer5();
 
         //when
-        repo.addCustomer(customer1);
-        repo.addCustomer(customer2);
-        repo.addCustomer(customer3);
-        repo.addCustomer(customer4);
-        repo.addCustomer(customer5);
+        customerRepo.addCustomer(customer1);
+        customerRepo.addCustomer(customer2);
+        customerRepo.addCustomer(customer3);
+        customerRepo.addCustomer(customer4);
+        customerRepo.addCustomer(customer5);
 
-        Optional<Customer> customer1ByNip = repo.findCustomerByNIP(new NIP("1462693747"));
-        Optional<Customer> customer2ByNip = repo.findCustomerByNIP(new NIP("9527816928"));
-        Optional<Customer> customer3ByNip = repo.findCustomerByNIP(new NIP("0003768420"));
-        Optional<Customer> customer4ByNip = repo.findCustomerByNIP(new NIP("1461113747"));
-        Optional<Customer> customer5ByNip = repo.findCustomerByNIP(new NIP("4627890357"));
-        Optional<Customer> empty = repo.findCustomerByNIP(new NIP("1111111111"));
+        Optional<Customer> customer1ByNip = customerRepo.findCustomerByNIP(new NIP("1462693747"));
+        Optional<Customer> customer2ByNip = customerRepo.findCustomerByNIP(new NIP("9527816928"));
+        Optional<Customer> customer3ByNip = customerRepo.findCustomerByNIP(new NIP("0003768420"));
+        Optional<Customer> customer4ByNip = customerRepo.findCustomerByNIP(new NIP("1461113747"));
+        Optional<Customer> customer5ByNip = customerRepo.findCustomerByNIP(new NIP("4627890357"));
+        Optional<Customer> empty = customerRepo.findCustomerByNIP(new NIP("1111111111"));
 
         //then
 
@@ -135,6 +137,11 @@ class InMemoryCustomerRepoTest {
         Assertions.assertEquals(customer4, customer4ByNip.get());
         Assertions.assertEquals(customer5, customer5ByNip.get());
         Assertions.assertEquals(Optional.empty(),empty);
+    }
+
+    @Test
+    void shouldAddInvoicesToCustomersLists(){
+
     }
 
 }

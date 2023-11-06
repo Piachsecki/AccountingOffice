@@ -2,6 +2,7 @@ package org.example.port.in.invoice;
 
 import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;
+import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
@@ -16,4 +17,5 @@ public interface InsertCostInvoiceUseCase {
             Company company,
             Product product
     );
+    Invoice insertCostInvoice(CostInvoice invoice);
 }

@@ -15,7 +15,6 @@ import java.util.Optional;
 public class InMemoryCustomerRepo implements CustomerRepository {
     private final Map<CustomerId, Customer> customers = new HashMap<>();
 
-
     @Override
     public void addCustomer(Customer customer) {
         customers.put(customer.getCustomerId(), customer);
@@ -46,13 +45,4 @@ public class InMemoryCustomerRepo implements CustomerRepository {
         return Optional.empty();
     }
 
-    @Override
-    public void insertIncomeInvoiceToCustomer(Invoice invoice) {
-
-    }
-
-    @Override
-    public void insertCostInvoiceToCustomer(Invoice invoice) {
-
-    }
 }

@@ -17,8 +17,8 @@ public class IncomeInvoice extends Invoice{
     }
 
     @Override
-    public Invoice withCustomer(Customer customer) {
+    public IncomeInvoice withCustomer(Customer customer) {
         super.customer = customer;
-        return this;
+        return (IncomeInvoice) this;
     }
 }

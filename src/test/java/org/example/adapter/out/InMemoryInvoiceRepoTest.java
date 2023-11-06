@@ -1,6 +1,6 @@
-package org.example.application;
+package org.example.adapter.out;
 
-import org.example.adapter.out.InMemoryInvoiceRepo;
+import org.example.DataCreator;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.Invoice;
 import org.junit.jupiter.api.Assertions;
@@ -8,8 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 
-class InMemoryInvoiceTest {
+class InMemoryInvoiceRepoTest {
+
     private final InMemoryInvoiceRepo inMemoryInvoiceRepo = new InMemoryInvoiceRepo();
+
 
     @Test
     void shouldCreateInvoicesCorrectly() {
@@ -35,23 +37,6 @@ class InMemoryInvoiceTest {
         Assertions.assertTrue(inMemoryInvoiceRepo.getInvoices().containsKey(invoice5.getCustomer().getCustomerId()));
 
     }
-
-
-    @Test
-    void shouldAddInvoiceToAlreadyExistingCustomer() {
-        //given
-        Customer customer1 = DataCreator.createCustomer1();
-        Invoice invoice1 = DataCreator.createCostInvoice1();
-        Invoice invoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
-
-        //when
-        inMemoryInvoiceRepo.insertCostInvoice(invoice1);
-        inMemoryInvoiceRepo.insertCostInvoice(invoice2);
-
-        //then
-        Assertions.assertEquals(2, inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()).size());
-    }
-
 
     @Test
     void shouldListAllOfTheInvoicesForCustomer() {

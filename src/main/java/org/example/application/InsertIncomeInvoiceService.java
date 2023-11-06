@@ -30,4 +30,12 @@ public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
             return invoice;
         }
 
+    @Override
+    public Invoice insertIncomeInvoice(IncomeInvoice invoice) {
+        invoice.getCustomer().insertIncomeInvoiceToCustomer(invoice);
+        invoiceRepository.insertCostInvoice(invoice);
+
+        return invoice;
+    }
+
 }
