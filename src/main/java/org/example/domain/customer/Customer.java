@@ -1,6 +1,9 @@
 package org.example.domain.customer;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.With;
 import org.example.domain.Address;
 import org.example.domain.NIP;
 import org.example.domain.invoice.CostInvoice;
@@ -12,11 +15,11 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"name", "surname", "address"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @With
-@ToString
 @Getter
 public class Customer implements InsertInvoiceToCustomer {
+    @EqualsAndHashCode.Include
 
     private CustomerId customerId;
     private String name;
@@ -31,11 +34,12 @@ public class Customer implements InsertInvoiceToCustomer {
 
     @Override
     public void insertIncomeInvoiceToCustomer(IncomeInvoice invoice) {
-        this.getIncomeInvoices().add(invoice);
+    incomeInvoices.add(invoice);
+
     }
 
     @Override
     public void insertCostInvoiceToCustomer(CostInvoice invoice) {
-        this.getCostInvoices().add(invoice);
+        costInvoices.add(invoice);
     }
 }

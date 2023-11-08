@@ -56,4 +56,10 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     public void insertIncomeInvoice(Invoice invoice) {
         insertCostInvoice(invoice);
     }
+
+    @Override
+    public void deleteAllWithCustomer(CustomerId customerId) {
+        invoices.get(customerId).clear();
+        invoices.clear();
+    }
 }

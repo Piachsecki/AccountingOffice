@@ -1,7 +1,6 @@
 package org.example.adapter.out;
 
 import org.example.DataCreator;
-import org.example.application.InsertCostInvoiceService;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.junit.jupiter.api.Assertions;
@@ -12,11 +11,8 @@ import java.util.Optional;
 
 class InMemoryCustomerRepoTest {
 
-    //this seems to be mocked, but I am using the official implementation of this interface,
-    //to check its behaviour
     private final InMemoryCustomerRepo customerRepo = new InMemoryCustomerRepo();
-    private final InsertCostInvoiceService insertCostInvoiceService = new InsertCostInvoiceService();
-    private final DataCreator dataCreator = new DataCreator();
+
 
 
     @Test
@@ -139,9 +135,5 @@ class InMemoryCustomerRepoTest {
         Assertions.assertEquals(Optional.empty(),empty);
     }
 
-    @Test
-    void shouldAddInvoicesToCustomersLists(){
-
-    }
 
 }

@@ -7,4 +7,6 @@ public interface DeleteInvoiceUseCase {
     void deleteInvoice(CustomerId customerId, InvoiceId invoiceId);
 
     void deleteAll(CustomerId customerId);
+
+    void deleteAllWithUser(CustomerId customerId);
 }

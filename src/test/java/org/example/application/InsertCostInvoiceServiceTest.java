@@ -4,23 +4,23 @@ import org.example.DataCreator;
 import org.example.adapter.out.InMemoryInvoiceRepo;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.CostInvoice;
-import org.example.domain.invoice.Invoice;
 import org.example.port.in.invoice.InsertCostInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class InsertCostInvoiceServiceTest {
-    @InjectMocks
-    private InsertCostInvoiceUseCase insertCostInvoiceService = new InsertCostInvoiceService();
-    @Mock
-    private InvoiceRepository invoiceRepository = new InMemoryInvoiceRepo();
 
+    private InsertCostInvoiceUseCase insertCostInvoiceService;
+    private InvoiceRepository invoiceRepository;
+
+
+    @BeforeEach
+    void setUp(){
+        this.invoiceRepository = new InMemoryInvoiceRepo();
+        this.insertCostInvoiceService =new InsertCostInvoiceService(invoiceRepository);
+    }
     @Test
     void checkIfCostInvoicesAreAddedToUserCorrectly() {
         //given
@@ -44,7 +44,9 @@ class InsertCostInvoiceServiceTest {
 
 
         //then
+        System.out.println(invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()));
 
+        Assertions.assertEquals(5,invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
         Assertions.assertEquals(5, customer1.getCostInvoices().size());
 
     }

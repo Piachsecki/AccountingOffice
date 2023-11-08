@@ -1,8 +1,6 @@
 package org.example.domain.invoice;
 
 import lombok.Getter;
-import lombok.ToString;
-import lombok.With;
 import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;
 import org.example.domain.money.Price;
@@ -25,29 +23,16 @@ public class CostInvoice extends Invoice{
         this.amount = amount;
     }
 
-    public CostInvoice(InvoiceId invoiceId, Customer customer, Company company, Product product, OffsetDateTime date, Price amount) {
-        super(invoiceId, customer, date);
-        this.company = company;
-        this.product = product;
-        this.amount = amount;
-    }
+
 
     @Override
     public CostInvoice withCustomer(Customer customer) {
-        super.customer = customer;
-        return (CostInvoice)this;
+        this.customer = customer;
+        return this;
     }
 
     @Override
     public String toString() {
-        return "CostInvoice{" +
-                "invoiceType=" + invoiceType +
-                ", company=" + company +
-                ", product=" + product +
-                ", amount=" + amount +
-                ", invoiceId=" + invoiceId +
-                ", customer=" + customer +
-                ", date=" + date +
-                '}';
+        return "" + super.invoiceId;
     }
 }

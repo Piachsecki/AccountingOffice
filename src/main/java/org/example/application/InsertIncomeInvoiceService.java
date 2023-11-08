@@ -1,5 +1,6 @@
 package org.example.application;
 
+import lombok.AllArgsConstructor;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
@@ -10,6 +11,7 @@ import org.example.port.out.InvoiceRepository;
 
 import java.time.OffsetDateTime;
 
+@AllArgsConstructor
 public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
         private InvoiceRepository invoiceRepository;
         @Override

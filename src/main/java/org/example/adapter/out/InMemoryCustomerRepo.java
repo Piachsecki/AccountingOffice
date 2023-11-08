@@ -4,7 +4,6 @@ import lombok.Getter;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
-import org.example.domain.invoice.Invoice;
 import org.example.port.out.CustomerRepository;
 
 import java.util.HashMap;

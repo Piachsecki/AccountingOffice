@@ -11,7 +11,6 @@ import org.example.domain.customer.TaxPayments.IndustryType;
 import org.example.domain.customer.TaxPayments.LumpSumTax;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
-import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
 import org.example.domain.money.Currency;
 import org.example.domain.money.Income;
@@ -171,13 +170,13 @@ public class DataCreator {
         return new CostInvoice(
                 new InvoiceId("AZG--421-A5"),
                 createCustomer1(),
-                createCompany1(),
-                createProduct1(),
                 OffsetDateTime.of(
                         2020, 12, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Price(new BigDecimal("152.23"), Currency.PLN)
+                new Price(new BigDecimal("152.23"), Currency.PLN),
+                createCompany1(),
+                createProduct1()
         );
     }
 
@@ -199,13 +198,13 @@ public class DataCreator {
         return new CostInvoice(
                 new InvoiceId("PPP--001-A2"),
                 createCustomer3(),
-                createCompany3(),
-                createProduct3(),
+
                 OffsetDateTime.of(
                         2022, 12, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Price(new BigDecimal("333.23"), Currency.PLN)
+                new Price(new BigDecimal("333.23"), Currency.PLN),createCompany3(),
+                createProduct3()
 
         );
     }
@@ -214,28 +213,28 @@ public class DataCreator {
         return new CostInvoice(
                 new InvoiceId("LLL--777-00"),
                 createCustomer4(),
-                createCompany4(),
-                createProduct4(),
                 OffsetDateTime.of(
                         2023, 12, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Price(new BigDecimal("444.23"), Currency.PLN)
+                new Price(new BigDecimal("444.23"), Currency.PLN),
+                createCompany4(),
+                createProduct4()
 
         );
     }
 
     public static CostInvoice createCostInvoice5() {
         return new CostInvoice(
-                new InvoiceId("AZG--421-A5"),
+                new InvoiceId("AZG--401-A5"),
                 createCustomer5(),
-                createCompany5(),
-                createProduct5(),
                 OffsetDateTime.of(
                         2024, 12, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Price(new BigDecimal("555.23"), Currency.PLN)
+                new Price(new BigDecimal("555.23"), Currency.PLN),
+                createCompany5(),
+                createProduct5()
 
 
         );
@@ -294,7 +293,7 @@ public class DataCreator {
         return new Company(
                 "BOSCH",
                 new NIP("8888777762"),
-                createAddress1()
+                createAddress2()
         );
     }
 
@@ -302,7 +301,7 @@ public class DataCreator {
         return new Company(
                 "Samsung",
                 new NIP("1223334490"),
-                createAddress1()
+                createAddress3()
         );
     }
 
@@ -310,7 +309,7 @@ public class DataCreator {
         return new Company(
                 "Apple",
                 new NIP("2900182654"),
-                createAddress1()
+                createAddress4()
         );
     }
 
@@ -318,7 +317,7 @@ public class DataCreator {
         return new Company(
                 "Edifier",
                 new NIP("2200997452"),
-                createAddress1()
+                createAddress5()
         );
     }
 

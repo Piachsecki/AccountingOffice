@@ -6,20 +6,20 @@ import org.example.domain.customer.Customer;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 public class InsertIncomeInvoiceServiceTest {
-    @InjectMocks
-    private InsertIncomeInvoiceService insertIncomeInvoiceService = new InsertIncomeInvoiceService();
-    @Mock
-    private InvoiceRepository invoiceRepository = new InMemoryInvoiceRepo();
+    private InsertIncomeInvoiceService insertIncomeInvoiceService;
+    private InvoiceRepository invoiceRepository;
 
 
+
+    @BeforeEach
+    void setUp(){
+        invoiceRepository = new InMemoryInvoiceRepo();
+        insertIncomeInvoiceService = new InsertIncomeInvoiceService(invoiceRepository);
+    }
 
     @Test
     void checkIfIncomeInvoicesAreAddedToUserCorrectly(){
@@ -40,6 +40,7 @@ public class InsertIncomeInvoiceServiceTest {
 
         //then
         Assertions.assertEquals(5, customer2.getIncomeInvoices().size());
+        Assertions.assertEquals(5, invoiceRepository.listAllInvoicesForCustomerId(customer2.getCustomerId()).size());
 
 
     }

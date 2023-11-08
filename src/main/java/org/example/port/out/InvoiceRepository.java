@@ -16,4 +16,6 @@ public interface InvoiceRepository {
     void deleteAllInvoicesForCustomerId(CustomerId customerId);
 
     void insertIncomeInvoice(Invoice invoice);
+
+    void deleteAllWithCustomer(CustomerId customerId);
 }
