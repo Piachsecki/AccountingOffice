@@ -1,6 +1,7 @@
 package org.example.application;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
 import org.example.domain.money.Money;
 import org.example.port.in.invoice.CountRevenueUseCase;

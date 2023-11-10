@@ -6,6 +6,6 @@ import org.example.domain.money.Money;
 
 import java.time.YearMonth;
 
-public interface CountHealthInsuranceContributionUseCase {
-    Money CalculateHealthInsuranceContribution(Customer customerId, YearMonth monthToCalculateHealthInsuranceContribution);
+public interface CountMonthlyIncomeUseCase {
+    Money countMonthlyIncome(Customer customer, YearMonth monthToCalculateTheIncome);
 }
