@@ -5,7 +5,7 @@ import org.example.domain.customer.Customer;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
-import org.example.domain.money.Income;
+import org.example.domain.money.Money;
 import org.example.port.in.invoice.InsertIncomeInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 
@@ -18,16 +18,16 @@ public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
         public Invoice insertIncomeInvoice(
                 Customer customer,
                 OffsetDateTime date,
-                Income income
+                Money money
         ) {
             IncomeInvoice invoice = new IncomeInvoice(
                     InvoiceId.createRandomInvoiceId(),
                     customer,
                     date,
-                    income
+                    money
             );
             customer.insertIncomeInvoiceToCustomer(invoice);
-            invoiceRepository.insertIncomeInvoice(invoice);
+            invoiceRepository.insertInvoice(invoice);
 
             return invoice;
         }
@@ -35,7 +35,7 @@ public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
     @Override
     public Invoice insertIncomeInvoice(IncomeInvoice invoice) {
         invoice.getCustomer().insertIncomeInvoiceToCustomer(invoice);
-        invoiceRepository.insertCostInvoice(invoice);
+        invoiceRepository.insertInvoice(invoice);
 
         return invoice;
     }

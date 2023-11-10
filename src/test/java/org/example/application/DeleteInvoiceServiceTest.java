@@ -30,9 +30,9 @@ public class DeleteInvoiceServiceTest {
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
 
         //when
-        invoiceRepository.insertCostInvoice(costInvoice1);
-        invoiceRepository.insertCostInvoice(costInvoice2);
-        invoiceRepository.insertCostInvoice(costInvoice3);
+        invoiceRepository.insertInvoice(costInvoice1);
+        invoiceRepository.insertInvoice(costInvoice2);
+        invoiceRepository.insertInvoice(costInvoice3);
         deleteInvoiceService.deleteInvoice(customer1.getCustomerId(), costInvoice2.getInvoiceId());
 
         //then
@@ -50,9 +50,9 @@ public class DeleteInvoiceServiceTest {
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
 
         //when
-        invoiceRepository.insertCostInvoice(costInvoice1);
-        invoiceRepository.insertCostInvoice(costInvoice2);
-        invoiceRepository.insertCostInvoice(costInvoice3);
+        invoiceRepository.insertInvoice(costInvoice1);
+        invoiceRepository.insertInvoice(costInvoice2);
+        invoiceRepository.insertInvoice(costInvoice3);
         deleteInvoiceService.deleteAll(customer1.getCustomerId());
 
         //then

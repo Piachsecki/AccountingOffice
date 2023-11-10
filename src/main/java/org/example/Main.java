@@ -2,7 +2,9 @@
 
 import org.example.adapter.in.PrintingService;
 
-public class Main {
+import java.time.YearMonth;
+
+    public class Main {
     private static final PrintingService printingService = new PrintingService();
     private static final String MENU =   "GOOD MORNING ACCOUNTANT!" +
                             "Here is the list of the operations available" +
@@ -49,6 +51,8 @@ public class Main {
 //    }
 
     public static void main(String[] args) {
-
+        YearMonth first = YearMonth.of(2020, 8);
+        YearMonth second = YearMonth.of(2020, 7);
+        System.out.println(first.isAfter(second));
     }
 }

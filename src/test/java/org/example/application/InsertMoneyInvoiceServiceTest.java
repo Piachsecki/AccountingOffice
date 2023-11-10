@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class InsertIncomeInvoiceServiceTest {
+public class InsertMoneyInvoiceServiceTest {
     private InsertIncomeInvoiceService insertIncomeInvoiceService;
     private InvoiceRepository invoiceRepository;
 

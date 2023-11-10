@@ -10,10 +10,7 @@ import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 
-import java.util.HashSet;
 import java.util.Optional;
 
 public class DeleteCustomerServiceTest {
@@ -43,11 +40,11 @@ public class DeleteCustomerServiceTest {
 
 
         //when
-        invoiceRepository.insertCostInvoice(costInvoice1);
-        invoiceRepository.insertCostInvoice(costInvoice2);
-        invoiceRepository.insertCostInvoice(costInvoice3);
-        invoiceRepository.insertCostInvoice(costInvoice4);
-        invoiceRepository.insertCostInvoice(costInvoice5);
+        invoiceRepository.insertInvoice(costInvoice1);
+        invoiceRepository.insertInvoice(costInvoice2);
+        invoiceRepository.insertInvoice(costInvoice3);
+        invoiceRepository.insertInvoice(costInvoice4);
+        invoiceRepository.insertInvoice(costInvoice5);
 
         deleteCustomerService.deleteCustomer(customer1.getCustomerId());
 

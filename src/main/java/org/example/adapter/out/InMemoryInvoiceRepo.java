@@ -2,10 +2,16 @@ package org.example.adapter.out;
 
 import lombok.Getter;
 import org.example.domain.customer.CustomerId;
+import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
+import org.example.domain.money.Currency;
+import org.example.domain.money.Money;
 import org.example.port.out.InvoiceRepository;
 
+import java.math.BigDecimal;
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -17,14 +23,14 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     private Map<CustomerId, HashSet<Invoice>> invoices = new HashMap<>();
 
     @Override
-    public void insertCostInvoice(Invoice invoice) {
-        if(!invoices.containsKey(invoice.getCustomer().getCustomerId())){
+    public void insertInvoice(Invoice invoice) {
+        if (!invoices.containsKey(invoice.getCustomer().getCustomerId())){
             invoices.put(invoice.getCustomer().getCustomerId(), new HashSet<>(Set.of(invoice)));
-        }else {
+        } else {
             HashSet<Invoice> newHashSet = new HashSet<>(invoices.get(invoice.getCustomer().getCustomerId()).size() + 1);
 
             for (Map.Entry<CustomerId, HashSet<Invoice>> customerIdHashSetEntry : invoices.entrySet()) {
-               newHashSet.addAll(customerIdHashSetEntry.getValue());
+                newHashSet.addAll(customerIdHashSetEntry.getValue());
             }
             newHashSet.add(invoice);
             invoices.put(
@@ -49,17 +55,54 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
 
 
 
-    // czy taka praktyka jest dobra? - mamy 2 metody insert cost i income invoice
-    // aby miec rozdzielenie w kodzie, ale koniec koncow bedziemy uzywac jednej mapy,
-    // gdzie wystarczy metoda insertCostInvoice
-    @Override
-    public void insertIncomeInvoice(Invoice invoice) {
-        insertCostInvoice(invoice);
-    }
-
     @Override
     public void deleteAllWithCustomer(CustomerId customerId) {
         invoices.get(customerId).clear();
         invoices.clear();
+    }
+
+    @Override
+    public Money countMonthlyRevenueUseCase(CustomerId customerId, YearMonth monthToBeCounted) {
+        Set<IncomeInvoice> result = new HashSet<>();
+
+        if (invoices.containsKey(customerId)) {
+
+            for (Map.Entry<CustomerId, HashSet<Invoice>> customerIdHashSetEntry : invoices.entrySet()) {
+                if (customerIdHashSetEntry.getKey().equals(customerId)) {
+                    HashSet<Invoice> allCustomerInvoices = customerIdHashSetEntry.getValue();
+                    result.addAll(findProperIncomeInvoices(monthToBeCounted, allCustomerInvoices));
+                }
+
+            }
+        }
+        BigDecimal revenue = sumTheRevenueForIncomeInvoices(result);
+        return new Money(revenue, Currency.PLN);
+    }
+
+    private static Set<IncomeInvoice> findProperIncomeInvoices(YearMonth monthToBeCounted, HashSet<Invoice> value) {
+        Set<IncomeInvoice> result = new HashSet<>();
+
+        for (Invoice invoice : value) {
+            int invoiceYear = invoice.getDate().getYear();
+            Month invoiceMonth = invoice.getDate().getMonth();
+            if (
+                    (
+                            monthToBeCounted.getYear() == invoiceYear &&
+                                    monthToBeCounted.getMonth() == invoiceMonth
+                    ) &&
+                            IncomeInvoice.class.equals(invoice.getClass())
+            ) {
+                result.add((IncomeInvoice) invoice);
+            }
+        }
+        return result;
+    }
+
+    private static BigDecimal sumTheRevenueForIncomeInvoices(Set<IncomeInvoice> result) {
+        BigDecimal revenue = BigDecimal.ZERO;
+        for (IncomeInvoice incomeInvoice : result) {
+                revenue = revenue.add(incomeInvoice.getAmount().countToPLN());
+        }
+        return revenue;
     }
 }

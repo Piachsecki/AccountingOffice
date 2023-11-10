@@ -2,7 +2,7 @@ package org.example.domain.invoice;
 
 import lombok.Getter;
 import org.example.domain.customer.Customer;
-import org.example.domain.money.Income;
+import org.example.domain.money.Money;
 
 import java.time.OffsetDateTime;
 
@@ -10,8 +10,8 @@ import java.time.OffsetDateTime;
 public class IncomeInvoice extends Invoice{
     private final InvoiceType invoiceType = InvoiceType.INCOME_INVOICE;
 
-    private final Income amount;
-    public IncomeInvoice(InvoiceId invoiceId, Customer customer, OffsetDateTime date, Income amount) {
+    private final Money amount;
+    public IncomeInvoice(InvoiceId invoiceId, Customer customer, OffsetDateTime date, Money amount) {
         super(invoiceId, customer, date);
         this.amount = amount;
     }

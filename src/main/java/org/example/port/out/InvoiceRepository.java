@@ -3,11 +3,13 @@ package org.example.port.out;
 import org.example.domain.customer.CustomerId;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
+import org.example.domain.money.Money;
 
+import java.time.YearMonth;
 import java.util.HashSet;
 
 public interface InvoiceRepository {
-    void insertCostInvoice(Invoice invoice);
+    void insertInvoice(Invoice invoice);
 
     HashSet<Invoice> listAllInvoicesForCustomerId(CustomerId customerId);
 
@@ -15,7 +17,8 @@ public interface InvoiceRepository {
 
     void deleteAllInvoicesForCustomerId(CustomerId customerId);
 
-    void insertIncomeInvoice(Invoice invoice);
 
     void deleteAllWithCustomer(CustomerId customerId);
+
+    Money countMonthlyRevenueUseCase(CustomerId customerId, YearMonth monthToBeCounted);
 }

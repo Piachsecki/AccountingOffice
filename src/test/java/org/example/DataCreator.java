@@ -13,7 +13,7 @@ import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.InvoiceId;
 import org.example.domain.money.Currency;
-import org.example.domain.money.Income;
+import org.example.domain.money.Money;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
 import org.example.domain.product.ProductId;
@@ -327,10 +327,10 @@ public class DataCreator {
                 new InvoiceId("EEE--111-A5"),
                 createCustomer1(),
                 OffsetDateTime.of(
-                        2021, 12, 12,
+                        2025, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Income(new BigDecimal("8000"), Currency.PLN)
+                new Money(new BigDecimal("8000"), Currency.EUR)
         );
     }
     public static IncomeInvoice createIncomeInvoice2() {
@@ -338,10 +338,10 @@ public class DataCreator {
                 new InvoiceId("DDD--111-A5"),
                 createCustomer2(),
                 OffsetDateTime.of(
-                        2022, 12, 12,
+                        2025, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Income(new BigDecimal("10000"), Currency.PLN)
+                new Money(new BigDecimal("10000"), Currency.PLN)
         );
 
     }
@@ -350,10 +350,10 @@ public class DataCreator {
                 new InvoiceId("CCC--111-A5"),
                 createCustomer3(),
                 OffsetDateTime.of(
-                        2023, 12, 12,
+                        2025, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Income(new BigDecimal("15000"), Currency.PLN)
+                new Money(new BigDecimal("15000"), Currency.PLN)
         );
 
     }
@@ -362,10 +362,10 @@ public class DataCreator {
                 new InvoiceId("BBB--111-A5"),
                 createCustomer4(),
                 OffsetDateTime.of(
-                        2024, 12, 12,
+                        2025, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Income(new BigDecimal("20000"), Currency.PLN)
+                new Money(new BigDecimal("20000"), Currency.PLN)
         );
 
     }
@@ -376,10 +376,10 @@ public class DataCreator {
                 new InvoiceId("AAA--111-A5"),
                 createCustomer5(),
                 OffsetDateTime.of(
-                        2025, 12, 12,
+                        2025, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Income(new BigDecimal("30000"), Currency.PLN)
+                new Money(new BigDecimal("30000"), Currency.PLN)
         );
 
     }

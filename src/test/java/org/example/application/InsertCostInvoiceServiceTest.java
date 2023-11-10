@@ -4,11 +4,14 @@ import org.example.DataCreator;
 import org.example.adapter.out.InMemoryInvoiceRepo;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.CostInvoice;
+import org.example.domain.invoice.Invoice;
 import org.example.port.in.invoice.InsertCostInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashSet;
 
 class InsertCostInvoiceServiceTest {
 
@@ -41,13 +44,19 @@ class InsertCostInvoiceServiceTest {
         insertCostInvoiceService.insertCostInvoice(costInvoice3);
         insertCostInvoiceService.insertCostInvoice(costInvoice4);
         insertCostInvoiceService.insertCostInvoice(costInvoice5);
+        HashSet<Invoice> invoices = invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId());
 
 
         //then
         System.out.println(invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()));
 
+
         Assertions.assertEquals(5,invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
         Assertions.assertEquals(5, customer1.getCostInvoices().size());
+        for (Invoice invoice : invoices) {
+            Assertions.assertEquals(CostInvoice.class, invoice.getClass());
+        }
+        Assertions.assertEquals(CostInvoice.class, customer1.getCostInvoices().get(0).getClass());
 
     }
 
