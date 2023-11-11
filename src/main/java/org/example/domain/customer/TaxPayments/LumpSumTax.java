@@ -8,9 +8,9 @@ public class LumpSumTax extends TaxPaymentForm{
     public LumpSumTax(IndustryType industryType) {
         switch (industryType){
             case DOCTOR -> this.taxRate = TaxRate.LUMP_SUM15;
-            case FARMER -> this.taxRate = TaxRate.LUMP_SUM5;
+            case FARMER -> this.taxRate = TaxRate.LUMP_SUM5_5;
             case SOFTWARE_DEVELOPER -> this.taxRate = TaxRate.LUMP_SUM17;
-            case TENANT -> this.taxRate = TaxRate.LUMP_SUM8;
+            case TENANT -> this.taxRate = TaxRate.LUMP_SUM8_5;
             default -> {
                     log.error("A given profession {} is not supported in our accounting office!", industryType);
                     throw new IndustryTypeException(String.format(
