@@ -3,10 +3,12 @@ package org.example.application;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.customer.Customer;
+import org.example.domain.money.Currency;
 import org.example.domain.money.Money;
 import org.example.port.in.invoice.CountMonthlyCostsUseCase;
 import org.example.port.in.invoice.CountMonthlyIncomeUseCase;
 
+import java.math.BigDecimal;
 import java.time.YearMonth;
 
 @AllArgsConstructor
@@ -23,7 +25,12 @@ public class CountMonthlyIncomeService implements CountMonthlyIncomeUseCase {
                     "revenue for the upcoming months!", yearMonth, YearMonth.now());
             throw new RuntimeException("We cannot calculate the revenue for the upcoming months!");
         }
-        return null;
+
+        Money monthlyRevenue = countMonthlyRevenueService.countMonthlyRevenue(customer.getCustomerId(), yearMonth);
+        Money monthlyCosts = countMonthlyCostsUseCase.countMonthlyCosts(customer, yearMonth);
+        Money tax = countIncomeTaxService.countIncomeTax(customer, yearMonth);
+        BigDecimal finalIncome = monthlyRevenue.amount().subtract(monthlyCosts.amount()).subtract(tax.amount());
+        return new Money(finalIncome, Currency.PLN);
 
     }
 }
