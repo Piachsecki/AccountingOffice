@@ -5,6 +5,7 @@ import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
 import org.example.domain.money.Money;
 
+import java.math.BigDecimal;
 import java.time.YearMonth;
 import java.util.HashSet;
 
@@ -21,4 +22,6 @@ public interface InvoiceRepository {
     void deleteAllWithCustomer(CustomerId customerId);
 
     Money countMonthlyRevenueUseCase(CustomerId customerId, YearMonth monthToBeCounted);
+
+    Money countMonthlyCosts(CustomerId customerId, YearMonth yearMonth);
 }

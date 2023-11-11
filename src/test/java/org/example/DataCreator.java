@@ -7,6 +7,7 @@ import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
 import org.example.domain.customer.Entrepreneurship;
 import org.example.domain.customer.EntrepreneurshipForm;
+import org.example.domain.customer.TaxPayments.FlatTax;
 import org.example.domain.customer.TaxPayments.IndustryType;
 import org.example.domain.customer.TaxPayments.LumpSumTax;
 import org.example.domain.invoice.CostInvoice;
@@ -37,7 +38,7 @@ public class DataCreator {
                 ),
                 new Entrepreneurship(
                         EntrepreneurshipForm.SOLE_PROPRIETORSHIP,
-                        new LumpSumTax(IndustryType.SOFTWARE_DEVELOPER)
+                        new FlatTax()
                 ),
                 new ArrayList<>(),
                 new ArrayList<>()
@@ -171,7 +172,7 @@ public class DataCreator {
                 new InvoiceId("AZG--421-A5"),
                 createCustomer1(),
                 OffsetDateTime.of(
-                        2020, 12, 12,
+                        2022, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
                 new Price(new BigDecimal("152.23"), Currency.PLN),

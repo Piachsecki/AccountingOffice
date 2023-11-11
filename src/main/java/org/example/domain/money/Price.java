@@ -33,4 +33,12 @@ public record Price(BigDecimal amount, Currency currency) {
             }
         }
     }
+
+    public BigDecimal countToPLN(){
+        if (!this.currency.equals(Currency.PLN)){
+            BigDecimal exchange_rate = new BigDecimal(currency.getExchange_rate());
+            return exchange_rate.multiply(amount);
+        }
+        return amount;
+    }
 }

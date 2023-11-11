@@ -5,6 +5,6 @@ import org.example.domain.money.Money;
 
 import java.time.YearMonth;
 
-public interface CountRevenueUseCase {
-    Money countMonthlyRevenueUseCase(CustomerId customerId, YearMonth monthToBeCounted);
+public interface CountMonthlyRevenueUseCase {
+    Money countMonthlyRevenue(CustomerId customerId, YearMonth monthToBeCounted);
 }

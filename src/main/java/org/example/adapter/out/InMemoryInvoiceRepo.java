@@ -2,6 +2,7 @@ package org.example.adapter.out;
 
 import lombok.Getter;
 import org.example.domain.customer.CustomerId;
+import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
@@ -79,6 +80,32 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
         return new Money(revenue, Currency.PLN);
     }
 
+    @Override
+    public Money countMonthlyCosts(CustomerId customerId, YearMonth yearMonth) {
+        Set<CostInvoice> result = new HashSet<>();
+
+        if (invoices.containsKey(customerId)) {
+
+            for (Map.Entry<CustomerId, HashSet<Invoice>> customerIdHashSetEntry : invoices.entrySet()) {
+                if (customerIdHashSetEntry.getKey().equals(customerId)) {
+                    HashSet<Invoice> allCustomerInvoices = customerIdHashSetEntry.getValue();
+                    result.addAll(findProperCostInvoices(yearMonth, allCustomerInvoices));
+                }
+
+            }
+        }
+        BigDecimal revenue = sumTheCosts(result);
+        return new Money(revenue, Currency.PLN);
+    }
+
+    private BigDecimal sumTheCosts(Set<CostInvoice> result) {
+        BigDecimal costs = BigDecimal.ZERO;
+        for (CostInvoice costInvoice : result) {
+            costs = costs.add(costInvoice.getAmount().countToPLN());
+        }
+        return costs;
+    }
+
     private static Set<IncomeInvoice> findProperIncomeInvoices(YearMonth monthToBeCounted, HashSet<Invoice> value) {
         Set<IncomeInvoice> result = new HashSet<>();
 
@@ -93,6 +120,26 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
                             IncomeInvoice.class.equals(invoice.getClass())
             ) {
                 result.add((IncomeInvoice) invoice);
+            }
+        }
+        return result;
+    }
+
+
+    private static Set<CostInvoice> findProperCostInvoices(YearMonth monthToBeCounted, HashSet<Invoice> value) {
+        Set<CostInvoice> result = new HashSet<>();
+
+        for (Invoice invoice : value) {
+            int invoiceYear = invoice.getDate().getYear();
+            Month invoiceMonth = invoice.getDate().getMonth();
+            if (
+                    (
+                            monthToBeCounted.getYear() == invoiceYear &&
+                                    monthToBeCounted.getMonth() == invoiceMonth
+                    ) &&
+                            CostInvoice.class.equals(invoice.getClass())
+            ) {
+                result.add((CostInvoice) invoice);
             }
         }
         return result;
