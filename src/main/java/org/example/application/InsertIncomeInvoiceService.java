@@ -12,6 +12,7 @@ import org.example.port.out.InvoiceRepository;
 import java.time.OffsetDateTime;
 
 @AllArgsConstructor
+
 public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
         private InvoiceRepository invoiceRepository;
         @Override

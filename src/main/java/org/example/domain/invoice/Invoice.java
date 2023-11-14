@@ -24,7 +24,8 @@ public abstract class Invoice {
         return getInvoiceId().hashCode();
     }
 
-    protected final InvoiceId invoiceId;
+    @With
+    protected InvoiceId invoiceId;
     @With
     protected Customer customer;
     protected final OffsetDateTime date;

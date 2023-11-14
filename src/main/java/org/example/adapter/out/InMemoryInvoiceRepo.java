@@ -21,7 +21,7 @@ import java.util.Set;
 @Getter
 public class InMemoryInvoiceRepo implements InvoiceRepository {
     // maybe a list of invoices in here?
-    private Map<CustomerId, HashSet<Invoice>> invoices = new HashMap<>();
+    private final Map<CustomerId, HashSet<Invoice>> invoices = new HashMap<>();
 
     @Override
     public void insertInvoice(Invoice invoice) {

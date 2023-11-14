@@ -122,7 +122,7 @@ class InMemoryInvoiceRepoTest {
         inMemoryInvoiceRepo.insertInvoice(incomeInvoice4);
         inMemoryInvoiceRepo.insertInvoice(incomeInvoice5);
         inMemoryInvoiceRepo.insertInvoice(costInvoice1);
-        Money result = inMemoryInvoiceRepo.countMonthlyRevenueUseCase(customer1.getCustomerId(), YearMonth.of(2025, 10));
+        Money result = inMemoryInvoiceRepo.countMonthlyRevenueUseCase(customer1.getCustomerId(), YearMonth.of(2020, 10));
 
         BigDecimal expected = incomeInvoice1.getAmount().countToPLN()
                 .add(incomeInvoice2.getAmount().countToPLN())
@@ -157,7 +157,7 @@ class InMemoryInvoiceRepoTest {
         inMemoryInvoiceRepo.insertInvoice(incomeInvoice4);
         inMemoryInvoiceRepo.insertInvoice(incomeInvoice5);
         inMemoryInvoiceRepo.insertInvoice(costInvoice1);
-        Money result = inMemoryInvoiceRepo.countMonthlyCosts(customer1.getCustomerId(), YearMonth.of(2025, 10));
+        Money result = inMemoryInvoiceRepo.countMonthlyCosts(customer1.getCustomerId(), YearMonth.of(2022, 10));
 
         BigDecimal expected = costInvoice1.getAmount().countToPLN();
 

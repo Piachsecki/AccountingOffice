@@ -9,7 +9,6 @@ import java.util.Random;
 @Slf4j
 public record InvoiceId(String value) {
     private static final String NUMS = "0123456789";
-    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String ALL = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final int LENGTH = 11;
 
@@ -24,7 +23,6 @@ public record InvoiceId(String value) {
 
     public static InvoiceId createRandomInvoiceId() {
         Random random = new Random();
-        var charTable = new char[LENGTH];
 
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < LENGTH; i++) {

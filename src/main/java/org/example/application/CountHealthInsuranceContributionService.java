@@ -1,6 +1,7 @@
 package org.example.application;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.example.domain.customer.Customer;
 import org.example.domain.customer.TaxPayments.FlatTax;
 import org.example.domain.customer.TaxPayments.GeneralTax;
@@ -13,10 +14,12 @@ import java.math.BigDecimal;
 import java.time.YearMonth;
 
 @AllArgsConstructor
+@Getter
+
 public class CountHealthInsuranceContributionService implements CountHealthInsuranceContributionUseCase {
-    private static final Integer FIRST_CONTRIBUTION_RANGE = 5000;
-    private static final Integer SECOND_CONTRIBUTION_RANGE = 25000;
-    private static final BigDecimal MINIMUM_WAGE = BigDecimal.valueOf(3490);
+    public static final Integer FIRST_CONTRIBUTION_RANGE = 5000;
+    public static final Integer SECOND_CONTRIBUTION_RANGE = 25000;
+    public static final BigDecimal MINIMUM_WAGE = BigDecimal.valueOf(3490);
     private CountMonthlyMonthlyRevenueService countMonthlyRevenueService;
     private CountMonthlyIncomeService countIncomeService;
 
@@ -26,36 +29,6 @@ public class CountHealthInsuranceContributionService implements CountHealthInsur
 
     @Override
     public Money calculateHealthInsuranceContribution(Customer customer, YearMonth monthToCalculateHealthInsuranceContribution) {
-
-        if (FlatTax.class.equals(customer.getEntrepreneurshipForm().taxPaymentForm().getClass())) {
-            Money monthlyIncome = countIncomeService.countMonthlyIncome(
-                    customer,
-                    monthToCalculateHealthInsuranceContribution
-            );
-            if (monthlyIncome.amount().compareTo(MINIMUM_WAGE) <= 0) {
-                return new Money(MINIMUM_WAGE.multiply(BigDecimal.valueOf(0.09)), Currency.PLN);
-
-            } else {
-                return new Money(monthlyIncome.amount().multiply(BigDecimal.valueOf(0.49)), Currency.PLN);
-            }
-
-        }
-
-
-        if (GeneralTax.class.equals(customer.getEntrepreneurshipForm().taxPaymentForm().getClass())) {
-            Money monthlyIncome = countIncomeService.countMonthlyIncome(
-                    customer,
-                    monthToCalculateHealthInsuranceContribution
-            );
-            if (monthlyIncome.amount().compareTo(MINIMUM_WAGE) <= 0) {
-                return new Money(MINIMUM_WAGE.multiply(BigDecimal.valueOf(0.09)), Currency.PLN);
-
-            } else {
-                return new Money(monthlyIncome.amount().multiply(BigDecimal.valueOf(0.09)), Currency.PLN);
-            }
-
-        }
-
 
         if (LumpSumTax.class.equals(customer.getEntrepreneurshipForm().taxPaymentForm().getClass())) {
             BigDecimal monthlyRevenue = countMonthlyRevenueService.countMonthlyRevenue(
@@ -89,6 +62,37 @@ public class CountHealthInsuranceContributionService implements CountHealthInsur
             }
 
         }
+
+        if (FlatTax.class.equals(customer.getEntrepreneurshipForm().taxPaymentForm().getClass())) {
+            Money monthlyIncome = countIncomeService.countMonthlyIncome(
+                    customer,
+                    monthToCalculateHealthInsuranceContribution
+            );
+            if (monthlyIncome.amount().compareTo(MINIMUM_WAGE) <= 0) {
+                return new Money(MINIMUM_WAGE.multiply(BigDecimal.valueOf(0.09)), Currency.PLN);
+
+            } else {
+                return new Money(monthlyIncome.amount().multiply(BigDecimal.valueOf(0.49)), Currency.PLN);
+            }
+
+        }
+
+
+        if (GeneralTax.class.equals(customer.getEntrepreneurshipForm().taxPaymentForm().getClass())) {
+            Money monthlyIncome = countIncomeService.countMonthlyIncome(
+                    customer,
+                    monthToCalculateHealthInsuranceContribution
+            );
+            if (monthlyIncome.amount().compareTo(MINIMUM_WAGE) <= 0) {
+                return new Money(MINIMUM_WAGE.multiply(BigDecimal.valueOf(0.09)), Currency.PLN);
+
+            } else {
+                return new Money(monthlyIncome.amount().multiply(BigDecimal.valueOf(0.09)), Currency.PLN);
+            }
+
+        }
+
+
 
         return null;
     }

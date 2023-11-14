@@ -13,6 +13,7 @@ import java.time.YearMonth;
 
 @AllArgsConstructor
 @Slf4j
+
 public class CountMonthlyIncomeService implements CountMonthlyIncomeUseCase {
     private CountMonthlyMonthlyRevenueService countMonthlyRevenueService;
     private CountMonthlyCostsUseCase countMonthlyCostsUseCase;

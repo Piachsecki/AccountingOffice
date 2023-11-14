@@ -328,18 +328,18 @@ public class DataCreator {
                 new InvoiceId("EEE--111-A5"),
                 createCustomer1(),
                 OffsetDateTime.of(
-                        2025, 10, 12,
+                        2020, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Money(new BigDecimal("8000"), Currency.EUR)
+                new Money(new BigDecimal("8000"), Currency.PLN)
         );
     }
     public static IncomeInvoice createIncomeInvoice2() {
         return new IncomeInvoice(
                 new InvoiceId("DDD--111-A5"),
-                createCustomer2(),
+                createCustomer1(),
                 OffsetDateTime.of(
-                        2025, 10, 12,
+                        2020, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
                 new Money(new BigDecimal("10000"), Currency.PLN)
@@ -351,7 +351,7 @@ public class DataCreator {
                 new InvoiceId("CCC--111-A5"),
                 createCustomer3(),
                 OffsetDateTime.of(
-                        2025, 10, 12,
+                        2020, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
                 new Money(new BigDecimal("15000"), Currency.PLN)
@@ -363,7 +363,7 @@ public class DataCreator {
                 new InvoiceId("BBB--111-A5"),
                 createCustomer4(),
                 OffsetDateTime.of(
-                        2025, 10, 12,
+                        2020, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
                 new Money(new BigDecimal("20000"), Currency.PLN)
@@ -377,7 +377,7 @@ public class DataCreator {
                 new InvoiceId("AAA--111-A5"),
                 createCustomer5(),
                 OffsetDateTime.of(
-                        2025, 10, 12,
+                        2020, 10, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
                 new Money(new BigDecimal("30000"), Currency.PLN)

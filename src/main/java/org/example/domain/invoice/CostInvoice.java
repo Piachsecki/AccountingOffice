@@ -35,4 +35,10 @@ public class CostInvoice extends Invoice{
     public String toString() {
         return "" + super.invoiceId;
     }
+
+    @Override
+    public CostInvoice withInvoiceId(InvoiceId invoiceId) {
+        this.invoiceId = invoiceId;
+        return this;
+    }
 }

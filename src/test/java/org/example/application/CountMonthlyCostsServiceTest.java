@@ -4,15 +4,11 @@ import org.example.DataCreator;
 import org.example.adapter.out.InMemoryInvoiceRepo;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.CostInvoice;
-import org.example.domain.money.Money;
-import org.example.port.in.invoice.CountMonthlyCostsUseCase;
-import org.example.port.in.invoice.CountMonthlyRevenueUseCase;
 import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 import java.time.YearMonth;
 
@@ -20,18 +16,22 @@ public class CountMonthlyCostsServiceTest {
     private InvoiceRepository invoiceRepository;
     private CountHealthInsuranceContributionService countHealthInsuranceContributionService;
     private CountMonthlyCostsService countMonthlyCostsService;
+    private CountMonthlyMonthlyRevenueService countMonthlyMonthlyRevenueService;
 
 
 
     @BeforeEach
     void setUp(){
         invoiceRepository = new InMemoryInvoiceRepo();
-        CountMonthlyMonthlyRevenueService countMonthlyMonthlyRevenueService = new CountMonthlyMonthlyRevenueService();
+        countMonthlyMonthlyRevenueService = new CountMonthlyMonthlyRevenueService(invoiceRepository);
         countHealthInsuranceContributionService = new CountHealthInsuranceContributionService(countMonthlyMonthlyRevenueService);
-        countMonthlyCostsService = new CountMonthlyCostsService(
-                invoiceRepository,
-                countHealthInsuranceContributionService
-        );
+        countMonthlyCostsService = new CountMonthlyCostsService(invoiceRepository);
+
+        Assertions.assertNotNull(invoiceRepository);
+        Assertions.assertNotNull(countMonthlyMonthlyRevenueService);
+        Assertions.assertNotNull(countHealthInsuranceContributionService);
+        Assertions.assertNotNull(countMonthlyCostsService);
+
 
     }
 
@@ -46,7 +46,7 @@ public class CountMonthlyCostsServiceTest {
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer);
         CostInvoice costInvoice4 = DataCreator.createCostInvoice4().withCustomer(customer);
         CostInvoice costInvoice5 = DataCreator.createCostInvoice5().withCustomer(customer);
-        YearMonth yearMonth = YearMonth.of(2022, 10);
+        YearMonth yearMonth = YearMonth.of(costInvoice1.getDate().getYear(), costInvoice1.getDate().getMonth());
 
 
         //when
@@ -63,18 +63,5 @@ public class CountMonthlyCostsServiceTest {
         Assertions.assertEquals(expected, result);
     }
 
-
-
-    @Test
-    void checkIfCountsCostsGoodForLumpSum(){
-
-    }
-
-
-
-    @Test
-    void checkIfCountsCostsGoodForGeneralTax(){
-
-    }
 
 }

@@ -6,6 +6,7 @@ import org.example.port.in.customer.DeleteCustomerUseCase;
 import org.example.port.out.CustomerRepository;
 
 @AllArgsConstructor
+
 public class DeleteCustomerService implements DeleteCustomerUseCase {
     private CustomerRepository customerRepository;
     private DeleteInvoiceService deleteInvoiceService;

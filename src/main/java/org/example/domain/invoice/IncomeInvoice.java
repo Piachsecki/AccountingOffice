@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 public class IncomeInvoice extends Invoice{
     private final InvoiceType invoiceType = InvoiceType.INCOME_INVOICE;
 
-    private final Money amount;
+    private Money amount;
     public IncomeInvoice(InvoiceId invoiceId, Customer customer, OffsetDateTime date, Money amount) {
         super(invoiceId, customer, date);
         this.amount = amount;
@@ -18,7 +18,17 @@ public class IncomeInvoice extends Invoice{
 
     @Override
     public IncomeInvoice withCustomer(Customer customer) {
-        super.customer = customer;
-        return (IncomeInvoice) this;
+        this.customer = customer;
+        return this;
+    }
+    public IncomeInvoice withAmount(Money amount){
+        this.amount = amount;
+        return this;
+    }
+
+    @Override
+    public IncomeInvoice withInvoiceId(InvoiceId invoiceId) {
+        this.invoiceId = invoiceId;
+        return this;
     }
 }

@@ -1,5 +1,6 @@
 package org.example.application;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.customer.CustomerId;
 import org.example.domain.money.Money;
@@ -10,6 +11,7 @@ import java.time.YearMonth;
 
 
 @Slf4j
+@AllArgsConstructor
 public class CountMonthlyMonthlyRevenueService implements CountMonthlyRevenueUseCase {
     private InvoiceRepository invoiceRepository;
     @Override

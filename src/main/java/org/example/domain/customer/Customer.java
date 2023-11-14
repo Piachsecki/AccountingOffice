@@ -3,7 +3,6 @@ package org.example.domain.customer;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.With;
 import org.example.domain.Address;
 import org.example.domain.NIP;
 import org.example.domain.invoice.CostInvoice;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@With
 @Getter
 public class Customer implements InsertInvoiceToCustomer {
     @EqualsAndHashCode.Include
@@ -27,7 +25,7 @@ public class Customer implements InsertInvoiceToCustomer {
     private NIP nip;
     private Address address;
     private final OffsetDateTime joinDate;
-    private final Entrepreneurship entrepreneurshipForm;
+    private Entrepreneurship entrepreneurshipForm;
     private List<Invoice> incomeInvoices;
     private List<Invoice> costInvoices;
 
@@ -42,4 +40,11 @@ public class Customer implements InsertInvoiceToCustomer {
     public void insertCostInvoiceToCustomer(CostInvoice invoice) {
         costInvoices.add(invoice);
     }
+
+    public Customer withEntrepreneurshipForm(Entrepreneurship entrepreneurshipForm) {
+        this.entrepreneurshipForm = entrepreneurshipForm;
+        return this;
+
+    }
+
 }

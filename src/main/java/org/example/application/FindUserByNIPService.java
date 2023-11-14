@@ -9,6 +9,7 @@ import org.example.port.out.CustomerRepository;
 import java.util.Optional;
 
 @AllArgsConstructor
+
 public class FindUserByNIPService implements FindCustomerUseCase {
 
     private CustomerRepository customerRepository;
