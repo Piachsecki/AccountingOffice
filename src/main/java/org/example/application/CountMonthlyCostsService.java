@@ -2,6 +2,7 @@ package org.example.application;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.application.exceptions.CountMonthlyCostsException;
 import org.example.domain.customer.Customer;
 import org.example.domain.money.Currency;
 import org.example.domain.money.Money;
@@ -22,7 +23,7 @@ public class CountMonthlyCostsService implements CountMonthlyCostsUseCase {
             log.error("We cannot calculate the revenue for the specified month [{}]," +
                     " because now we have [{}] and it is impossible to calculate" +
                     "revenue for the upcoming months!", yearMonth, YearMonth.now());
-            throw new RuntimeException("We cannot calculate the revenue for the upcoming months!");
+            throw new CountMonthlyCostsException("We cannot calculate the revenue for the upcoming months!");
         }
         amount = amount.add(invoiceRepository.countMonthlyCosts(customer.getCustomerId(), yearMonth).amount());
         return new Money(amount, Currency.PLN);

@@ -2,6 +2,7 @@ package org.example.application;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.application.exceptions.CountMonthlyIncomeException;
 import org.example.domain.customer.Customer;
 import org.example.domain.money.Currency;
 import org.example.domain.money.Money;
@@ -24,7 +25,7 @@ public class CountMonthlyIncomeService implements CountMonthlyIncomeUseCase {
             log.error("We cannot calculate the revenue for the specified month [{}]," +
                     " because now we have [{}] and it is impossible to calculate" +
                     "revenue for the upcoming months!", yearMonth, YearMonth.now());
-            throw new RuntimeException("We cannot calculate the revenue for the upcoming months!");
+            throw new CountMonthlyIncomeException("We cannot calculate the revenue for the upcoming months!");
         }
 
         Money monthlyRevenue = countMonthlyRevenueService.countMonthlyRevenue(customer.getCustomerId(), yearMonth);

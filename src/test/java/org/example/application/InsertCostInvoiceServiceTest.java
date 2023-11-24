@@ -28,9 +28,6 @@ class InsertCostInvoiceServiceTest {
     void checkIfCostInvoicesAreAddedToUserCorrectly() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
-        //dlaczego jezeli tutaj definiujemy
-        //CostInvoice costInvoice1 = DataCreator.createCostInvoice1(), to nie dodaje on
-        //poprawnie do memory ?
         CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
         CostInvoice costInvoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
@@ -48,9 +45,6 @@ class InsertCostInvoiceServiceTest {
 
 
         //then
-        System.out.println(invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()));
-
-
         Assertions.assertEquals(5,invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
         Assertions.assertEquals(5, customer1.getCostInvoices().size());
         for (Invoice invoice : invoices) {

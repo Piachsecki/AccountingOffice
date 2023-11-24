@@ -21,16 +21,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.YearMonth;
 
-import static org.example.application.CountHealthInsuranceContributionService.MINIMUM_WAGE;
+import static org.example.Data.MINIMUM_WAGE;
 
-//@SpringJUnitConfig(classes = {ApplicationConfiguration.class})
-//@AllArgsConstructor(onConstructor = @__(@Autowired))
 class CountHealthInsuranceContributionServiceTest {
-//    @InjectMocks
     private CountHealthInsuranceContributionService countHealthInsuranceContributionService;
-//    @Mock
     private CountMonthlyMonthlyRevenueService countMonthlyRevenueService;
-//    @Mock
     private CountMonthlyIncomeService countIncomeService;
     private CountMonthlyCostsService countMonthlyCostsService;
     private InsertIncomeInvoiceService insertIncomeInvoice;
@@ -39,10 +34,7 @@ class CountHealthInsuranceContributionServiceTest {
     private InsertCostInvoiceService insertCostInvoice;
     private InsertInvoiceService insertInvoiceService;
 
-    //problem z testami - Klasa CountIncomeService i countHealthInsuranceContributionService sa obie zalezne od siebie
 
-
-    // klasa countMonthlyCosts- countHealthInsuranceContribution jest nullem !!!!
 
     @BeforeEach
     void setUp(){

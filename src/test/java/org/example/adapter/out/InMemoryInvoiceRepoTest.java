@@ -61,7 +61,6 @@ class InMemoryInvoiceRepoTest {
         inMemoryInvoiceRepo.insertInvoice(invoice5);
 
         //then
-        System.out.println(inMemoryInvoiceRepo.getInvoices().get(customer1.getCustomerId()));
         Assertions.assertEquals(5,
                 inMemoryInvoiceRepo.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
     }
@@ -130,9 +129,6 @@ class InMemoryInvoiceRepoTest {
                 .add(incomeInvoice4.getAmount().countToPLN())
                 .add(incomeInvoice5.getAmount().countToPLN());
 
-        System.out.println("expected: " + expected);
-        System.out.println("result: " + result);
-
 
         //then
 
@@ -160,9 +156,6 @@ class InMemoryInvoiceRepoTest {
         Money result = inMemoryInvoiceRepo.countMonthlyCosts(customer1.getCustomerId(), YearMonth.of(2022, 10));
 
         BigDecimal expected = costInvoice1.getAmount().countToPLN();
-
-        System.out.println("expected: " + expected);
-        System.out.println("result: " + result);
 
 
         //then

@@ -1,6 +1,7 @@
 package org.example.domain;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.domain.exceptions.NIPException;
 
 import java.util.Objects;
 import java.util.Random;
@@ -13,7 +14,7 @@ public record NIP(String value) {
         Objects.requireNonNull(value, "You passed the wrong value format for NIP");
         if (value.length() != 10) {
             log.error("The given value {} for NIP id cannot be empty!", value);
-            throw new RuntimeException("The given value for NIP id cannot be empty!");
+            throw new NIPException("The given value for NIP id cannot be empty!");
         }
     }
 

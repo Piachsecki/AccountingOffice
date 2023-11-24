@@ -40,32 +40,6 @@ class InMemoryCustomerRepoTest {
     }
 
     @Test
-    void shouldThrowWhenAddingCustomerWithInvalidId() {
-
-
-        //given, when, then
-//        Throwable exception1 = Assertions.assertThrows(
-//                CustomerIdException.class, () -> DataCreator.createCustomer1().withCustomerId(new CustomerId(""))
-//                );
-//
-//        Throwable exception2 = Assertions.assertThrows(
-//                CustomerIdException.class, () -> DataCreator.createCustomer1().withCustomerId(null)
-//                );
-//
-//        Throwable exception3 = Assertions.assertThrows(
-//                CustomerIdException.class,
-//                () -> DataCreator.createCustomer1().withCustomerId(new CustomerId("0123456789"))
-//        );
-
-
-
-        //idk why this doesn't work honestly
-//        Assertions.assertEquals(String.format("Given value:[%s] cannot be used as CustomerId" +
-//                "!", new CustomerId("")), exception.getMessage());
-    }
-
-
-    @Test
     void shouldDeleteCustomer(){
         //given
         Customer customer1 = DataCreator.createCustomer1();
