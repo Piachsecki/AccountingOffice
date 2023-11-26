@@ -37,6 +37,8 @@ dependencies {
 //    testAnnotationProcessor "org.projectlombok:$lombokVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.10.0"
+
     testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
 }
 
