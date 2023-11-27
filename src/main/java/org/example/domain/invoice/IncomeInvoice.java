@@ -16,7 +16,6 @@ public class IncomeInvoice extends Invoice{
         this.amount = amount;
     }
 
-    @Override
     public IncomeInvoice withCustomer(Customer customer) {
         this.customer = customer;
         return this;
@@ -26,7 +25,6 @@ public class IncomeInvoice extends Invoice{
         return this;
     }
 
-    @Override
     public IncomeInvoice withInvoiceId(InvoiceId invoiceId) {
         this.invoiceId = invoiceId;
         return this;

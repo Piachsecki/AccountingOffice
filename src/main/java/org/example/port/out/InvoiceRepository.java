@@ -20,7 +20,4 @@ public interface InvoiceRepository {
 
     void deleteAllWithCustomer(CustomerId customerId);
 
-    Money countMonthlyRevenueUseCase(CustomerId customerId, YearMonth monthToBeCounted);
-
-    Money countMonthlyCosts(CustomerId customerId, YearMonth yearMonth);
 }

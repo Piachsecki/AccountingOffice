@@ -25,7 +25,6 @@ public class CostInvoice extends Invoice{
 
 
 
-    @Override
     public CostInvoice withCustomer(Customer customer) {
         this.customer = customer;
         return this;
@@ -36,7 +35,7 @@ public class CostInvoice extends Invoice{
         return "" + super.invoiceId;
     }
 
-    @Override
+
     public CostInvoice withInvoiceId(InvoiceId invoiceId) {
         this.invoiceId = invoiceId;
         return this;
