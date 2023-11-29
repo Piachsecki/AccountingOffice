@@ -9,7 +9,7 @@ import org.example.port.out.InvoiceRepository;
 import java.time.YearMonth;
 import java.util.HashSet;
 
-public class InvoiceStorage implements InvoiceRepository {
+public class InvoiceRepositoryImpl implements InvoiceRepository {
     @Override
     public void insertInvoice(Invoice invoice) {
 
@@ -35,13 +35,4 @@ public class InvoiceStorage implements InvoiceRepository {
 
     }
 
-    @Override
-    public Money countMonthlyRevenueUseCase(CustomerId customerId, YearMonth monthToBeCounted) {
-        return null;
-    }
-
-    @Override
-    public Money countMonthlyCosts(CustomerId customerId, YearMonth yearMonth) {
-        return null;
-    }
 }

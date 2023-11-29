@@ -1,4 +1,4 @@
-package org.example.adapter.out;
+package org.example.adapter.out.maps;
 
 import lombok.Getter;
 import org.example.domain.NIP;
@@ -15,8 +15,9 @@ public class InMemoryCustomerRepo implements CustomerRepository {
     private final Map<CustomerId, Customer> customers = new HashMap<>();
 
     @Override
-    public void addCustomer(Customer customer) {
+    public Customer addCustomer(Customer customer) {
         customers.put(customer.getCustomerId(), customer);
+        return customer;
     }
 
     @Override

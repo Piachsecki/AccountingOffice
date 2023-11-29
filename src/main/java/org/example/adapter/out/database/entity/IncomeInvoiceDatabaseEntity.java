@@ -1,23 +1,35 @@
 package org.example.adapter.out.database.entity;
 
 import jakarta.persistence.*;
-import org.example.adapter.out.database.model.InvoiceDatabase;
-import org.example.adapter.out.database.model.MoneyDatabase;
-import org.example.domain.invoice.Invoice;
-import org.example.domain.invoice.InvoiceType;
-import org.example.domain.money.Money;
+import lombok.*;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.UUID;
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(of = "invoiceId")
 @Entity
 @Table(name = "income_invoice")
-public class IncomeInvoiceDatabaseEntity extends InvoiceDatabase {
-    @Enumerated(EnumType.STRING)
-    @Column(name = "invoice_type")
-    private final InvoiceType invoiceType = InvoiceType.INCOME_INVOICE;
+public class IncomeInvoiceDatabaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "invoice_id")
+    private UUID invoiceId;
 
-    @Embedded
-    private MoneyDatabase amount;
+    @Column(name = "date")
+    private OffsetDateTime date;
 
-    @ManyToOne
-    private CustomerDatabaseEntity customerDatabaseEntity;
+    @Column(name = "amount")
+    private BigDecimal amount;
+    @Column(name = "currency")
+    private String currency;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private CustomerDatabaseEntity customer;
 
 }

@@ -1,6 +1,7 @@
 package org.example.adapter.out;
 
 import org.example.DataCreator;
+import org.example.adapter.out.maps.InMemoryInvoiceRepo;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
@@ -103,65 +104,6 @@ class InMemoryInvoiceRepoTest {
         Assertions.assertEquals(new HashSet<>(), inMemoryInvoiceRepo.listAllInvoicesForCustomerId(customer1.getCustomerId()));
     }
 
-    @Test
-    void shouldCountRevenueCorrectly(){
-        //given
-        Customer customer1 = DataCreator.createCustomer1();
-        IncomeInvoice incomeInvoice1 = DataCreator.createIncomeInvoice1().withCustomer(customer1);
-        IncomeInvoice incomeInvoice2 = DataCreator.createIncomeInvoice2().withCustomer(customer1);
-        IncomeInvoice incomeInvoice3 = DataCreator.createIncomeInvoice3().withCustomer(customer1);
-        IncomeInvoice incomeInvoice4 = DataCreator.createIncomeInvoice4().withCustomer(customer1);
-        IncomeInvoice incomeInvoice5 = DataCreator.createIncomeInvoice5().withCustomer(customer1);
-        CostInvoice costInvoice1 = DataCreator.createCostInvoice1();
-
-        //when
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice1);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice2);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice3);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice4);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice5);
-        inMemoryInvoiceRepo.insertInvoice(costInvoice1);
-        Money result = inMemoryInvoiceRepo.countMonthlyRevenueUseCase(customer1.getCustomerId(), YearMonth.of(2020, 10));
-
-        BigDecimal expected = incomeInvoice1.getAmount().countToPLN()
-                .add(incomeInvoice2.getAmount().countToPLN())
-                .add(incomeInvoice3.getAmount().countToPLN())
-                .add(incomeInvoice4.getAmount().countToPLN())
-                .add(incomeInvoice5.getAmount().countToPLN());
-
-
-        //then
-
-        Assertions.assertEquals(expected, result.amount());
-    }
-
-    @Test
-    void shouldCountCostsCorrectly(){
-        //given
-        Customer customer1 = DataCreator.createCustomer1();
-        IncomeInvoice incomeInvoice1 = DataCreator.createIncomeInvoice1().withCustomer(customer1);
-        IncomeInvoice incomeInvoice2 = DataCreator.createIncomeInvoice2().withCustomer(customer1);
-        IncomeInvoice incomeInvoice3 = DataCreator.createIncomeInvoice3().withCustomer(customer1);
-        IncomeInvoice incomeInvoice4 = DataCreator.createIncomeInvoice4().withCustomer(customer1);
-        IncomeInvoice incomeInvoice5 = DataCreator.createIncomeInvoice5().withCustomer(customer1);
-        CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
-
-        //when
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice1);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice2);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice3);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice4);
-        inMemoryInvoiceRepo.insertInvoice(incomeInvoice5);
-        inMemoryInvoiceRepo.insertInvoice(costInvoice1);
-        Money result = inMemoryInvoiceRepo.countMonthlyCosts(customer1.getCustomerId(), YearMonth.of(2022, 10));
-
-        BigDecimal expected = costInvoice1.getAmount().countToPLN();
-
-
-        //then
-
-        Assertions.assertEquals(expected, result.amount());
-    }
 
 
 }

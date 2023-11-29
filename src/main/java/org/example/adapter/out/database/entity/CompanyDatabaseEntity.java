@@ -1,9 +1,15 @@
 package org.example.adapter.out.database.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.example.domain.Address;
 import org.example.domain.NIP;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(of = "companyId")
 @Table(name = "company")
 @Entity
 public class CompanyDatabaseEntity {
@@ -14,11 +20,12 @@ public class CompanyDatabaseEntity {
 
     @Column(name = "company_name")
     private String companyName;
-    @Embedded
-    private NIP nip;
+    @Column(name = "nip")
+    private String nip;
 
-    @OneToOne
-    private AddressDatabaseEntity addressDatabaseEntity;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private AddressDatabaseEntity address;
 
 
 }

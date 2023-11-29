@@ -20,4 +20,9 @@ public class LumpSumTax extends TaxPaymentForm{
         log.debug("TaxRate: {} set successfully for a given profession: {}", taxRate, industryType);
     }
 
+    @Override
+    public String toString() {
+        return "LumpSumTax";
+    }
+
 }

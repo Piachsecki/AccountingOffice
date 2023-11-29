@@ -9,4 +9,8 @@ public class GeneralTax extends TaxPaymentForm{
     public GeneralTax() {
         super(TaxRate.GENERAL_TAX);
     }
+    @Override
+    public String toString() {
+        return "GeneralTax";
+    }
 }

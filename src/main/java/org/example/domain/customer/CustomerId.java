@@ -22,4 +22,13 @@ public record CustomerId(String value) {
         UUID uuid = UUID.randomUUID();
         return new CustomerId(uuid.toString());
     }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public UUID getCustomerIdAsUUID(){
+        return UUID.fromString(this.value);
+    }
 }

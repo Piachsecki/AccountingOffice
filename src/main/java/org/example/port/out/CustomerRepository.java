@@ -7,7 +7,7 @@ import org.example.domain.customer.CustomerId;
 import java.util.Optional;
 
 public interface CustomerRepository {
-    void addCustomer(Customer customer);
+    Customer addCustomer(Customer customer);
 
     void deleteCustomer(CustomerId customerId);
 

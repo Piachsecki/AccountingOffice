@@ -2,8 +2,14 @@ package org.example.adapter.out.database.entity;
 
 
 import jakarta.persistence.*;
-import lombok.ToString;
+import lombok.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(of = "addressId")
 @Entity
 @Table(name  = "address")
 public class AddressDatabaseEntity {
@@ -22,8 +28,10 @@ public class AddressDatabaseEntity {
     private String postalCode;
 
 
-    @OneToOne
-    private CompanyDatabaseEntity companyDatabaseEntity;
-    @OneToOne
-    private CustomerDatabaseEntity customerDatabaseEntity;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "address", cascade = CascadeType.ALL)
+    private CompanyDatabaseEntity company;
+
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "address", cascade = CascadeType.ALL)
+    private CustomerDatabaseEntity customer;
 }

@@ -2,8 +2,7 @@ package org.example.adapter.out.database.entity;
 
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.example.domain.NIP;
 import org.example.domain.customer.EntrepreneurshipForm;
 
@@ -11,8 +10,12 @@ import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 
-
-@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
+@EqualsAndHashCode(of = "customerId")
 @Entity
 @ToString(of = {"customerId", "name", "surname"})
 @Table(name  = "customer")
@@ -23,28 +26,35 @@ public class CustomerDatabaseEntity {
     @Column(name = "customer_id")
     private UUID customerId;
 
-    @Embedded
-    private EntrepreneurshipForm entrepreneurshipForm;
-
-    @Embedded
-    private NIP nip;
-
     @Column(name = "name")
     private String name;
+
     @Column(name = "surname")
     private String surname;
 
     @Column(name = "join_date")
     private OffsetDateTime joinDate;
 
+    @Column(name = "entrepreneurship_form")
+    private String entrepreneurshipForm;
 
-    @OneToMany
+    @Column(name = "nip")
+    private String nip;
+
+    @Column(name = "tax_payment_form")
+    private String taxPaymentForm;
+    
+    @Column(name = "tax_rate")
+    private String taxRate;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<CostInvoiceDatabaseEntity> costInvoices;
 
-    @OneToMany
-    private Set<IncomeInvoiceDatabaseEntity> costInvoices;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    private Set<IncomeInvoiceDatabaseEntity> incomeInvoices;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", unique = true)
     private AddressDatabaseEntity address;
 
 

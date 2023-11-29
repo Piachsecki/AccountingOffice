@@ -1,9 +1,6 @@
 package org.example.domain.customer;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.example.application.exceptions.CountHealthInsuranceContributionException;
 import org.example.application.exceptions.CountIncomeTaxException;
@@ -21,29 +18,40 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.UUID;
 
 import static org.example.Data.*;
 import static org.example.domain.customer.TaxPayments.FlatTax.FLAT_TAX_RATE;
 import static org.example.domain.customer.TaxPayments.HEALTH_INSURANCE_RANGE_FOR_LUMP_SUM.*;
 
+@NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Slf4j
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 public class Customer {
     @EqualsAndHashCode.Include
-
     private CustomerId customerId;
     private String name;
     private String surname;
     private NIP nip;
     private Address address;
-    private final OffsetDateTime joinDate;
+    private OffsetDateTime joinDate;
     private Entrepreneurship entrepreneurshipForm;
     private List<IncomeInvoice> incomeInvoices;
     private List<CostInvoice> costInvoices;
 
-
+    public Customer(String name, String surname, NIP nip, Address address, OffsetDateTime joinDate, Entrepreneurship entrepreneurshipForm, List<IncomeInvoice> incomeInvoices, List<CostInvoice> costInvoices) {
+        this.name = name;
+        this.surname = surname;
+        this.nip = nip;
+        this.address = address;
+        this.joinDate = joinDate;
+        this.entrepreneurshipForm = entrepreneurshipForm;
+        this.incomeInvoices = incomeInvoices;
+        this.costInvoices = costInvoices;
+    }
 
     public void insertIncomeInvoiceToCustomer(IncomeInvoice invoice) {
         incomeInvoices.add(invoice);

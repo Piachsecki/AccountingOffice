@@ -8,10 +8,11 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
+import org.hibernate.service.ServiceRegistry;
 
 import java.util.Map;
 
-public class HibernateUtil {
+public class DatabaseHibernateConfig {
 
     private static final Map<String, Object> HIBERNATE_SETTINGS = Map.ofEntries(
             Map.entry(Environment.JAKARTA_JDBC_DRIVER, "org.postgresql.Driver"),
@@ -25,20 +26,17 @@ public class HibernateUtil {
             Map.entry(Environment.FORMAT_SQL, "true"),
             Map.entry(Environment.CHECK_NULLABILITY, "true")
     );
-
     private static final Map<String, Object> HIKARI_CP_SETTINGS = Map.ofEntries(
             Map.entry("hibernate.hikari.connectionTimeout","20000"),
             Map.entry("hibernate.hikari.minimumIdle","10"),
             Map.entry("hibernate.hikari.maximumPoolSize", "20"),
             Map.entry("hibernate.hikari.idleTimeout", "300000")
     );
-
-
     private static SessionFactory sessionFactory = loadSessionFactory();
 
     private static SessionFactory loadSessionFactory() {
         try{
-            StandardServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(HIBERNATE_SETTINGS)
                     .applySettings(HIKARI_CP_SETTINGS)
                     .build();
@@ -65,19 +63,18 @@ public class HibernateUtil {
         try{
             sessionFactory.close();
         }catch(Exception e){
-            System.err.println("Exception while closing: " + e);
+            throw new RuntimeException("Problem with closing session");
         }
 
 
     }
 
-    public static Session getSession(){
+    public static Session getSession() {
         try{
             return sessionFactory.openSession();
         }catch (Exception e){
-            System.err.println("Exception while opening session: " + e);
+            throw new RuntimeException("Problem with closing session");
         }
-        return null;
     }
 
 }

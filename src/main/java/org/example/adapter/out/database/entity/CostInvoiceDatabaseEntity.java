@@ -1,30 +1,50 @@
 package org.example.adapter.out.database.entity;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.example.adapter.out.database.model.InvoiceDatabase;
-import org.example.domain.company.Company;
-import org.example.domain.invoice.InvoiceType;
-import org.example.domain.money.Price;
-import org.example.domain.product.Product;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
 
+import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.util.UUID;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Getter
+@Setter
 @Entity
-@ToString(of = {"invoiceType", "product", "amount"})
+@ToString(of = {"invoiceId", "date", "amount"})
+@EqualsAndHashCode(of = "invoiceId")
+
 @Table(name  = "cost_invoice")
-public class CostInvoiceDatabaseEntity extends InvoiceDatabase {
-    @Enumerated(EnumType.STRING)
-    @Column(name = "invoice_type")
-    private InvoiceType invoiceType = InvoiceType.COST_INVOICE;
+public class CostInvoiceDatabaseEntity  {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "invoice_id")
+    private UUID invoiceId;
 
-    @Embedded
-    private Price amount;
+    @Column(name = "date")
+    private OffsetDateTime date;
 
-    @OneToOne
-    private CompanyDatabaseEntity companyDatabaseEntity;
-    @OneToOne
-    private Product product;
+    @Column(name = "currency")
+    private String currency;
+
+    @Column(name = "amount")
+    private BigDecimal amount;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private CompanyDatabaseEntity company;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductDatabaseEntity product;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private CustomerDatabaseEntity customer;
 
 
 }
