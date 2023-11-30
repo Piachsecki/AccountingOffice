@@ -18,6 +18,11 @@ public record NIP(String value) {
         }
     }
 
+    @Override
+    public String toString() {
+        return value;
+    }
+
     public static String createNIP() {
         Random random = new Random();
         var table = new String[LENGTH];

@@ -24,6 +24,7 @@ import static org.example.Data.*;
 import static org.example.domain.customer.TaxPayments.FlatTax.FLAT_TAX_RATE;
 import static org.example.domain.customer.TaxPayments.HEALTH_INSURANCE_RANGE_FOR_LUMP_SUM.*;
 
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
