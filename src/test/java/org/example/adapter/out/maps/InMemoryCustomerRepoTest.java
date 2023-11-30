@@ -1,4 +1,4 @@
-package org.example.adapter.out;
+package org.example.adapter.out.maps;
 
 import org.example.DataCreator;
 import org.example.adapter.out.maps.InMemoryCustomerRepo;

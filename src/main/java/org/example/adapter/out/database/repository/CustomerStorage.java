@@ -44,6 +44,7 @@ public class CustomerStorage implements CustomerRepository {
                     .build();
             session.persist(customerDatabaseEntity);
             session.getTransaction().commit();
+            customer.setCustomerId(new CustomerId(customerDatabaseEntity.getCustomerId().toString()));
             return customer;
         }
     }
@@ -54,7 +55,6 @@ public class CustomerStorage implements CustomerRepository {
             if(Objects.isNull(session)){
                 throw new RuntimeException();
             }
-
             UUID customerIdAsUUID = customerId.getCustomerIdAsUUID();
 //            System.out.println("customerIdAsUUID: " + customerIdAsUUID);
             session.beginTransaction();

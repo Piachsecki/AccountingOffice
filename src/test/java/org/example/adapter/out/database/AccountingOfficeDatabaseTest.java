@@ -6,6 +6,9 @@ import org.example.DataCreator;
 import org.example.adapter.out.database.configuration.DatabaseHibernateConfig;
 import org.example.adapter.out.database.repository.CustomerStorage;
 import org.example.adapter.out.database.repository.InvoiceRepositoryImpl;
+import org.example.application.InsertCostInvoiceService;
+import org.example.application.InsertIncomeInvoiceService;
+import org.example.application.InsertInvoiceService;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.port.out.CustomerRepository;
@@ -14,16 +17,22 @@ import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
-public class AccountingOfficeTest {
+public class AccountingOfficeDatabaseTest {
     private CustomerRepository customerRepository;
     private InvoiceRepository invoiceRepository;
+    private InsertInvoiceService insertInvoiceService;
+    private
 
     @BeforeEach
     void initClasses(){
         customerRepository = new CustomerStorage();
         invoiceRepository = new InvoiceRepositoryImpl();
-    }
+        insertInvoiceService = new InsertInvoiceService(
+                new InsertCostInvoiceService(invoiceRepository),
+                new InsertIncomeInvoiceService(invoiceRepository)
+        );
 
+    }
 
     @AfterAll
     static void afterAll(){
@@ -36,7 +45,7 @@ public class AccountingOfficeTest {
     void clean(){
         log.info("### RUNNING ORDER 1");
         customerRepository.deleteAllCustomers();
-
+//        invoiceRepository.deleteAllInvoicesForCustomerId();
     }
 
     @Order(2)
@@ -44,16 +53,9 @@ public class AccountingOfficeTest {
     @Test()
     void init(){
         log.info("### RUNNING ORDER 2");
-        //given
-        Customer customer1 = DataCreator.createCustomer1();
-        IncomeInvoice incomeInvoice = DataCreator.createIncomeInvoice1()
-                .withCustomer(customer1);
+//        Customer customer1 = DataCreator.createCustomer1();
+//        customerRepository.addCustomer(customer1);
 
-        //when
-        customerRepository.addCustomer(customer1);
-
-        //then
-//        Assertions.assertEquals();
     }
 
     @Order(3)
@@ -66,9 +68,11 @@ public class AccountingOfficeTest {
 
     @Test
     void deleteSingleUserFromDatabase(){
-//        Customer customer = customerRepository.addCustomer(DataCreator.createCustomer1());
-//        System.out.println("after " + customer.getCustomerId());
-//        customerRepository.deleteCustomer(customer.getCustomerId());
+        Customer customer1 = DataCreator.createCustomer1();
+        System.out.println("before" + customer1.getCustomerId());
+        Customer customer = customerRepository.addCustomer(customer1);
+        System.out.println("after " + customer.getCustomerId());
+        customerRepository.deleteCustomer(customer.getCustomerId());
 
 
     }

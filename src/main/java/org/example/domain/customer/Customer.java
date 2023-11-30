@@ -28,6 +28,7 @@ import static org.example.domain.customer.TaxPayments.HEALTH_INSURANCE_RANGE_FOR
 @AllArgsConstructor
 @Builder
 @Slf4j
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Getter
 public class Customer {
