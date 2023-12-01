@@ -7,9 +7,11 @@ import org.example.domain.money.Money;
 
 import java.time.YearMonth;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public interface InvoiceRepository {
-    void insertInvoice(Invoice invoice);
+    void insertInvoice(CustomerId customerId, Invoice invoice);
 
     HashSet<Invoice> listAllInvoicesForCustomerId(CustomerId customerId);
 
@@ -19,5 +21,7 @@ public interface InvoiceRepository {
 
 
     void deleteAllWithCustomer(CustomerId customerId);
+    List<Invoice> listCostInvoices(CustomerId customerId);
+    List<Invoice> listIncomeInvoices(CustomerId customerId);
 
 }

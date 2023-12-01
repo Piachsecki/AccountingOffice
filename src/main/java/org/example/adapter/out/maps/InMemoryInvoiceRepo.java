@@ -13,10 +13,7 @@ import org.example.port.out.InvoiceRepository;
 import java.math.BigDecimal;
 import java.time.Month;
 import java.time.YearMonth;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 public class InMemoryInvoiceRepo implements InvoiceRepository {
@@ -24,18 +21,18 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     private final Map<CustomerId, HashSet<Invoice>> invoices = new HashMap<>();
 
     @Override
-    public void insertInvoice(Invoice invoice) {
-        if (!invoices.containsKey(invoice.getCustomer().getCustomerId())){
-            invoices.put(invoice.getCustomer().getCustomerId(), new HashSet<>(Set.of(invoice)));
+    public void insertInvoice(CustomerId customerId, Invoice invoice) {
+        if (!invoices.containsKey(customerId)){
+            invoices.put(customerId, new HashSet<>(Set.of(invoice)));
         } else {
-            HashSet<Invoice> newHashSet = new HashSet<>(invoices.get(invoice.getCustomer().getCustomerId()).size() + 1);
+            HashSet<Invoice> newHashSet = new HashSet<>(invoices.get(customerId).size() + 1);
 
             for (Map.Entry<CustomerId, HashSet<Invoice>> customerIdHashSetEntry : invoices.entrySet()) {
                 newHashSet.addAll(customerIdHashSetEntry.getValue());
             }
             newHashSet.add(invoice);
             invoices.put(
-                    invoice.getCustomer().getCustomerId(), newHashSet);
+                    customerId, newHashSet);
         }
     }
 
@@ -60,6 +57,16 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     public void deleteAllWithCustomer(CustomerId customerId) {
         invoices.get(customerId).clear();
         invoices.clear();
+    }
+
+    @Override
+    public List<Invoice> listCostInvoices(CustomerId customerId) {
+        return null;
+    }
+
+    @Override
+    public List<Invoice> listIncomeInvoices(CustomerId customerId) {
+        return null;
     }
 
 }

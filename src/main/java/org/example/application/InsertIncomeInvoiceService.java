@@ -28,7 +28,7 @@ public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
                     money
             );
             customer.insertIncomeInvoiceToCustomer(invoice);
-            invoiceRepository.insertInvoice(invoice);
+            invoiceRepository.insertInvoice(customer.getCustomerId(), invoice);
 
             return invoice;
         }
@@ -36,7 +36,7 @@ public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
     @Override
     public Invoice insertIncomeInvoice(IncomeInvoice invoice) {
         invoice.getCustomer().insertIncomeInvoiceToCustomer(invoice);
-        invoiceRepository.insertInvoice(invoice);
+        invoiceRepository.insertInvoice(invoice.getCustomer().getCustomerId(), invoice);
 
         return invoice;
     }

@@ -33,11 +33,11 @@ public class CostInvoiceDatabaseEntity  {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
     private CompanyDatabaseEntity company;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private ProductDatabaseEntity product;
 

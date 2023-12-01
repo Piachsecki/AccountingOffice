@@ -29,10 +29,10 @@ public class DeleteInvoiceServiceTest {
         CostInvoice costInvoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
 
-        //when
-        invoiceRepository.insertInvoice(costInvoice1);
-        invoiceRepository.insertInvoice(costInvoice2);
-        invoiceRepository.insertInvoice(costInvoice3);
+//        //when
+//        invoiceRepository.insertInvoice(costInvoice1);
+//        invoiceRepository.insertInvoice(costInvoice2);
+//        invoiceRepository.insertInvoice(costInvoice3);
         deleteInvoiceService.deleteInvoice(customer1.getCustomerId(), costInvoice2.getInvoiceId());
 
         //then
@@ -48,11 +48,11 @@ public class DeleteInvoiceServiceTest {
         CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
         CostInvoice costInvoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
-
-        //when
-        invoiceRepository.insertInvoice(costInvoice1);
-        invoiceRepository.insertInvoice(costInvoice2);
-        invoiceRepository.insertInvoice(costInvoice3);
+//
+//        //when
+//        invoiceRepository.insertInvoice(costInvoice1);
+//        invoiceRepository.insertInvoice(costInvoice2);
+//        invoiceRepository.insertInvoice(costInvoice3);
         deleteInvoiceService.deleteAll(customer1.getCustomerId());
 
         //then

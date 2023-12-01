@@ -18,11 +18,14 @@ import org.example.domain.customer.EntrepreneurshipForm;
 import org.example.domain.customer.TaxPayments.IndustryType;
 import org.example.domain.customer.TaxPayments.LumpSumTax;
 import org.example.domain.customer.TaxPayments.TaxPaymentForm;
+import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
+import org.example.domain.invoice.Invoice;
 import org.example.port.out.CustomerRepository;
 import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -103,6 +106,48 @@ public class AccountingOfficeDatabaseTest {
     }
 
 
+    @Test
+    void addIncomeInvoiceToCustomer(){
+//        IncomeInvoice incomeInvoice = DataCreator.createIncomeInvoice1();
+        IncomeInvoice incomeInvoice1 = DataCreator.createIncomeInvoice1();
+        IncomeInvoice incomeInvoice2 = DataCreator.createIncomeInvoice2();
+        IncomeInvoice incomeInvoice3 = DataCreator.createIncomeInvoice3();
+        IncomeInvoice incomeInvoice4 = DataCreator.createIncomeInvoice4();
+        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice1 );
+        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice2 );
+        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice3 );
+        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice4 );
+
+
+    }
+
+    @Test
+    void addCostInvoiceToCustomer(){
+//        CostInvoice costInvoice = DataCreator.createCostInvoice1();
+        CostInvoice costInvoice1 = DataCreator.createCostInvoice2();
+        CostInvoice costInvoice2 = DataCreator.createCostInvoice3();
+        CostInvoice costInvoice3 = DataCreator.createCostInvoice4();
+        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), costInvoice1 );
+        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), costInvoice2 );
+        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), costInvoice3 );
+
+    }
+
+
+
+    @Test
+    void listCostInvoices(){
+        List<Invoice> invoices = invoiceRepository.listCostInvoices(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"));
+        invoices.forEach(System.out::println);
+
+    }
+
+    @Test
+    void listIncomeInvoices(){
+        List<Invoice> invoices = invoiceRepository.listIncomeInvoices(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"));
+        invoices.forEach(System.out::println);
+
+    }
 
 
 }

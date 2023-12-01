@@ -34,7 +34,7 @@ public class InsertCostInvoiceService implements InsertCostInvoiceUseCase {
                 product
         );
         customer.insertCostInvoiceToCustomer(invoice);
-        invoiceRepository.insertInvoice(invoice);
+        invoiceRepository.insertInvoice(customer.getCustomerId(), invoice);
 
         return invoice;
     }
@@ -42,7 +42,7 @@ public class InsertCostInvoiceService implements InsertCostInvoiceUseCase {
     @Override
     public Invoice insertCostInvoice(CostInvoice invoice) {
         invoice.getCustomer().insertCostInvoiceToCustomer(invoice);
-        invoiceRepository.insertInvoice(invoice);
+        invoiceRepository.insertInvoice(invoice.getCustomer().getCustomerId(), invoice);
 
         return invoice;
     }
