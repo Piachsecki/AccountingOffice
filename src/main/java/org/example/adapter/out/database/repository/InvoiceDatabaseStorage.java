@@ -1,35 +1,31 @@
 package org.example.adapter.out.database.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.adapter.out.database.configuration.DatabaseHibernateConfig;
 import org.example.adapter.out.database.entity.*;
 import org.example.domain.Address;
-import org.example.domain.NIP;
 import org.example.domain.company.Company;
-import org.example.domain.customer.Customer;
 import org.example.domain.customer.CustomerId;
-import org.example.domain.customer.Entrepreneurship;
-import org.example.domain.customer.EntrepreneurshipForm;
-import org.example.domain.customer.TaxPayments.*;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
-import org.example.domain.money.Money;
-import org.example.domain.money.Price;
 import org.example.domain.product.Product;
-import org.example.domain.product.ProductId;
 import org.example.port.out.InvoiceRepository;
 import org.hibernate.Session;
 
-import java.math.BigDecimal;
 import java.util.*;
 
-public class InvoiceRepositoryImpl implements InvoiceRepository {
+import static org.example.adapter.out.database.repository.EntityToDomainClassMapper.*;
+
+@Slf4j
+public class InvoiceDatabaseStorage implements InvoiceRepository {
     @Override
-    public void insertInvoice(CustomerId customerId, Invoice invoice) {
+    public Invoice insertInvoice(CustomerId customerId, Invoice invoice) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
-                throw new RuntimeException();
+                log.error("Session is null");
+                throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
             String query = "SELECT cust FROM CustomerDatabaseEntity cust WHERE cust.customerId = :customerId";
@@ -38,6 +34,7 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
                     .uniqueResultOptional();
 
             if (!customerToAddInvoices.isPresent()) {
+                log.error("Couldn't find customer from database");
                 throw new RuntimeException("There is not such a customer");
             }
 
@@ -77,6 +74,9 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
                         .customer(customerToAddInvoices.get())
                         .build();
                 session.persist(costInvoiceDatabaseEntity);
+                session.getTransaction().commit();
+                return ((CostInvoice) invoice).withInvoiceId(new InvoiceId(costInvoiceDatabaseEntity.getInvoiceId().toString()));
+
 
             } else if (invoice instanceof IncomeInvoice) {
                 IncomeInvoiceDatabaseEntity incomeInvoiceDatabaseEntity = IncomeInvoiceDatabaseEntity.builder()
@@ -84,48 +84,69 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
                         .amount(((IncomeInvoice) invoice).getAmount().amount())
                         .currency(((IncomeInvoice) invoice).getAmount().currency().toString())
                         .customer(customerToAddInvoices.get())
-
                         .build();
                 session.persist(incomeInvoiceDatabaseEntity);
+                session.getTransaction().commit();
+                return ((IncomeInvoice) invoice).withInvoiceId(new InvoiceId(incomeInvoiceDatabaseEntity.getInvoiceId().toString()));
             }
 
-            session.getTransaction().commit();
-
         }
+        log.error("Cannot return mapped IncomeInvoice/CostInvoice from database correctly");
+        throw new RuntimeException("Cannot return mapped IncomeInvoice/CostInvoice from database correctly");
     }
 
     @Override
     public HashSet<Invoice> listAllInvoicesForCustomerId(CustomerId customerId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
-                throw new RuntimeException();
+                log.error("Session is null");
+                throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
+
             session.getTransaction().commit();
             return null;
         }
     }
 
     @Override
-    public void deleteInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
+    public void deleteCostInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
+        try (Session session = DatabaseHibernateConfig.getSession()) {
+            if (Objects.isNull(session)) {
+                log.error("Session is null");
 
+                throw new RuntimeException("Session is null");
+            }
+            session.beginTransaction();
+            session.remove(session.find(CostInvoiceDatabaseEntity.class, invoiceId.getCustomerIdAsUUID()));
+            session.getTransaction().commit();
+
+        }
     }
 
     @Override
-    public void deleteAllInvoicesForCustomerId(CustomerId customerId) {
+    public void deleteIncomeInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
+        try (Session session = DatabaseHibernateConfig.getSession()) {
+            if (Objects.isNull(session)) {
+                log.error("Session is null");
 
+                throw new RuntimeException("Session is null");
+            }
+            session.beginTransaction();
+            session.remove(session.find(IncomeInvoiceDatabaseEntity.class, invoiceId.getCustomerIdAsUUID()));
+            session.getTransaction().commit();
+
+        }
     }
 
-    @Override
-    public void deleteAllWithCustomer(CustomerId customerId) {
-
-    }
 
     @Override
     public List<Invoice> listCostInvoices(CustomerId customerId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
-                throw new RuntimeException();
+                log.error("Session is null");
+
+                throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
             String query = "SELECT costInv FROM CostInvoiceDatabaseEntity costInv where costInv.customer.customerId = :customerId";
@@ -156,7 +177,9 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
     public List<Invoice> listIncomeInvoices(CustomerId customerId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
-                throw new RuntimeException();
+                log.error("Session is null");
+
+                throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
             String query = "SELECT incomeInv FROM IncomeInvoiceDatabaseEntity incomeInv where incomeInv.customer.customerId = :customerId";
@@ -180,92 +203,6 @@ public class InvoiceRepositoryImpl implements InvoiceRepository {
             return result;
         }
 
-    }
-
-    private Money mapToMoneyFromDatabase(String currency, BigDecimal amount) {
-        return new Money(amount, org.example.domain.money.Currency.valueOf(currency));
-    }
-
-    private Company mapToCompanyFromCompanyDatabaseEntity(CompanyDatabaseEntity company) {
-        return new Company(
-                company.getCompanyName(),
-                new NIP(company.getNip().toString()),
-                mapAddressFromAddressDatabaseEntity(company.getAddress())
-        );
-    }
-
-    private Customer mapToCustomerFromCustomerDatabaseEntity(CustomerDatabaseEntity customer) {
-        return new Customer(
-                new CustomerId(customer.getCustomerId().toString()),
-                customer.getName(),
-                customer.getSurname(),
-                new NIP(customer.getNip()),
-                mapAddressFromAddressDatabaseEntity(customer.getAddress()),
-                customer.getJoinDate(),
-                mapEntrepreneurshipFromCustomerDatabaseEntity(customer),
-                new ArrayList<>(),
-                new ArrayList<>()
-        );
-    }
-
-    private Address mapAddressFromAddressDatabaseEntity(AddressDatabaseEntity address) {
-        return new Address(
-                address.getCity(),
-                address.getCountry(),
-                address.getAddress(),
-                address.getPostalCode()
-        );
-    }
-
-    private Price mapToPriceFromDatabase(String currency, BigDecimal amount) {
-        return new Price(
-                amount,
-                org.example.domain.money.Currency.valueOf(currency));
-    }
-
-    private Product mapToProductFromProductDatabaseEntity(ProductDatabaseEntity product) {
-        return new Product(
-                new ProductId(product.getProductId().toString()),
-                product.getProductName(),
-                new Price(product.getAmount(), org.example.domain.money.Currency.valueOf(product.getCurrency()))
-        );
-    }
-
-
-    private Entrepreneurship mapEntrepreneurshipFromCustomerDatabaseEntity(CustomerDatabaseEntity customerDatabaseEntity) {
-        EntrepreneurshipForm entrepreneurshipForm = EntrepreneurshipForm.valueOf(customerDatabaseEntity.getEntrepreneurshipForm());
-        String taxPaymentForm = customerDatabaseEntity.getTaxPaymentForm();
-        TaxRate taxRate = null;
-        for (TaxRate value : TaxRate.values()) {
-            if (customerDatabaseEntity.getTaxRate().equals(value.getValue())) {
-                taxRate = value;
-            }
-        }
-
-        TaxPaymentForm taxPaymentFormToReturn = null;
-        IndustryType industryType = null;
-        if ("LumpSumTax".equals(taxPaymentForm)) {
-            if ("0.17".equals(taxRate.getValue())) {
-                industryType = IndustryType.SOFTWARE_DEVELOPER;
-            }
-            if ("0.15".equals(taxRate.getValue())) {
-                industryType = IndustryType.DOCTOR;
-            }
-            if ("0.085".equals(taxRate.getValue())) {
-                industryType = IndustryType.TENANT;
-            }
-            if ("0.055".equals(taxRate.getValue())) {
-                industryType = IndustryType.FARMER;
-            }
-            taxPaymentFormToReturn = new LumpSumTax(industryType);
-        } else if ("FlatTax".equals(taxPaymentForm)) {
-            taxPaymentFormToReturn = new FlatTax();
-        } else {
-            taxPaymentFormToReturn = new GeneralTax();
-
-        }
-
-        return new Entrepreneurship(entrepreneurshipForm, taxPaymentFormToReturn);
     }
 
 

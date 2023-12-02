@@ -2,8 +2,6 @@ package org.example.adapter.out.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.domain.Address;
-import org.example.domain.NIP;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

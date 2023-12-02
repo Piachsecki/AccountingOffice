@@ -1,6 +1,5 @@
 package org.example.domain.invoice;
 
-import lombok.Builder;
 import lombok.Getter;
 import org.example.domain.customer.Customer;
 import org.example.domain.money.Money;

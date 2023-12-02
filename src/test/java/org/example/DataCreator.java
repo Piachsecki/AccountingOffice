@@ -4,7 +4,6 @@ import org.example.domain.Address;
 import org.example.domain.NIP;
 import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;
-import org.example.domain.customer.CustomerId;
 import org.example.domain.customer.Entrepreneurship;
 import org.example.domain.customer.EntrepreneurshipForm;
 import org.example.domain.customer.TaxPayments.FlatTax;

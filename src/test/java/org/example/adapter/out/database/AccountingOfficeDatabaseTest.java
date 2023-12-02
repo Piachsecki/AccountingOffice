@@ -2,11 +2,10 @@ package org.example.adapter.out.database;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.Data;
 import org.example.DataCreator;
 import org.example.adapter.out.database.configuration.DatabaseHibernateConfig;
-import org.example.adapter.out.database.repository.CustomerStorage;
-import org.example.adapter.out.database.repository.InvoiceRepositoryImpl;
+import org.example.adapter.out.database.repository.CustomerDatabaseStorage;
+import org.example.adapter.out.database.repository.InvoiceDatabaseStorage;
 import org.example.application.InsertCostInvoiceService;
 import org.example.application.InsertIncomeInvoiceService;
 import org.example.application.InsertInvoiceService;
@@ -17,7 +16,6 @@ import org.example.domain.customer.Entrepreneurship;
 import org.example.domain.customer.EntrepreneurshipForm;
 import org.example.domain.customer.TaxPayments.IndustryType;
 import org.example.domain.customer.TaxPayments.LumpSumTax;
-import org.example.domain.customer.TaxPayments.TaxPaymentForm;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
@@ -38,8 +36,8 @@ public class AccountingOfficeDatabaseTest {
 
     @BeforeEach
     void initClasses(){
-        customerRepository = new CustomerStorage();
-        invoiceRepository = new InvoiceRepositoryImpl();
+        customerRepository = new CustomerDatabaseStorage();
+        invoiceRepository = new InvoiceDatabaseStorage();
         insertInvoiceService = new InsertInvoiceService(
                 new InsertCostInvoiceService(invoiceRepository),
                 new InsertIncomeInvoiceService(invoiceRepository)
@@ -113,10 +111,10 @@ public class AccountingOfficeDatabaseTest {
         IncomeInvoice incomeInvoice2 = DataCreator.createIncomeInvoice2();
         IncomeInvoice incomeInvoice3 = DataCreator.createIncomeInvoice3();
         IncomeInvoice incomeInvoice4 = DataCreator.createIncomeInvoice4();
-        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice1 );
-        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice2 );
-        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice3 );
-        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), incomeInvoice4 );
+        invoiceRepository.insertInvoice(new CustomerId("818c6c07-013d-4c23-b37a-6d745c4baffe"), incomeInvoice1 );
+        invoiceRepository.insertInvoice(new CustomerId("818c6c07-013d-4c23-b37a-6d745c4baffe"), incomeInvoice2 );
+        invoiceRepository.insertInvoice(new CustomerId("818c6c07-013d-4c23-b37a-6d745c4baffe"), incomeInvoice3 );
+        invoiceRepository.insertInvoice(new CustomerId("818c6c07-013d-4c23-b37a-6d745c4baffe"), incomeInvoice4 );
 
 
     }
@@ -127,9 +125,9 @@ public class AccountingOfficeDatabaseTest {
         CostInvoice costInvoice1 = DataCreator.createCostInvoice2();
         CostInvoice costInvoice2 = DataCreator.createCostInvoice3();
         CostInvoice costInvoice3 = DataCreator.createCostInvoice4();
-        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), costInvoice1 );
-        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), costInvoice2 );
-        invoiceRepository.insertInvoice(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"), costInvoice3 );
+        invoiceRepository.insertInvoice(new CustomerId("818c6c07-013d-4c23-b37a-6d745c4baffe"), costInvoice1 );
+        invoiceRepository.insertInvoice(new CustomerId("818c6c07-013d-4c23-b37a-6d745c4baffe"), costInvoice2 );
+        invoiceRepository.insertInvoice(new CustomerId("818c6c07-013d-4c23-b37a-6d745c4baffe"), costInvoice3 );
 
     }
 
@@ -147,6 +145,23 @@ public class AccountingOfficeDatabaseTest {
         List<Invoice> invoices = invoiceRepository.listIncomeInvoices(new CustomerId("f623a270-48fb-410d-8891-a659f02e7e4d"));
         invoices.forEach(System.out::println);
 
+    }
+
+    @Test
+    void deleteIncomeInvoice(){
+//        invoiceRepository.deleteIncomeInvoiceForCustomerId(new CustomerId(),new InvoiceId("a55f9f63-c9e9-4ab7-ba7e-f3ee4deb464b"));
+    }
+
+
+    @Test
+    void deleteCostInvoice(){
+        Customer customer1 = DataCreator.createCustomer1();
+        Customer customer = customerRepository.addCustomer(customer1);
+        CostInvoice costInvoice1 = DataCreator.createCostInvoice1();
+        CostInvoice costInvoice2 = DataCreator.createCostInvoice2();
+        Invoice invoice1 = invoiceRepository.insertInvoice(customer.getCustomerId(), costInvoice1);
+        Invoice invoice2 = invoiceRepository.insertInvoice(customer.getCustomerId(), costInvoice2);
+        invoiceRepository.deleteCostInvoiceForCustomerId(customer.getCustomerId(),invoice1.getInvoiceId());
     }
 
 

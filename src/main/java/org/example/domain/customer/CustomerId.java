@@ -2,10 +2,8 @@ package org.example.domain.customer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.domain.exceptions.CustomerIdException;
-import org.example.domain.invoice.InvoiceId;
 
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 
 @Slf4j

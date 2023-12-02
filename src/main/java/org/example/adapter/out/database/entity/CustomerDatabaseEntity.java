@@ -3,8 +3,6 @@ package org.example.adapter.out.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.domain.NIP;
-import org.example.domain.customer.EntrepreneurshipForm;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -47,10 +45,10 @@ public class CustomerDatabaseEntity {
     @Column(name = "tax_rate")
     private String taxRate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private Set<CostInvoiceDatabaseEntity> costInvoices;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
     private Set<IncomeInvoiceDatabaseEntity> incomeInvoices;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

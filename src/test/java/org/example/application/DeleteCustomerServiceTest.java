@@ -15,45 +15,41 @@ import java.util.Optional;
 
 public class DeleteCustomerServiceTest {
 
-//    private DeleteCustomerService deleteCustomerService;
-//    private CustomerRepository customerRepository;
-//    private DeleteInvoiceService deleteInvoiceService;
-//    private InvoiceRepository invoiceRepository;
-//
-//
-//    @BeforeEach
-//    void setUp(){
-//        invoiceRepository = new InMemoryInvoiceRepo();
-//        customerRepository = new InMemoryCustomerRepo();
-//        deleteInvoiceService = new DeleteInvoiceService(invoiceRepository);
-//        deleteCustomerService = new DeleteCustomerService(customerRepository, deleteInvoiceService);
-//    }
-//    @Test
-//    void testIfBothCustomersAndInvoicesReposAreDeletingData(){
-//        //given
-//        Customer customer1 = DataCreator.createCustomer1();
-//        CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
-//        CostInvoice costInvoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
-//        CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
-//        CostInvoice costInvoice4 = DataCreator.createCostInvoice4().withCustomer(customer1);
-//        CostInvoice costInvoice5 = DataCreator.createCostInvoice5().withCustomer(customer1);
-//
-//
-//        //when
-//        invoiceRepository.insertInvoice(costInvoice1);
-//        invoiceRepository.insertInvoice(costInvoice2);
-//        invoiceRepository.insertInvoice(costInvoice3);
-//        invoiceRepository.insertInvoice(costInvoice4);
-//        invoiceRepository.insertInvoice(costInvoice5);
-//
-//        deleteCustomerService.deleteCustomer(customer1.getCustomerId());
-//
-//        //then
-//
-//        Assertions.assertEquals(Optional.empty(), customerRepository.findCustomerByNIP(customer1.getNip()));
-//
-//        //TODO should this return null or Empty -> we dont have a customer anymore in our database
-//        Assertions.assertEquals(null, invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()));
-//
-//    }
+    private DeleteCustomerService deleteCustomerService;
+    private CustomerRepository customerRepository;
+    private InvoiceRepository invoiceRepository;
+
+
+    @BeforeEach
+    void setUp(){
+        invoiceRepository = new InMemoryInvoiceRepo();
+        customerRepository = new InMemoryCustomerRepo();
+        deleteCustomerService = new DeleteCustomerService(customerRepository);
+    }
+    @Test
+    void testIfBothCustomersAndInvoicesReposAreDeletingData(){
+        //given
+        Customer customer1 = DataCreator.createCustomer1();
+        CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
+        CostInvoice costInvoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
+        CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
+        CostInvoice costInvoice4 = DataCreator.createCostInvoice4().withCustomer(customer1);
+        CostInvoice costInvoice5 = DataCreator.createCostInvoice5().withCustomer(customer1);
+
+
+        //when
+        invoiceRepository.insertInvoice(customer1.getCustomerId(), costInvoice1);
+        invoiceRepository.insertInvoice(customer1.getCustomerId(), costInvoice2);
+        invoiceRepository.insertInvoice(customer1.getCustomerId(), costInvoice3);
+        invoiceRepository.insertInvoice(customer1.getCustomerId(), costInvoice4);
+        invoiceRepository.insertInvoice(customer1.getCustomerId(), costInvoice5);
+
+        deleteCustomerService.deleteCustomer(customer1.getCustomerId());
+
+        //then
+
+        Assertions.assertEquals(Optional.empty(), customerRepository.findCustomerByNIP(customer1.getNip()));
+        Assertions.assertNull(invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()));
+
+    }
 }

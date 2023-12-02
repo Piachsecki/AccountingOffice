@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.YearMonth;
 import java.util.List;
-import java.util.UUID;
 
 import static org.example.Data.*;
 import static org.example.domain.customer.TaxPayments.FlatTax.FLAT_TAX_RATE;

@@ -1,7 +1,10 @@
 package org.example.domain.customer;
 
 import org.example.DataCreator;
-import org.example.domain.customer.TaxPayments.*;
+import org.example.domain.customer.TaxPayments.FlatTax;
+import org.example.domain.customer.TaxPayments.GeneralTax;
+import org.example.domain.customer.TaxPayments.IndustryType;
+import org.example.domain.customer.TaxPayments.LumpSumTax;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.money.Currency;
 import org.example.domain.money.Money;
@@ -17,8 +20,6 @@ import static org.example.Data.*;
 import static org.example.domain.customer.TaxPayments.FlatTax.FLAT_TAX_RATE;
 import static org.example.domain.customer.TaxPayments.GeneralTax.FIRST_SCALE;
 import static org.example.domain.customer.TaxPayments.GeneralTax.SECOND_SCALE;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CustomerTest {

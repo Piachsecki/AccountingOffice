@@ -6,13 +6,8 @@ import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
 import org.example.domain.invoice.InvoiceId;
-import org.example.domain.money.Currency;
-import org.example.domain.money.Money;
 import org.example.port.out.InvoiceRepository;
 
-import java.math.BigDecimal;
-import java.time.Month;
-import java.time.YearMonth;
 import java.util.*;
 
 @Getter
@@ -21,7 +16,7 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     private final Map<CustomerId, HashSet<Invoice>> invoices = new HashMap<>();
 
     @Override
-    public void insertInvoice(CustomerId customerId, Invoice invoice) {
+    public Invoice insertInvoice(CustomerId customerId, Invoice invoice) {
         if (!invoices.containsKey(customerId)){
             invoices.put(customerId, new HashSet<>(Set.of(invoice)));
         } else {
@@ -34,6 +29,7 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
             invoices.put(
                     customerId, newHashSet);
         }
+        return invoice;
     }
 
     @Override
@@ -42,31 +38,27 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     }
 
     @Override
-    public void deleteInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
+    public void deleteCostInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
         invoices.get(customerId).removeIf(invoice -> invoice.getInvoiceId().equals(invoiceId));
     }
 
     @Override
-    public void deleteAllInvoicesForCustomerId(CustomerId customerId) {
-        invoices.get(customerId).clear();
-    }
-
-
-
-    @Override
-    public void deleteAllWithCustomer(CustomerId customerId) {
-        invoices.get(customerId).clear();
-        invoices.clear();
+    public void deleteIncomeInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
+        invoices.get(customerId).removeIf(invoice -> invoice.getInvoiceId().equals(invoiceId));
     }
 
     @Override
     public List<Invoice> listCostInvoices(CustomerId customerId) {
-        return null;
+        return invoices.get(customerId).stream()
+                .filter(x -> x instanceof CostInvoice)
+                .toList();
     }
 
     @Override
     public List<Invoice> listIncomeInvoices(CustomerId customerId) {
-        return null;
+        return invoices.get(customerId).stream()
+                .filter(x -> x instanceof IncomeInvoice)
+                .toList();
     }
 
 }

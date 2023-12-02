@@ -26,11 +26,6 @@ public class InMemoryCustomerRepo implements CustomerRepository {
     }
 
     @Override
-    public void updateCustomer(CustomerId customerId) {
-
-    }
-
-    @Override
     public void deleteAllCustomers() {
             customers.clear();
     }

@@ -10,9 +10,6 @@ public interface CustomerRepository {
     Customer addCustomer(Customer customer);
 
     void deleteCustomer(CustomerId customerId);
-
-    void updateCustomer(CustomerId customerId);
-
     void deleteAllCustomers();
 
     Optional <Customer> findCustomerByNIP(NIP nip);

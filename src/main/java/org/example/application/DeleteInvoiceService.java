@@ -11,16 +11,8 @@ public class DeleteInvoiceService implements DeleteInvoiceUseCase {
     private InvoiceRepository invoiceRepository;
     @Override
     public void deleteInvoice(CustomerId customerId, InvoiceId invoiceId) {
-        invoiceRepository.deleteInvoiceForCustomerId(customerId, invoiceId);
+        invoiceRepository.deleteCostInvoiceForCustomerId(customerId, invoiceId);
     }
 
-    @Override
-    public void deleteAll(CustomerId customerId) {
-        invoiceRepository.deleteAllInvoicesForCustomerId(customerId);
-    }
 
-    @Override
-    public void deleteAllWithUser(CustomerId customerId) {
-        invoiceRepository.deleteAllWithCustomer(customerId);
-    }
 }
