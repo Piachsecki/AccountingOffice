@@ -7,6 +7,7 @@ import org.example.domain.money.Price;
 import org.example.domain.product.Product;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Getter
 public class CostInvoice extends Invoice{
@@ -16,7 +17,7 @@ public class CostInvoice extends Invoice{
     private final Price amount;
 
 
-    public CostInvoice(InvoiceId invoiceId, Customer customer, OffsetDateTime date, Price amount, Company company, Product product) {
+    public CostInvoice(UUID invoiceId, Customer customer, OffsetDateTime date, Price amount, Company company, Product product) {
         super(invoiceId, customer, date);
         this.company = company;
         this.product = product;
@@ -36,7 +37,7 @@ public class CostInvoice extends Invoice{
     }
 
 
-    public CostInvoice withInvoiceId(InvoiceId invoiceId) {
+    public CostInvoice withInvoiceId(UUID invoiceId) {
         this.invoiceId = invoiceId;
         return this;
     }

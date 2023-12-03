@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.example.domain.customer.Customer;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 
 @AllArgsConstructor
@@ -23,7 +24,7 @@ public abstract class Invoice {
         return getInvoiceId().hashCode();
     }
 
-    protected InvoiceId invoiceId;
+    protected UUID invoiceId;
     protected Customer customer;
     protected final OffsetDateTime date;
 

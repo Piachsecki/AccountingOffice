@@ -5,13 +5,13 @@ import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.Invoice;
-import org.example.domain.invoice.InvoiceId;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
 import org.example.port.in.invoice.InsertCostInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @AllArgsConstructor
 
@@ -26,7 +26,7 @@ public class InsertCostInvoiceService implements InsertCostInvoiceUseCase {
             Product product
     ) {
         CostInvoice invoice = new CostInvoice(
-                InvoiceId.createRandomInvoiceId(),
+                UUID.randomUUID(),
                 customer,
                 date,
                 price,

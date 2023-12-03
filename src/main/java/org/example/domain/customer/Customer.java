@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.YearMonth;
 import java.util.List;
+import java.util.UUID;
 
 import static org.example.Data.*;
 import static org.example.domain.customer.TaxPayments.FlatTax.FLAT_TAX_RATE;
@@ -33,7 +34,7 @@ import static org.example.domain.customer.TaxPayments.HEALTH_INSURANCE_RANGE_FOR
 @Getter
 public class Customer {
     @EqualsAndHashCode.Include
-    private CustomerId customerId;
+    private UUID customerId;
     private String name;
     private String surname;
     private NIP nip;

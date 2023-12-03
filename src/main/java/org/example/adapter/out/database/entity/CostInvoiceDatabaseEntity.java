@@ -41,7 +41,7 @@ public class CostInvoiceDatabaseEntity  {
     private ProductDatabaseEntity product;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private CustomerDatabaseEntity customer;
 

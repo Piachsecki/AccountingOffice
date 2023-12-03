@@ -8,14 +8,12 @@ import org.example.domain.Address;
 import org.example.domain.NIP;
 import org.example.domain.company.Company;
 import org.example.domain.customer.Customer;
-import org.example.domain.customer.CustomerId;
 import org.example.domain.customer.Entrepreneurship;
 import org.example.domain.customer.EntrepreneurshipForm;
 import org.example.domain.customer.TaxPayments.*;
 import org.example.domain.money.Money;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
-import org.example.domain.product.ProductId;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -36,7 +34,7 @@ public class EntityToDomainClassMapper {
 
     public static Customer mapToCustomerFromCustomerDatabaseEntity(CustomerDatabaseEntity customer) {
         return new Customer(
-                new CustomerId(customer.getCustomerId().toString()),
+                customer.getCustomerId(),
                 customer.getName(),
                 customer.getSurname(),
                 new NIP(customer.getNip()),
@@ -65,7 +63,7 @@ public class EntityToDomainClassMapper {
 
     public static Product mapToProductFromProductDatabaseEntity(ProductDatabaseEntity product) {
         return new Product(
-                new ProductId(product.getProductId().toString()),
+                product.getProductId(),
                 product.getProductName(),
                 new Price(product.getAmount(), org.example.domain.money.Currency.valueOf(product.getCurrency()))
         );
@@ -111,7 +109,7 @@ public class EntityToDomainClassMapper {
 
     public static Customer createCustomerFromCustomerDatabaseEntity(CustomerDatabaseEntity customerDatabaseEntity){
         return Customer.builder()
-                .customerId(new CustomerId(customerDatabaseEntity.getCustomerId().toString()))
+                .customerId(customerDatabaseEntity.getCustomerId())
                 .name(customerDatabaseEntity.getName())
                 .surname(customerDatabaseEntity.getSurname())
                 .nip(new NIP(customerDatabaseEntity.getNip()))

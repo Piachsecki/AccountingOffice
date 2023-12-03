@@ -5,11 +5,9 @@ import org.example.adapter.out.database.configuration.DatabaseHibernateConfig;
 import org.example.adapter.out.database.entity.*;
 import org.example.domain.Address;
 import org.example.domain.company.Company;
-import org.example.domain.customer.CustomerId;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
-import org.example.domain.invoice.InvoiceId;
 import org.example.domain.product.Product;
 import org.example.port.out.InvoiceRepository;
 import org.hibernate.Session;
@@ -21,7 +19,7 @@ import static org.example.adapter.out.database.repository.EntityToDomainClassMap
 @Slf4j
 public class InvoiceDatabaseStorage implements InvoiceRepository {
     @Override
-    public Invoice insertInvoice(CustomerId customerId, Invoice invoice) {
+    public Invoice insertInvoice(UUID customerId, Invoice invoice) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
                 log.error("Session is null");
@@ -30,7 +28,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
             session.beginTransaction();
             String query = "SELECT cust FROM CustomerDatabaseEntity cust WHERE cust.customerId = :customerId";
             Optional<CustomerDatabaseEntity> customerToAddInvoices = session.createQuery(query, CustomerDatabaseEntity.class)
-                    .setParameter("customerId", customerId.getCustomerIdAsUUID())
+                    .setParameter("customerId", customerId)
                     .uniqueResultOptional();
 
             if (!customerToAddInvoices.isPresent()) {
@@ -75,7 +73,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
                         .build();
                 session.persist(costInvoiceDatabaseEntity);
                 session.getTransaction().commit();
-                return ((CostInvoice) invoice).withInvoiceId(new InvoiceId(costInvoiceDatabaseEntity.getInvoiceId().toString()));
+                return ((CostInvoice) invoice).withInvoiceId(costInvoiceDatabaseEntity.getInvoiceId());
 
 
             } else if (invoice instanceof IncomeInvoice) {
@@ -87,7 +85,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
                         .build();
                 session.persist(incomeInvoiceDatabaseEntity);
                 session.getTransaction().commit();
-                return ((IncomeInvoice) invoice).withInvoiceId(new InvoiceId(incomeInvoiceDatabaseEntity.getInvoiceId().toString()));
+                return ((IncomeInvoice) invoice).withInvoiceId(incomeInvoiceDatabaseEntity.getInvoiceId());
             }
 
         }
@@ -96,7 +94,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
     }
 
     @Override
-    public HashSet<Invoice> listAllInvoicesForCustomerId(CustomerId customerId) {
+    public HashSet<Invoice> listAllInvoicesForCustomerId(UUID customerId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
                 log.error("Session is null");
@@ -110,7 +108,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
     }
 
     @Override
-    public void deleteCostInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
+    public void deleteCostInvoiceForCustomerId(UUID customerId, UUID invoiceId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
                 log.error("Session is null");
@@ -118,14 +116,14 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
                 throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
-            session.remove(session.find(CostInvoiceDatabaseEntity.class, invoiceId.getCustomerIdAsUUID()));
+            session.remove(session.find(CostInvoiceDatabaseEntity.class, invoiceId));
             session.getTransaction().commit();
 
         }
     }
 
     @Override
-    public void deleteIncomeInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId) {
+    public void deleteIncomeInvoiceForCustomerId(UUID customerId, UUID invoiceId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
                 log.error("Session is null");
@@ -133,7 +131,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
                 throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
-            session.remove(session.find(IncomeInvoiceDatabaseEntity.class, invoiceId.getCustomerIdAsUUID()));
+            session.remove(session.find(IncomeInvoiceDatabaseEntity.class, invoiceId));
             session.getTransaction().commit();
 
         }
@@ -141,7 +139,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
 
 
     @Override
-    public List<Invoice> listCostInvoices(CustomerId customerId) {
+    public List<Invoice> listCostInvoices(UUID customerId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
                 log.error("Session is null");
@@ -151,14 +149,14 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
             session.beginTransaction();
             String query = "SELECT costInv FROM CostInvoiceDatabaseEntity costInv where costInv.customer.customerId = :customerId";
             List<CostInvoiceDatabaseEntity> costInvoices = session.createQuery(query, CostInvoiceDatabaseEntity.class)
-                    .setParameter("customerId", customerId.getCustomerIdAsUUID())
+                    .setParameter("customerId", customerId)
                     .list();
             session.getTransaction().commit();
 
             List<Invoice> result = new ArrayList<>();
             for (CostInvoiceDatabaseEntity costInvoice : costInvoices) {
                 CostInvoice invoice = new CostInvoice(
-                        new InvoiceId(costInvoice.getInvoiceId().toString()),
+                        costInvoice.getInvoiceId(),
                         mapToCustomerFromCustomerDatabaseEntity(costInvoice.getCustomer()),
                         costInvoice.getDate(),
                         mapToPriceFromDatabase(costInvoice.getCurrency(), costInvoice.getAmount()),
@@ -174,7 +172,7 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
     }
 
     @Override
-    public List<Invoice> listIncomeInvoices(CustomerId customerId) {
+    public List<Invoice> listIncomeInvoices(UUID customerId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
                 log.error("Session is null");
@@ -184,14 +182,14 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
             session.beginTransaction();
             String query = "SELECT incomeInv FROM IncomeInvoiceDatabaseEntity incomeInv where incomeInv.customer.customerId = :customerId";
             List<IncomeInvoiceDatabaseEntity> incomeInvoices = session.createQuery(query, IncomeInvoiceDatabaseEntity.class)
-                    .setParameter("customerId", customerId.getCustomerIdAsUUID())
+                    .setParameter("customerId", customerId)
                     .list();
             session.getTransaction().commit();
 
             List<Invoice> result = new ArrayList<>();
             for (IncomeInvoiceDatabaseEntity incomeInvoice : incomeInvoices) {
                 IncomeInvoice invoice = new IncomeInvoice(
-                        new InvoiceId(incomeInvoice.getInvoiceId().toString()),
+                        incomeInvoice.getInvoiceId(),
                         mapToCustomerFromCustomerDatabaseEntity(incomeInvoice.getCustomer()),
                         incomeInvoice.getDate(),
                         mapToMoneyFromDatabase(incomeInvoice.getCurrency(), incomeInvoice.getAmount())

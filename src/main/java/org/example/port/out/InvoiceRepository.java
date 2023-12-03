@@ -1,21 +1,20 @@
 package org.example.port.out;
 
-import org.example.domain.customer.CustomerId;
 import org.example.domain.invoice.Invoice;
-import org.example.domain.invoice.InvoiceId;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 public interface InvoiceRepository {
-    Invoice insertInvoice(CustomerId customerId, Invoice invoice);
+    Invoice insertInvoice(UUID customerId, Invoice invoice);
 
-    HashSet<Invoice> listAllInvoicesForCustomerId(CustomerId customerId);
+    HashSet<Invoice> listAllInvoicesForCustomerId(UUID customerId);
 
-    void deleteCostInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId);
-    void deleteIncomeInvoiceForCustomerId(CustomerId customerId, InvoiceId invoiceId);
+    void deleteCostInvoiceForCustomerId(UUID customerId, UUID invoiceId);
+    void deleteIncomeInvoiceForCustomerId(UUID customerId, UUID invoiceId);
 
-    List<Invoice> listCostInvoices(CustomerId customerId);
-    List<Invoice> listIncomeInvoices(CustomerId customerId);
+    List<Invoice> listCostInvoices(UUID customerId);
+    List<Invoice> listIncomeInvoices(UUID customerId);
 
 }

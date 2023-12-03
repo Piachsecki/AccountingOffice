@@ -11,17 +11,16 @@ import org.example.domain.customer.TaxPayments.IndustryType;
 import org.example.domain.customer.TaxPayments.LumpSumTax;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
-import org.example.domain.invoice.InvoiceId;
 import org.example.domain.money.Currency;
 import org.example.domain.money.Money;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
-import org.example.domain.product.ProductId;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class DataCreator {
     public static Customer createCustomer1() {
@@ -163,7 +162,7 @@ public class DataCreator {
 
     public static CostInvoice createCostInvoice1() {
         return new CostInvoice(
-                new InvoiceId("AZG--421-A5"),
+                UUID.randomUUID(),
                 createCustomer1(),
                 OffsetDateTime.of(
                         2022, 10, 12,
@@ -177,7 +176,7 @@ public class DataCreator {
 
     public static CostInvoice createCostInvoice2() {
         return new CostInvoice(
-                new InvoiceId("ANP--444-A2"),
+                UUID.randomUUID(),
                 createCustomer2(),
                 OffsetDateTime.of(
                         2021, 12, 12,
@@ -191,7 +190,7 @@ public class DataCreator {
 
     public static CostInvoice createCostInvoice3() {
         return new CostInvoice(
-                new InvoiceId("PPP--001-A2"),
+                UUID.randomUUID(),
                 createCustomer3(),
 
                 OffsetDateTime.of(
@@ -206,7 +205,7 @@ public class DataCreator {
 
     public static CostInvoice createCostInvoice4() {
         return new CostInvoice(
-                new InvoiceId("LLL--777-00"),
+                UUID.randomUUID(),
                 createCustomer4(),
                 OffsetDateTime.of(
                         2023, 12, 12,
@@ -221,7 +220,7 @@ public class DataCreator {
 
     public static CostInvoice createCostInvoice5() {
         return new CostInvoice(
-                new InvoiceId("AZG--401-A5"),
+                UUID.randomUUID(),
                 createCustomer5(),
                 OffsetDateTime.of(
                         2024, 12, 12,
@@ -237,7 +236,7 @@ public class DataCreator {
 
     public static Product createProduct1() {
         return new Product(
-                new ProductId("ABCDE48B"),
+                UUID.randomUUID(),
                 "zabawka",
                 new Price(new BigDecimal("123.23"), Currency.PLN)
         );
@@ -245,7 +244,7 @@ public class DataCreator {
 
     public static Product createProduct2() {
         return new Product(
-                new ProductId("ABC76B8B"),
+                UUID.randomUUID(),
                 "obiad",
                 new Price(new BigDecimal("4211"), Currency.EUR)
         );
@@ -253,7 +252,7 @@ public class DataCreator {
 
     public static Product createProduct3() {
         return new Product(
-                new ProductId("19BDE488"),
+                UUID.randomUUID(),
                 "metal",
                 new Price(new BigDecimal("1.25"), Currency.USD)
         );
@@ -261,7 +260,7 @@ public class DataCreator {
 
     public static Product createProduct4() {
         return new Product(
-                new ProductId("111CD89M"),
+                UUID.randomUUID(),
                 "ciastko",
                 new Price(new BigDecimal("15000"), Currency.HUF)
         );
@@ -269,7 +268,7 @@ public class DataCreator {
 
     public static Product createProduct5() {
         return new Product(
-                new ProductId("ABCDE48B"),
+                UUID.randomUUID(),
                 "zabawka",
                 new Price(new BigDecimal("123.23"), Currency.PLN)
         );
@@ -319,7 +318,7 @@ public class DataCreator {
 
     public static IncomeInvoice createIncomeInvoice1() {
         return new IncomeInvoice(
-                new InvoiceId("EEE--111-A5"),
+                UUID.randomUUID(),
                 createCustomer1(),
                 OffsetDateTime.of(
                         2020, 10, 12,
@@ -330,7 +329,7 @@ public class DataCreator {
     }
     public static IncomeInvoice createIncomeInvoice2() {
         return new IncomeInvoice(
-                new InvoiceId("DDD--111-A5"),
+                UUID.randomUUID(),
                 createCustomer1(),
                 OffsetDateTime.of(
                         2020, 10, 12,
@@ -342,7 +341,7 @@ public class DataCreator {
     }
     public static IncomeInvoice createIncomeInvoice3() {
         return new IncomeInvoice(
-                new InvoiceId("CCC--111-A5"),
+                UUID.randomUUID(),
                 createCustomer3(),
                 OffsetDateTime.of(
                         2020, 10, 12,
@@ -354,7 +353,7 @@ public class DataCreator {
     }
     public static IncomeInvoice createIncomeInvoice4() {
         return new IncomeInvoice(
-                new InvoiceId("BBB--111-A5"),
+                UUID.randomUUID(),
                 createCustomer4(),
                 OffsetDateTime.of(
                         2020, 10, 12,
@@ -368,7 +367,7 @@ public class DataCreator {
 
     public static IncomeInvoice createIncomeInvoice5() {
         return new IncomeInvoice(
-                new InvoiceId("AAA--111-A5"),
+                UUID.randomUUID(),
                 createCustomer5(),
                 OffsetDateTime.of(
                         2020, 10, 12,

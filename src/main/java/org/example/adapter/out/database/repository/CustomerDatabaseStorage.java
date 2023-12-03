@@ -7,7 +7,6 @@ import org.example.adapter.out.database.entity.CustomerDatabaseEntity;
 import org.example.domain.Address;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
-import org.example.domain.customer.CustomerId;
 import org.example.port.out.CustomerRepository;
 import org.hibernate.Session;
 
@@ -49,23 +48,22 @@ public class CustomerDatabaseStorage implements CustomerRepository {
                     .build();
             session.persist(customerDatabaseEntity);
             session.getTransaction().commit();
-            customer.setCustomerId(new CustomerId(customerDatabaseEntity.getCustomerId().toString()));
+            customer.setCustomerId(customerDatabaseEntity.getCustomerId());
             System.out.println(customer);
             return customer;
         }
     }
 
     @Override
-    public void deleteCustomer(CustomerId customerId) {
+    public void deleteCustomer(UUID customerId) {
         try (Session session = DatabaseHibernateConfig.getSession()) {
             if (Objects.isNull(session)) {
                 log.error("Session is null");
 
                 throw new RuntimeException("Session is null");
             }
-            UUID customerIdAsUUID = customerId.getCustomerIdAsUUID();
             session.beginTransaction();
-            session.remove(session.find(CustomerDatabaseEntity.class, customerIdAsUUID));
+            session.remove(session.find(CustomerDatabaseEntity.class, customerId));
             session.getTransaction().commit();
         }
     }
