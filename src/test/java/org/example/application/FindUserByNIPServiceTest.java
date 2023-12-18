@@ -2,7 +2,6 @@ package org.example.application;
 
 import org.example.DataCreator;
 import org.example.adapter.out.maps.InMemoryCustomerRepo;
-import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.example.port.out.CustomerRepository;
 import org.junit.jupiter.api.Assertions;

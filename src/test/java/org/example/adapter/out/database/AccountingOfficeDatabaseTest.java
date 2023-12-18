@@ -21,9 +21,6 @@ import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j

@@ -3,6 +3,8 @@ package org.example.adapter.out.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -13,9 +15,9 @@ import lombok.*;
 @Entity
 public class CompanyDatabaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "company_id")
-    private Integer companyId;
+    private UUID companyId;
 
     @Column(name = "company_name")
     private String companyName;

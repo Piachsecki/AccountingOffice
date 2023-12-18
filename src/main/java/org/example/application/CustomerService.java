@@ -1,6 +1,5 @@
 package org.example.application;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;

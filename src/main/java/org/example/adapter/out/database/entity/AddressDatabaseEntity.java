@@ -4,6 +4,8 @@ package org.example.adapter.out.database.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -14,9 +16,9 @@ import lombok.*;
 @Table(name = "address")
 public class AddressDatabaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "address_id")
-    private Integer addressId;
+    private UUID addressId;
 
     @Column(name = "city")
     private String city;
