@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class InsertInvoiceServiceTest {
-    private InsertInvoiceService insertInvoiceService;
+import java.util.UUID;
+
+class InvoiceServiceTest {
+    private InvoiceService invoiceService;
     private InsertCostInvoiceService insertCostInvoiceService;
     private InsertIncomeInvoiceService insertIncomeInvoiceService;
     private InvoiceRepository invoiceRepository;
@@ -21,19 +23,20 @@ class InsertInvoiceServiceTest {
         invoiceRepository = new InMemoryInvoiceRepo();
         insertCostInvoiceService = new InsertCostInvoiceService(invoiceRepository);
         insertIncomeInvoiceService = new InsertIncomeInvoiceService(invoiceRepository);
-        insertInvoiceService = new InsertInvoiceService(insertCostInvoiceService, insertIncomeInvoiceService);
+        invoiceService = new InvoiceService(invoiceRepository, insertCostInvoiceService, insertIncomeInvoiceService);
     }
 
     @Test
     void insertInvoice() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
+        UUID customerId = customer1.getCustomerId();
         IncomeInvoice incomeInvoice1 = DataCreator.createIncomeInvoice1().withCustomer(customer1);
         CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
 
         //when
-        insertInvoiceService.insertInvoice(incomeInvoice1);
-        insertInvoiceService.insertInvoice(costInvoice1);
+        invoiceService.insertInvoice(customerId, incomeInvoice1);
+        invoiceService.insertInvoice(customerId, costInvoice1);
 
         //then
         Assertions.assertEquals(2, invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());

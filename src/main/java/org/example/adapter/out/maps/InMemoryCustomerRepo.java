@@ -27,13 +27,13 @@ public class InMemoryCustomerRepo implements CustomerRepository {
 
     @Override
     public void deleteAllCustomers() {
-            customers.clear();
+        customers.clear();
     }
 
     @Override
     public Optional<Customer> findCustomerByNIP(NIP nip) {
         for (Map.Entry<UUID, Customer> customerIdCustomerEntry : customers.entrySet()) {
-            if(customerIdCustomerEntry.getValue().getNip().equals(nip)){
+            if (customerIdCustomerEntry.getValue().getNip().equals(nip)) {
                 return Optional.of(customerIdCustomerEntry.getValue());
             }
         }

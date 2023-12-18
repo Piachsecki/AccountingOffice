@@ -15,7 +15,7 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
 
     @Override
     public Invoice insertInvoice(UUID customerId, Invoice invoice) {
-        if (!invoices.containsKey(customerId)){
+        if (!invoices.containsKey(customerId)) {
             invoices.put(customerId, new HashSet<>(Set.of(invoice)));
         } else {
             HashSet<Invoice> newHashSet = new HashSet<>(invoices.get(customerId).size() + 1);

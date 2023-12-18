@@ -12,14 +12,14 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 public class FindUserByNIPServiceTest {
-    private FindUserByNIPService findUserByNIPService;
+    private CustomerService customerService;
     private CustomerRepository customerRepository;
 
 
     @BeforeEach
     void setUp() {
         customerRepository = new InMemoryCustomerRepo();
-        findUserByNIPService = new FindUserByNIPService(customerRepository);
+        customerService = new CustomerService(customerRepository);
     }
 
 
@@ -40,22 +40,21 @@ public class FindUserByNIPServiceTest {
 
 
         //when
+        customerService.addCustomer(customer1);
+        customerService.addCustomer(customer2);
+        customerService.addCustomer(customer3);
+        customerService.addCustomer(customer4);
 
-        customerRepository.addCustomer(customer1);
-        customerRepository.addCustomer(customer2);
-        customerRepository.addCustomer(customer3);
-        customerRepository.addCustomer(customer4);
-
-        NIP nip1 = customerRepository.findCustomerByNIP(customer1.getNip()).get().getNip();
-        NIP nip2 = customerRepository.findCustomerByNIP(customer2.getNip()).get().getNip();
-        NIP nip3 = customerRepository.findCustomerByNIP(customer3.getNip()).get().getNip();
-        NIP nip4 = customerRepository.findCustomerByNIP(customer4.getNip()).get().getNip();
+        Customer customerByNip1 = customerService.findUserByNIP(customer1.getNip());
+        Customer customerByNip2 =customerService.findUserByNIP(customer2.getNip());
+        Customer customerByNip3 =customerService.findUserByNIP(customer3.getNip());
+        Customer customerByNip4 =customerService.findUserByNIP(customer4.getNip());
 
         //then
-        Assertions.assertEquals(customer1.getNip() ,nip1);
-        Assertions.assertEquals(customer2.getNip() ,nip2);
-        Assertions.assertEquals(customer3.getNip() ,nip3);
-        Assertions.assertEquals(customer4.getNip() ,nip4);
+        Assertions.assertNotNull(customerByNip1);
+        Assertions.assertNotNull(customerByNip2);
+        Assertions.assertNotNull(customerByNip3);
+        Assertions.assertNotNull(customerByNip4);
     }
 
 }

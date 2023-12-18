@@ -11,7 +11,7 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode(of = "addressId")
 @Entity
-@Table(name  = "address")
+@Table(name = "address")
 public class AddressDatabaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

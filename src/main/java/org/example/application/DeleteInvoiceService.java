@@ -9,6 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class DeleteInvoiceService implements DeleteInvoiceUseCase {
     private InvoiceRepository invoiceRepository;
+
     @Override
     public void deleteInvoice(UUID customerId, UUID invoiceId) {
         invoiceRepository.deleteCostInvoiceForCustomerId(customerId, invoiceId);

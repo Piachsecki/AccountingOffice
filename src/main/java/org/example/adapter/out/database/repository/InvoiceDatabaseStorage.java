@@ -101,7 +101,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
                 throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
-
             session.getTransaction().commit();
             return null;
         }

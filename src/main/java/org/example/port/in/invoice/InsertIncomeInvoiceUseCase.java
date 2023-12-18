@@ -6,6 +6,7 @@ import org.example.domain.invoice.Invoice;
 import org.example.domain.money.Money;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 public interface InsertIncomeInvoiceUseCase {
     Invoice insertIncomeInvoice(
@@ -14,5 +15,5 @@ public interface InsertIncomeInvoiceUseCase {
             Money amount
     );
 
-    Invoice insertIncomeInvoice(IncomeInvoice invoice);
+    Invoice insertIncomeInvoice(UUID customerId, IncomeInvoice invoice);
 }

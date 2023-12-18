@@ -16,7 +16,7 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "customerId")
 @Entity
 @ToString(of = {"customerId", "name", "surname"})
-@Table(name  = "customer")
+@Table(name = "customer")
 public class CustomerDatabaseEntity {
 
     @Id
@@ -41,17 +41,17 @@ public class CustomerDatabaseEntity {
 
     @Column(name = "tax_payment_form")
     private String taxPaymentForm;
-    
+
     @Column(name = "tax_rate")
     private String taxRate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer",  cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<CostInvoiceDatabaseEntity> costInvoices;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<IncomeInvoiceDatabaseEntity> incomeInvoices;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", unique = true)
     private AddressDatabaseEntity address;
 

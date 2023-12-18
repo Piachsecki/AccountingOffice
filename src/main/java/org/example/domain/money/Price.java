@@ -12,8 +12,8 @@ public record Price(BigDecimal amount, Currency currency) {
         Objects.requireNonNull(amount, "'amount' must not be null");
     }
 
-    public BigDecimal countToPLN(){
-        if (!this.currency.equals(Currency.PLN)){
+    public BigDecimal countToPLN() {
+        if (!this.currency.equals(Currency.PLN)) {
             BigDecimal exchange_rate = new BigDecimal(currency.getExchange_rate());
             return exchange_rate.multiply(amount);
         }

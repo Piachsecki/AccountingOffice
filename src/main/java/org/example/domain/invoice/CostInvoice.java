@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
-public class CostInvoice extends Invoice{
+public class CostInvoice extends Invoice {
     private final InvoiceType invoiceType = InvoiceType.COST_INVOICE;
     private final Company company;
     private final Product product;
@@ -23,7 +23,6 @@ public class CostInvoice extends Invoice{
         this.product = product;
         this.amount = amount;
     }
-
 
 
     public CostInvoice withCustomer(Customer customer) {

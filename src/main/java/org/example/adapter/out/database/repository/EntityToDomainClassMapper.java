@@ -1,9 +1,6 @@
 package org.example.adapter.out.database.repository;
 
-import org.example.adapter.out.database.entity.AddressDatabaseEntity;
-import org.example.adapter.out.database.entity.CompanyDatabaseEntity;
-import org.example.adapter.out.database.entity.CustomerDatabaseEntity;
-import org.example.adapter.out.database.entity.ProductDatabaseEntity;
+import org.example.adapter.out.database.entity.*;
 import org.example.domain.Address;
 import org.example.domain.NIP;
 import org.example.domain.company.Company;
@@ -11,12 +8,16 @@ import org.example.domain.customer.Customer;
 import org.example.domain.customer.Entrepreneurship;
 import org.example.domain.customer.EntrepreneurshipForm;
 import org.example.domain.customer.TaxPayments.*;
+import org.example.domain.invoice.CostInvoice;
+import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.money.Money;
 import org.example.domain.money.Price;
 import org.example.domain.product.Product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class EntityToDomainClassMapper {
 
@@ -27,7 +28,7 @@ public class EntityToDomainClassMapper {
     public static Company mapToCompanyFromCompanyDatabaseEntity(CompanyDatabaseEntity company) {
         return new Company(
                 company.getCompanyName(),
-                new NIP(company.getNip().toString()),
+                new NIP(company.getNip()),
                 mapAddressFromAddressDatabaseEntity(company.getAddress())
         );
     }
@@ -107,7 +108,14 @@ public class EntityToDomainClassMapper {
     }
 
 
-    public static Customer createCustomerFromCustomerDatabaseEntity(CustomerDatabaseEntity customerDatabaseEntity){
+    public static Customer createCustomerFromCustomerDatabaseEntity(CustomerDatabaseEntity customerDatabaseEntity) {
+        Customer customer = createCustomerWithoutInvoicesFromCustomerDatabaseEntity(customerDatabaseEntity);
+        customer.setCostInvoices(mapCostInvoiceEntityToCostInvoiceDomain(customerDatabaseEntity.getCostInvoices()));
+        customer.setIncomeInvoices(mapIncomeInvoiceEntityToIncomeInvoiceDomain(customerDatabaseEntity.getIncomeInvoices()));
+        return customer;
+    }
+
+    public static Customer createCustomerWithoutInvoicesFromCustomerDatabaseEntity(CustomerDatabaseEntity customerDatabaseEntity) {
         return Customer.builder()
                 .customerId(customerDatabaseEntity.getCustomerId())
                 .name(customerDatabaseEntity.getName())
@@ -119,7 +127,42 @@ public class EntityToDomainClassMapper {
                 .build();
     }
 
+    private static List<IncomeInvoice> mapIncomeInvoiceEntityToIncomeInvoiceDomain(Set<IncomeInvoiceDatabaseEntity> incomeDatabaseInvoices) {
+        List<IncomeInvoice> incomeDomainInvoices = new ArrayList<>();
+        for (IncomeInvoiceDatabaseEntity incomeInvoice : incomeDatabaseInvoices) {
+            incomeDomainInvoices.add(mapIncomeDatabaseInvoice(incomeInvoice));
+        }
+        return incomeDomainInvoices;
+    }
 
+    private static IncomeInvoice mapIncomeDatabaseInvoice(IncomeInvoiceDatabaseEntity incomeInvoice) {
+        return new IncomeInvoice(
+                incomeInvoice.getInvoiceId(),
+                createCustomerWithoutInvoicesFromCustomerDatabaseEntity(incomeInvoice.getCustomer()),
+                incomeInvoice.getDate(),
+                mapToMoneyFromDatabase(incomeInvoice.getCurrency(), incomeInvoice.getAmount())
+        );
+    }
+
+    private static List<CostInvoice> mapCostInvoiceEntityToCostInvoiceDomain(Set<CostInvoiceDatabaseEntity> costDatabaseInvoices) {
+        List<CostInvoice> costInvoicesDomain = new ArrayList<>();
+        for (CostInvoiceDatabaseEntity costInvoice : costDatabaseInvoices) {
+            costInvoicesDomain.add(mapCostDatabaseInvoice(costInvoice));
+        }
+        return costInvoicesDomain;
+    }
+
+
+    private static CostInvoice mapCostDatabaseInvoice(CostInvoiceDatabaseEntity costInvoiceDatabaseEntity) {
+        return new CostInvoice(
+                costInvoiceDatabaseEntity.getInvoiceId(),
+                createCustomerWithoutInvoicesFromCustomerDatabaseEntity(costInvoiceDatabaseEntity.getCustomer()),
+                costInvoiceDatabaseEntity.getDate(),
+                mapToPriceFromDatabase(costInvoiceDatabaseEntity.getCurrency(), costInvoiceDatabaseEntity.getAmount()),
+                mapToCompanyFromCompanyDatabaseEntity(costInvoiceDatabaseEntity.getCompany()),
+                mapToProductFromProductDatabaseEntity(costInvoiceDatabaseEntity.getProduct())
+        );
+    }
 
 
 }

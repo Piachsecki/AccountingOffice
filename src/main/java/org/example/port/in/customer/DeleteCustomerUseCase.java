@@ -5,4 +5,6 @@ import java.util.UUID;
 
 public interface DeleteCustomerUseCase {
     void deleteCustomer(UUID customerId);
+
+    void deleteAll();
 }

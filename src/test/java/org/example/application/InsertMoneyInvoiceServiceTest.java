@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.UUID;
+
 public class InsertMoneyInvoiceServiceTest {
     private InsertIncomeInvoiceService insertIncomeInvoiceService;
     private InvoiceRepository invoiceRepository;
@@ -25,6 +27,7 @@ public class InsertMoneyInvoiceServiceTest {
     void checkIfIncomeInvoicesAreAddedToUserCorrectly(){
         //given
         Customer customer2 = DataCreator.createCustomer2();
+        UUID customerId = customer2.getCustomerId();
         IncomeInvoice incomeInvoice1 = DataCreator.createIncomeInvoice1().withCustomer(customer2);
         IncomeInvoice incomeInvoice2 = DataCreator.createIncomeInvoice2().withCustomer(customer2);
         IncomeInvoice incomeInvoice3 = DataCreator.createIncomeInvoice3().withCustomer(customer2);
@@ -32,11 +35,11 @@ public class InsertMoneyInvoiceServiceTest {
         IncomeInvoice incomeInvoice5 = DataCreator.createIncomeInvoice5().withCustomer(customer2);
 
         //when
-        insertIncomeInvoiceService.insertIncomeInvoice(incomeInvoice1);
-        insertIncomeInvoiceService.insertIncomeInvoice(incomeInvoice2);
-        insertIncomeInvoiceService.insertIncomeInvoice(incomeInvoice3);
-        insertIncomeInvoiceService.insertIncomeInvoice(incomeInvoice4);
-        insertIncomeInvoiceService.insertIncomeInvoice(incomeInvoice5);
+        insertIncomeInvoiceService.insertIncomeInvoice(customerId, incomeInvoice1);
+        insertIncomeInvoiceService.insertIncomeInvoice(customerId, incomeInvoice2);
+        insertIncomeInvoiceService.insertIncomeInvoice(customerId, incomeInvoice3);
+        insertIncomeInvoiceService.insertIncomeInvoice(customerId, incomeInvoice4);
+        insertIncomeInvoiceService.insertIncomeInvoice(customerId, incomeInvoice5);
 
         //then
         Assertions.assertEquals(5, customer2.getIncomeInvoices().size());

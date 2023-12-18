@@ -16,8 +16,8 @@ import java.util.UUID;
 @ToString(of = {"invoiceId", "date", "amount"})
 @EqualsAndHashCode(of = "invoiceId")
 
-@Table(name  = "cost_invoice")
-public class CostInvoiceDatabaseEntity  {
+@Table(name = "cost_invoice")
+public class CostInvoiceDatabaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "invoice_id")
@@ -41,7 +41,7 @@ public class CostInvoiceDatabaseEntity  {
     private ProductDatabaseEntity product;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private CustomerDatabaseEntity customer;
 

@@ -22,7 +22,7 @@ import java.util.UUID;
 
 import static org.example.Data.*;
 import static org.example.domain.customer.TaxPayments.FlatTax.FLAT_TAX_RATE;
-import static org.example.domain.customer.TaxPayments.HEALTH_INSURANCE_RANGE_FOR_LUMP_SUM.*;
+import static org.example.domain.customer.TaxPayments.HealthInsuranceRangeForLumpSum.*;
 
 @ToString
 @NoArgsConstructor
@@ -219,8 +219,8 @@ public class Customer {
 
     private Money countHealthInsuranceForGeneralTax(YearMonth yearMonth) {
         Money monthlyIncome = countMonthlyIncome(
-                        yearMonth
-                );
+                yearMonth
+        );
         if (checkIfIncomeIsLessThanMinimumWage(monthlyIncome)) {
             return new Money(
                     MINIMUM_WAGE.multiply(STANDARD_CONTRIBUTION_HEALTH_RATE),
@@ -294,7 +294,6 @@ public class Customer {
     }
 
 
-
     private static Money countTheIncomeTaxForLumpSum(BigDecimal incomeBeforeTax, BigDecimal lumpSumTaxRate) {
         return new Money(
                 incomeBeforeTax
@@ -311,7 +310,7 @@ public class Customer {
         return monthlyIncome.amount().compareTo(MINIMUM_WAGE) <= 0;
     }
 
-    private static HEALTH_INSURANCE_RANGE_FOR_LUMP_SUM checkTheRevenueRangeForHealthInsuranceTax(BigDecimal monthlyRevenue) {
+    private static HealthInsuranceRangeForLumpSum checkTheRevenueRangeForHealthInsuranceTax(BigDecimal monthlyRevenue) {
         if (monthlyRevenue.compareTo(FIRST_CONTRIBUTION_RANGE) < 0) {
             return FIRST_RANGE;
         } else if (monthlyRevenue.compareTo(FIRST_CONTRIBUTION_RANGE) >= 0 &&
@@ -322,9 +321,6 @@ public class Customer {
         }
 
     }
-
-
-
 
 
 }

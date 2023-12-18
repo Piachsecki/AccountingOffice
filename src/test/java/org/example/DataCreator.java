@@ -25,6 +25,7 @@ import java.util.UUID;
 public class DataCreator {
     public static Customer createCustomer1() {
         return new Customer(
+                UUID.randomUUID(),
                 "Kacper",
                 "Piasecki",
                 new NIP("1462693747"),
@@ -77,6 +78,7 @@ public class DataCreator {
 
     public static Customer createCustomer2() {
         return new Customer(
+                UUID.randomUUID(),
                 "Kacper",
                 "Maslany",
                 new NIP("9527816928"),
@@ -95,6 +97,7 @@ public class DataCreator {
 
     public static Customer createCustomer3() {
         return new Customer(
+                UUID.randomUUID(),
                 "Karolina",
                 "Koralowa",
                 new NIP("0003768420"),
@@ -115,6 +118,7 @@ public class DataCreator {
 
     public static Customer createCustomer4() {
         return new Customer(
+                UUID.randomUUID(),
                 "Kacper",
                 "Piasecki",
                 new NIP("1461113747"),
@@ -135,6 +139,7 @@ public class DataCreator {
 
     public static Customer createCustomer5() {
         return new Customer(
+                UUID.randomUUID(),
                 "Wojtek",
                 "Marciniak",
                 new NIP("4627890357"),

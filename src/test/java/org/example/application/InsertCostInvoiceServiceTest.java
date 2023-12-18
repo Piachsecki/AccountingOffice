@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 class InsertCostInvoiceServiceTest {
 
@@ -28,6 +29,7 @@ class InsertCostInvoiceServiceTest {
     void checkIfCostInvoicesAreAddedToUserCorrectly() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
+        UUID customerId = customer1.getCustomerId();
         CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
         CostInvoice costInvoice2 = DataCreator.createCostInvoice2().withCustomer(customer1);
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(customer1);
@@ -36,11 +38,11 @@ class InsertCostInvoiceServiceTest {
 
 
         //when
-        insertCostInvoiceService.insertCostInvoice(costInvoice1);
-        insertCostInvoiceService.insertCostInvoice(costInvoice2);
-        insertCostInvoiceService.insertCostInvoice(costInvoice3);
-        insertCostInvoiceService.insertCostInvoice(costInvoice4);
-        insertCostInvoiceService.insertCostInvoice(costInvoice5);
+        insertCostInvoiceService.insertCostInvoice(customerId, costInvoice1);
+        insertCostInvoiceService.insertCostInvoice(customerId, costInvoice2);
+        insertCostInvoiceService.insertCostInvoice(customerId, costInvoice3);
+        insertCostInvoiceService.insertCostInvoice(customerId, costInvoice4);
+        insertCostInvoiceService.insertCostInvoice(customerId, costInvoice5);
         HashSet<Invoice> invoices = invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId());
 
 

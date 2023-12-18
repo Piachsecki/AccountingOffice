@@ -8,6 +8,7 @@ import org.example.domain.money.Price;
 import org.example.domain.product.Product;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 public interface InsertCostInvoiceUseCase {
     Invoice insertCostInvoice(
@@ -17,5 +18,6 @@ public interface InsertCostInvoiceUseCase {
             Company company,
             Product product
     );
-    Invoice insertCostInvoice(CostInvoice invoice);
+
+    Invoice insertCostInvoice(UUID customerId, CostInvoice invoice);
 }

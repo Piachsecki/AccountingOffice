@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -13,7 +14,7 @@ import java.util.UUID;
 @EqualsAndHashCode(of = "productId")
 @Entity
 @ToString(of = {"productId", "productName", "amount", "currency"})
-@Table(name  = "product")
+@Table(name = "product")
 public class ProductDatabaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

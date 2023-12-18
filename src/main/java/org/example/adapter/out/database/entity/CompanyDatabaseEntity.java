@@ -2,6 +2,7 @@ package org.example.adapter.out.database.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -25,7 +26,7 @@ public class CompanyDatabaseEntity {
     @JoinColumn(name = "address_id", unique = true)
     private AddressDatabaseEntity address;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
     private CostInvoiceDatabaseEntity invoiceDatabaseEntity;
 
 

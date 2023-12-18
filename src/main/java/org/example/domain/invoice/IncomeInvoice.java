@@ -8,10 +8,11 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter
-public class IncomeInvoice extends Invoice{
+public class IncomeInvoice extends Invoice {
     private final InvoiceType invoiceType = InvoiceType.INCOME_INVOICE;
 
     private Money amount;
+
     public IncomeInvoice(UUID invoiceId, Customer customer, OffsetDateTime date, Money amount) {
         super(invoiceId, customer, date);
         this.amount = amount;
@@ -21,7 +22,8 @@ public class IncomeInvoice extends Invoice{
         this.customer = customer;
         return this;
     }
-    public IncomeInvoice withAmount(Money amount){
+
+    public IncomeInvoice withAmount(Money amount) {
         this.amount = amount;
         return this;
     }

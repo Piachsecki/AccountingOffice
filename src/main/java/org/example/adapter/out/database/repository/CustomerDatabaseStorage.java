@@ -10,6 +10,7 @@ import org.example.domain.customer.Customer;
 import org.example.port.out.CustomerRepository;
 import org.hibernate.Session;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -77,7 +78,8 @@ public class CustomerDatabaseStorage implements CustomerRepository {
                 throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
-            session.createMutationQuery("DELETE from CustomerDatabaseEntity").executeUpdate();
+            List<CustomerDatabaseEntity> allCustomers = session.createQuery("SELECT cust FROM CustomerDatabaseEntity cust", CustomerDatabaseEntity.class).getResultList();
+            allCustomers.forEach(session::remove);
             session.getTransaction().commit();
         }
     }
@@ -100,7 +102,6 @@ public class CustomerDatabaseStorage implements CustomerRepository {
             return Optional.of(customer);
         }
     }
-
 
 
 }

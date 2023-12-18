@@ -26,15 +26,15 @@ public class DatabaseHibernateConfig {
             Map.entry(Environment.CHECK_NULLABILITY, "true")
     );
     private static final Map<String, Object> HIKARI_CP_SETTINGS = Map.ofEntries(
-            Map.entry("hibernate.hikari.connectionTimeout","20000"),
-            Map.entry("hibernate.hikari.minimumIdle","10"),
+            Map.entry("hibernate.hikari.connectionTimeout", "20000"),
+            Map.entry("hibernate.hikari.minimumIdle", "10"),
             Map.entry("hibernate.hikari.maximumPoolSize", "20"),
             Map.entry("hibernate.hikari.idleTimeout", "300000")
     );
-    private static SessionFactory sessionFactory = loadSessionFactory();
+    private static final SessionFactory sessionFactory = loadSessionFactory();
 
     private static SessionFactory loadSessionFactory() {
-        try{
+        try {
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(HIBERNATE_SETTINGS)
                     .applySettings(HIKARI_CP_SETTINGS)
@@ -50,18 +50,17 @@ public class DatabaseHibernateConfig {
                     .getMetadataBuilder()
                     .build();
             return metadata.getSessionFactoryBuilder().build();
-        }catch (Throwable e){
+        } catch (Throwable e) {
             throw new ExceptionInInitializerError(e);
         }
 
     }
 
 
-
-    public static void closeFactory(){
-        try{
+    public static void closeFactory() {
+        try {
             sessionFactory.close();
-        }catch(Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Problem with closing session");
         }
 
@@ -69,9 +68,9 @@ public class DatabaseHibernateConfig {
     }
 
     public static Session getSession() {
-        try{
+        try {
             return sessionFactory.openSession();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Problem with closing session");
         }
     }
