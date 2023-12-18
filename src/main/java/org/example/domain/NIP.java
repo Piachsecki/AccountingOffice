@@ -1,18 +1,26 @@
 package org.example.domain;
 
-import lombok.EqualsAndHashCode;
+import lombok.extern.slf4j.Slf4j;
+import org.example.domain.exceptions.NIPException;
 
 import java.util.Objects;
 import java.util.Random;
 
+@Slf4j
 public record NIP(String value) {
     private static final int LENGTH = 10;
 
     public NIP {
         Objects.requireNonNull(value, "You passed the wrong value format for NIP");
         if (value.length() != 10) {
-            throw new RuntimeException("The given value for NIP id cannot be empty!");
+            log.error("The given value {} for NIP id cannot be empty!", value);
+            throw new NIPException("The given value for NIP id cannot be empty!");
         }
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 
     public static String createNIP() {

@@ -1,7 +1,10 @@
 package org.example.port.in.customer;
 
-import org.example.domain.customer.CustomerId;
+
+import java.util.UUID;
 
 public interface DeleteCustomerUseCase {
-    void deleteCustomer(CustomerId customerId);
+    void deleteCustomer(UUID customerId);
+
+    void deleteAll();
 }

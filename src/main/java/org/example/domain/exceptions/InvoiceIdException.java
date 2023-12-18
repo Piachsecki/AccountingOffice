@@ -1,6 +1,7 @@
 package org.example.domain.exceptions;
 
 public class InvoiceIdException extends RuntimeException {
-    public InvoiceIdException(String format) {
+    public InvoiceIdException(String message) {
+        super(message);
     }
 }
