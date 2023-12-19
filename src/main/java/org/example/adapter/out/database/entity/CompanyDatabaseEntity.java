@@ -28,7 +28,7 @@ public class CompanyDatabaseEntity {
     @JoinColumn(name = "address_id", unique = true)
     private AddressDatabaseEntity address;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "company")
     private CostInvoiceDatabaseEntity invoiceDatabaseEntity;
 
 

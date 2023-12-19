@@ -352,7 +352,6 @@ public class CustomerTest {
     }
 
 
-
     @Test
     void shouldCalculateHealthInsuranceContributionForLumpSumTax2ndCorrectly() {
 
@@ -382,7 +381,6 @@ public class CustomerTest {
         Assertions.assertEquals(expected, result);
 
     }
-
 
 
     @Test
@@ -415,10 +413,6 @@ public class CustomerTest {
         Assertions.assertEquals(expected, result);
 
     }
-
-
-
-
 
 
 }

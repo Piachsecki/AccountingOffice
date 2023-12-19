@@ -16,15 +16,14 @@ public class InsertMoneyInvoiceServiceTest {
     private InvoiceRepository invoiceRepository;
 
 
-
     @BeforeEach
-    void setUp(){
+    void setUp() {
         invoiceRepository = new InMemoryInvoiceRepo();
         insertIncomeInvoiceService = new InsertIncomeInvoiceService(invoiceRepository);
     }
 
     @Test
-    void checkIfIncomeInvoicesAreAddedToUserCorrectly(){
+    void checkIfIncomeInvoicesAreAddedToUserCorrectly() {
         //given
         Customer customer2 = DataCreator.createCustomer2();
         UUID customerId = customer2.getCustomerId();

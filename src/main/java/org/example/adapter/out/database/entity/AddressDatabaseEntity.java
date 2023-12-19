@@ -30,10 +30,10 @@ public class AddressDatabaseEntity {
     private String postalCode;
 
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "address", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
     private CompanyDatabaseEntity company;
 
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "address", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
     private CustomerDatabaseEntity customer;
 }

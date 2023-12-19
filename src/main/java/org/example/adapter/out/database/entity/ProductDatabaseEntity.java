@@ -29,6 +29,6 @@ public class ProductDatabaseEntity {
     @Column(name = "currency")
     private String currency;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "product")
     private CostInvoiceDatabaseEntity costInvoice;
 }

@@ -21,10 +21,11 @@ class InsertCostInvoiceServiceTest {
 
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         this.invoiceRepository = new InMemoryInvoiceRepo();
-        this.insertCostInvoiceService =new InsertCostInvoiceService(invoiceRepository);
+        this.insertCostInvoiceService = new InsertCostInvoiceService(invoiceRepository);
     }
+
     @Test
     void checkIfCostInvoicesAreAddedToUserCorrectly() {
         //given
@@ -47,7 +48,7 @@ class InsertCostInvoiceServiceTest {
 
 
         //then
-        Assertions.assertEquals(5,invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
+        Assertions.assertEquals(5, invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
         Assertions.assertEquals(5, customer1.getCostInvoices().size());
         for (Invoice invoice : invoices) {
             Assertions.assertEquals(CostInvoice.class, invoice.getClass());

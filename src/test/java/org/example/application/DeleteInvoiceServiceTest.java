@@ -14,13 +14,13 @@ public class DeleteInvoiceServiceTest {
     private InvoiceRepository invoiceRepository;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         this.invoiceRepository = new InMemoryInvoiceRepo();
         deleteInvoiceService = new DeleteInvoiceService(invoiceRepository);
     }
 
     @Test
-    void checkIfSingleInvoiceIsDeletedCorrectly(){
+    void checkIfSingleInvoiceIsDeletedCorrectly() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
         CostInvoice costInvoice1 = DataCreator.createCostInvoice1().withCustomer(customer1);
@@ -37,7 +37,6 @@ public class DeleteInvoiceServiceTest {
         Assertions.assertEquals(2, invoiceRepository.listAllInvoicesForCustomerId(customer1.getCustomerId()).size());
 
     }
-
 
 
 }

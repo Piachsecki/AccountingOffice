@@ -45,9 +45,9 @@ public class FindUserByNIPServiceTest {
         customerService.addCustomer(customer4);
 
         Customer customerByNip1 = customerService.findUserByNIP(customer1.getNip());
-        Customer customerByNip2 =customerService.findUserByNIP(customer2.getNip());
-        Customer customerByNip3 =customerService.findUserByNIP(customer3.getNip());
-        Customer customerByNip4 =customerService.findUserByNIP(customer4.getNip());
+        Customer customerByNip2 = customerService.findUserByNIP(customer2.getNip());
+        Customer customerByNip3 = customerService.findUserByNIP(customer3.getNip());
+        Customer customerByNip4 = customerService.findUserByNIP(customer4.getNip());
 
         //then
         Assertions.assertNotNull(customerByNip1);

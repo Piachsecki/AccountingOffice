@@ -7,12 +7,14 @@ import org.example.domain.invoice.Invoice;
 import org.example.port.in.invoice.InsertInvoiceUseCase;
 import org.example.port.in.invoice.ListInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
+@Service
 public class InvoiceService implements InsertInvoiceUseCase, ListInvoiceUseCase {
     private InvoiceRepository invoiceRepository;
     private InsertCostInvoiceService insertCostInvoiceService;

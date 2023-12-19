@@ -19,9 +19,8 @@ public class InsertBothTypeOfInvoicesTest {
     private InvoiceService invoiceService;
 
 
-
     @BeforeEach
-    void setUp(){
+    void setUp() {
         InvoiceRepository invoiceRepository;
         invoiceRepository = new InMemoryInvoiceRepo();
         insertIncomeInvoiceService = new InsertIncomeInvoiceService(invoiceRepository);
@@ -31,7 +30,7 @@ public class InsertBothTypeOfInvoicesTest {
 
 
     @Test
-    void checkIfBothTypesOfInvoicesAreAddedToTheSameRepo(){
+    void checkIfBothTypesOfInvoicesAreAddedToTheSameRepo() {
         //given
         Customer customer1 = DataCreator.createCustomer1();
         UUID customerId = customer1.getCustomerId();

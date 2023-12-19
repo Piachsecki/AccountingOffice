@@ -19,7 +19,7 @@ class InvoiceServiceTest {
     private InvoiceRepository invoiceRepository;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         invoiceRepository = new InMemoryInvoiceRepo();
         insertCostInvoiceService = new InsertCostInvoiceService(invoiceRepository);
         insertIncomeInvoiceService = new InsertIncomeInvoiceService(invoiceRepository);

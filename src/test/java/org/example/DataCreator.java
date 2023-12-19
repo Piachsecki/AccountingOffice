@@ -202,7 +202,7 @@ public class DataCreator {
                         2022, 12, 12,
                         15, 17, 2, 4,
                         ZoneOffset.UTC),
-                new Price(new BigDecimal("333.23"), Currency.PLN),createCompany3(),
+                new Price(new BigDecimal("333.23"), Currency.PLN), createCompany3(),
                 createProduct3()
 
         );
@@ -332,6 +332,7 @@ public class DataCreator {
                 new Money(new BigDecimal("8000"), Currency.PLN)
         );
     }
+
     public static IncomeInvoice createIncomeInvoice2() {
         return new IncomeInvoice(
                 UUID.randomUUID(),
@@ -344,6 +345,7 @@ public class DataCreator {
         );
 
     }
+
     public static IncomeInvoice createIncomeInvoice3() {
         return new IncomeInvoice(
                 UUID.randomUUID(),
@@ -356,6 +358,7 @@ public class DataCreator {
         );
 
     }
+
     public static IncomeInvoice createIncomeInvoice4() {
         return new IncomeInvoice(
                 UUID.randomUUID(),
