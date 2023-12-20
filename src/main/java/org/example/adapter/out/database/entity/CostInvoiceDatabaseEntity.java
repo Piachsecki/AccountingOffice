@@ -15,7 +15,6 @@ import java.util.UUID;
 @Entity
 @ToString(of = {"invoiceId", "date", "amount"})
 @EqualsAndHashCode(of = "invoiceId")
-
 @Table(name = "cost_invoice")
 public class CostInvoiceDatabaseEntity {
     @Id
