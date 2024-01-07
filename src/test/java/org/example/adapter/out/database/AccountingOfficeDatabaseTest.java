@@ -1,11 +1,16 @@
 package org.example.adapter.out.database;
 
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.DataCreator;
-import org.example.adapter.out.database.configuration.DatabaseHibernateConfig;
+import org.example.adapter.out.database.configuration.ApplicationConfiguration;
 import org.example.adapter.out.database.repository.CustomerDatabaseStorage;
 import org.example.adapter.out.database.repository.InvoiceDatabaseStorage;
+import org.example.adapter.out.database.repository.mappers.*;
+import org.example.adapter.out.database.repository.mappers.impl.*;
 import org.example.application.*;
 import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
@@ -19,35 +24,23 @@ import org.example.domain.invoice.Invoice;
 import org.example.port.out.CustomerRepository;
 import org.example.port.out.InvoiceRepository;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import java.util.List;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Slf4j
+@SpringJUnitConfig(classes = {ApplicationConfiguration.class})
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AccountingOfficeDatabaseTest {
+
     private InsertCostInvoiceService insertCostInvoiceService;
     private InsertIncomeInvoiceService insertIncomeInvoiceService;
     private InvoiceService invoiceService;
     private CustomerService customerService;
     private DeleteInvoiceService deleteInvoiceService;
 
-    @AfterAll
-    static void afterAll() {
-        DatabaseHibernateConfig.closeFactory();
-    }
-
-    private
-
-    @BeforeEach
-    void initClasses() {
-        CustomerRepository customerRepository = new CustomerDatabaseStorage();
-        InvoiceRepository invoiceRepository = new InvoiceDatabaseStorage();
-        insertCostInvoiceService = new InsertCostInvoiceService(invoiceRepository);
-        insertIncomeInvoiceService = new InsertIncomeInvoiceService(invoiceRepository);
-        customerService = new CustomerService(customerRepository);
-        invoiceService = new InvoiceService(invoiceRepository, insertCostInvoiceService, insertIncomeInvoiceService);
-        deleteInvoiceService = new DeleteInvoiceService(invoiceRepository);
-    }
 
     @Order(1)
     @DisplayName("Test responsible for deleting all of the data from the database")

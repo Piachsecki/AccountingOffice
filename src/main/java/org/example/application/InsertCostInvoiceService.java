@@ -9,11 +9,15 @@ import org.example.domain.money.Price;
 import org.example.domain.product.Product;
 import org.example.port.in.invoice.InsertCostInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+
+@Service
+
 public class InsertCostInvoiceService implements InsertCostInvoiceUseCase {
     private final InvoiceRepository invoiceRepository;
 

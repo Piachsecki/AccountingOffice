@@ -7,11 +7,14 @@ import org.example.domain.invoice.Invoice;
 import org.example.domain.money.Money;
 import org.example.port.in.invoice.InsertIncomeInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Service
+
 public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
     private final InvoiceRepository invoiceRepository;
 

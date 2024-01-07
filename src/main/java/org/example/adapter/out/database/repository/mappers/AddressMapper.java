@@ -1,28 +1,17 @@
-/*
-package org.example.adapter.out.database.repository;
+package org.example.adapter.out.database.repository.mappers;
 
-import org.example.adapter.out.database.entity.*;
+import org.example.adapter.out.database.entity.AddressDatabaseEntity;
 import org.example.domain.Address;
-import org.example.domain.NIP;
-import org.example.domain.company.Company;
-import org.example.domain.customer.Customer;
-import org.example.domain.customer.Entrepreneurship;
-import org.example.domain.customer.EntrepreneurshipForm;
-import org.example.domain.customer.TaxPayments.*;
-import org.example.domain.invoice.CostInvoice;
-import org.example.domain.invoice.IncomeInvoice;
-import org.example.domain.money.Money;
-import org.example.domain.money.Price;
-import org.example.domain.product.Product;
+import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+public interface AddressMapper {
+    Address addressEntityToAddressDomainMapper(AddressDatabaseEntity addressDatabaseEntity);
 
-public class EntityToDomainClassMapper {
+    AddressDatabaseEntity addressDomainToAddressDatabaseEntityMapper(Address addressDomain);
+}
 
-    public static Money mapToMoneyFromDatabase(String currency, BigDecimal amount) {
+/*
+public static Money mapToMoneyFromDatabase(String currency, BigDecimal amount) {
         return new Money(amount, org.example.domain.money.Currency.valueOf(currency));
     }
 
@@ -166,5 +155,4 @@ public class EntityToDomainClassMapper {
     }
 
 
-}
-*/
+ */

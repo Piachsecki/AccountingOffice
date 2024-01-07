@@ -8,15 +8,20 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {url = 'https://repo.spring.io/milestone' }
 }
 ext{
     mockitoVersion = '5.6.0'
     lombokVersion = '1.18.28'
-    logbackVersion = '1.2.9'
+    logbackVersion = '1.4.14'
     jUnitVersion = '5.8.1'
     hibernateVersion = '6.3.1.Final'
     hikariVersion = '5.1.0'
     postgresqlDriverVersion = '42.5.4'
+    springDataVersion = '3.1.0-RC1'
+    springVersion = '6.0.0-RC1'
+    jakartaPersistenceApiVersion = '3.1.0'
+
 
 }
 
@@ -32,6 +37,24 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
+
+
+    implementation "org.springframework:spring-core:$springVersion"
+    implementation "org.springframework:spring-beans:$springVersion"
+    implementation "org.springframework:spring-context:$springVersion"
+    implementation "org.springframework:spring-context-support:$springVersion"
+    implementation "org.springframework:spring-expression:$springVersion"
+    implementation "org.springframework:spring-jdbc:$springVersion"
+    implementation "org.springframework:spring-tx:$springVersion"
+    implementation "org.flywaydb:flyway-core:9.5.1"
+    implementation "org.springframework.data:spring-data-jpa:$springDataVersion"
+
+//    implementation 'org.slf4j:slf4j-api:1.6.4'
+
+    testImplementation "org.springframework:spring-test:$springVersion"
+    testImplementation "org.mockito:mockito-junit-jupiter:5.7.0"
+    testImplementation "org.testcontainers:junit-jupiter:1.18.3"
+    testImplementation "org.testcontainers:postgresql:1.18.3"
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
     testImplementation "org.junit.jupiter:junit-jupiter-api:$jUnitVersion"

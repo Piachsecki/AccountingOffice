@@ -7,11 +7,13 @@ import org.example.port.in.customer.AddCustomerUseCase;
 import org.example.port.in.customer.DeleteCustomerUseCase;
 import org.example.port.in.customer.FindCustomerUseCase;
 import org.example.port.out.CustomerRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Service
 public class CustomerService implements AddCustomerUseCase, DeleteCustomerUseCase, FindCustomerUseCase {
     private final CustomerRepository customerRepository;
 
