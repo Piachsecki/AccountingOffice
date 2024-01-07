@@ -29,7 +29,7 @@ public class IncomeInvoiceDatabaseEntity {
     @Column(name = "currency")
     private String currency;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private CustomerDatabaseEntity customer;
 
