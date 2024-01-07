@@ -8,17 +8,17 @@ import org.example.domain.money.Money;
 import org.example.port.in.invoice.InsertIncomeInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-
 public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
     private final InvoiceRepository invoiceRepository;
 
-
+@Transactional
     @Override
     public Invoice insertIncomeInvoice(
             Customer customer,
@@ -37,6 +37,7 @@ public class InsertIncomeInvoiceService implements InsertIncomeInvoiceUseCase {
         return invoice;
     }
 
+    @Transactional
     @Override
     public Invoice insertIncomeInvoice(UUID customerId, IncomeInvoice invoice) {
         invoice.getCustomer().getIncomeInvoices().add(invoice);

@@ -10,6 +10,7 @@ import org.example.domain.NIP;
 import org.example.domain.customer.Customer;
 import org.example.port.out.CustomerRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +26,48 @@ public class CustomerDatabaseStorage implements CustomerRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     @Override
     public Customer addCustomer(Customer customer) {
+
+
+        CustomerDatabaseEntity customerDatabaseEntity = customerInvoiceMapper.customerDomainToCustomerDatabaseEntityMapper(customer);
+        entityManager.persist(customerDatabaseEntity);
+        customer.setCustomerId(customerDatabaseEntity.getCustomerId());
+//            System.out.println(customer);
+        return customer;
+
+    }
+
+    @Override
+    public void deleteCustomer(UUID customerId) {
+
+        entityManager.remove(entityManager.find(CustomerDatabaseEntity.class, customerId));
+    }
+
+
+
+    @Override
+    public void deleteAllCustomers() {
+        List<CustomerDatabaseEntity> allCustomers = entityManager.createQuery("SELECT cust FROM CustomerDatabaseEntity cust", CustomerDatabaseEntity.class).getResultList();
+        allCustomers.forEach(entityManager::remove);
+
+    }
+
+    @Override
+    public Optional<Customer> findCustomerByNIP(NIP nip) {
+        String query = "SELECT cust FROM CustomerDatabaseEntity cust WHERE cust.nip = :nip";
+        CustomerDatabaseEntity customerDatabaseEntity = entityManager.createQuery(query, CustomerDatabaseEntity.class)
+                .setParameter("nip", nip.toString())
+                .getSingleResult();
+        Customer customer = customerInvoiceMapper.customerEntityToCustomerDomainMapper(customerDatabaseEntity);
+        return Optional.of(customer);
+    }
+}
+
+
+
+
 
 //            Address address = customer.getAddress();
 //            AddressDatabaseEntity addressDatabaseEntity = AddressDatabaseEntity
@@ -36,8 +77,6 @@ public class CustomerDatabaseStorage implements CustomerRepository {
 //                    .address(address.getAddress())
 //                    .postalCode(address.getPostalCode())
 //                    .build();
-
-        CustomerDatabaseEntity customerDatabaseEntity = customerInvoiceMapper.customerDomainToCustomerDatabaseEntityMapper(customer);
 //
 //            CustomerDatabaseEntity customerDatabaseEntity = CustomerDatabaseEntity
 //                    .builder()
@@ -50,43 +89,6 @@ public class CustomerDatabaseStorage implements CustomerRepository {
 //                    .taxRate(customer.getEntrepreneurshipForm().taxPaymentForm().getTaxRate().getValue())
 //                    .address(addressDatabaseEntity)
 //                    .build();
-        entityManager.persist(customerDatabaseEntity);
-        entityManager.getTransaction().commit();
-        customer.setCustomerId(customerDatabaseEntity.getCustomerId());
-//            System.out.println(customer);
-        return customer;
-
-    }
-
-    @Override
-    public void deleteCustomer(UUID customerId) {
-
-        entityManager.remove(entityManager.find(CustomerDatabaseEntity.class, customerId));
-        entityManager.getTransaction().commit();
-    }
-
-
-
-    @Override
-    public void deleteAllCustomers() {
-        List<CustomerDatabaseEntity> allCustomers = entityManager.createQuery("SELECT cust FROM CustomerDatabaseEntity cust", CustomerDatabaseEntity.class).getResultList();
-        allCustomers.forEach(entityManager::remove);
-        entityManager.getTransaction().commit();
-
-    }
-
-    @Override
-    public Optional<Customer> findCustomerByNIP(NIP nip) {
-        String query = "SELECT cust FROM CustomerDatabaseEntity cust WHERE cust.nip = :nip";
-        CustomerDatabaseEntity customerDatabaseEntity = entityManager.createQuery(query, CustomerDatabaseEntity.class)
-                .setParameter("nip", nip.toString())
-                .getSingleResult();
-        entityManager.getTransaction().commit();
-        Customer customer = customerInvoiceMapper.customerEntityToCustomerDomainMapper(customerDatabaseEntity);
-        return Optional.of(customer);
-    }
-}
-
 
 
 

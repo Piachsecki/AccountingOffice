@@ -1,16 +1,20 @@
 package org.example.adapter.out.database.configuration;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.AllArgsConstructor;
 import org.example.adapter.out.database.entity.EntityMarker;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.Location;
 import org.flywaydb.core.api.configuration.ClassicConfiguration;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -24,8 +28,9 @@ import java.util.Properties;
 
 @Configuration
 @AllArgsConstructor
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @PropertySource({"classpath:database.properties"})
+@EnableJpaRepositories
 //chodzi o wlaczanie repozytoriow jpa na danym markerze w danym miejscu
 public class PersistenceJPAConfiguration {
     private final Environment environment;
@@ -81,6 +86,7 @@ public class PersistenceJPAConfiguration {
         configuration.setDataSource(dataSource());
         return new Flyway(configuration);
     }
+
 
 
 }

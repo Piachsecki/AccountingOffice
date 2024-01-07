@@ -10,17 +10,16 @@ import org.example.domain.product.Product;
 import org.example.port.in.invoice.InsertCostInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-
 @Service
-
 public class InsertCostInvoiceService implements InsertCostInvoiceUseCase {
     private final InvoiceRepository invoiceRepository;
-
+    @Transactional
     @Override
     public Invoice insertCostInvoice(
             Customer customer,
@@ -42,7 +41,7 @@ public class InsertCostInvoiceService implements InsertCostInvoiceUseCase {
 
         return invoice;
     }
-
+    @Transactional
     @Override
     public Invoice insertCostInvoice(UUID customerId, CostInvoice invoice) {
         invoice.getCustomer().getCostInvoices().add(invoice);

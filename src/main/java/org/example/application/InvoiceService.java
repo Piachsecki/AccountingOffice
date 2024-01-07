@@ -8,6 +8,7 @@ import org.example.port.in.invoice.InsertInvoiceUseCase;
 import org.example.port.in.invoice.ListInvoiceUseCase;
 import org.example.port.out.InvoiceRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -15,13 +16,12 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @Service
-
 public class InvoiceService implements InsertInvoiceUseCase, ListInvoiceUseCase {
     private InvoiceRepository invoiceRepository;
     private InsertCostInvoiceService insertCostInvoiceService;
     private InsertIncomeInvoiceService insertIncomeInvoiceService;
 
-
+    @Transactional
     @Override
     public <T extends Invoice> Invoice insertInvoice(UUID customerId, T invoice) {
         if (IncomeInvoice.class.equals(invoice.getClass())) {
@@ -31,17 +31,17 @@ public class InvoiceService implements InsertInvoiceUseCase, ListInvoiceUseCase 
         }
 
     }
-
+    @Transactional
     @Override
     public Set<Invoice> listAllInvoicesForCustomerId(UUID customerId) {
         return invoiceRepository.listAllInvoicesForCustomerId(customerId);
     }
-
+    @Transactional
     @Override
     public List<Invoice> listCostInvoices(UUID customerId) {
         return invoiceRepository.listCostInvoices(customerId);
     }
-
+    @Transactional
     @Override
     public List<Invoice> listIncomeInvoices(UUID customerId) {
         return invoiceRepository.listIncomeInvoices(customerId);

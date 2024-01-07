@@ -8,6 +8,7 @@ import org.example.port.in.customer.DeleteCustomerUseCase;
 import org.example.port.in.customer.FindCustomerUseCase;
 import org.example.port.out.CustomerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,21 +18,23 @@ import java.util.UUID;
 public class CustomerService implements AddCustomerUseCase, DeleteCustomerUseCase, FindCustomerUseCase {
     private final CustomerRepository customerRepository;
 
+    @Transactional
     @Override
     public Customer addCustomer(Customer customer) {
         return customerRepository.addCustomer(customer);
     }
-
-    @Override
-    public void deleteCustomer(UUID customerId) {
-        customerRepository.deleteCustomer(customerId);
-    }
-
+    @Transactional
     @Override
     public void deleteAll() {
         customerRepository.deleteAllCustomers();
     }
 
+    @Transactional
+    @Override
+    public void deleteCustomer(UUID customerId) {
+        customerRepository.deleteCustomer(customerId);
+    }
+    @Transactional
     @Override
     public Customer findUserByNIP(NIP nip) {
         Optional<Customer> customerByNIP = customerRepository.findCustomerByNIP(nip);

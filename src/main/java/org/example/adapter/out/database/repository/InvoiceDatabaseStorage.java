@@ -74,7 +74,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
 //                        .customer(customerToAddInvoices.get())
 //                        .build();
             entityManager.persist(costInvoiceDatabaseEntity);
-            entityManager.getTransaction().commit();
             return ((CostInvoice) invoice).withInvoiceId(costInvoiceDatabaseEntity.getInvoiceId());
 
 
@@ -87,7 +86,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
 //                        .build();
             IncomeInvoiceDatabaseEntity incomeInvoiceDatabaseEntity = customerInvoiceMapper.incomeInvoiceDomainToIncomeInvoiceDatabaseEntityMapper((IncomeInvoice) invoice);
             entityManager.persist(incomeInvoiceDatabaseEntity);
-            entityManager.getTransaction().commit();
             return ((IncomeInvoice) invoice).withInvoiceId(incomeInvoiceDatabaseEntity.getInvoiceId());
         }
 
@@ -102,7 +100,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
             log.error("Session is null");
             throw new RuntimeException("Session is null");
         }
-        entityManager.getTransaction().commit();
         return null;
 
     }
@@ -115,7 +112,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
             throw new RuntimeException("Session is null");
         }
         entityManager.remove(entityManager.find(CostInvoiceDatabaseEntity.class, invoiceId));
-        entityManager.getTransaction().commit();
     }
 
     @Override
@@ -126,7 +122,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
             throw new RuntimeException("Session is null");
         }
         entityManager.remove(entityManager.find(IncomeInvoiceDatabaseEntity.class, invoiceId));
-        entityManager.getTransaction().commit();
 
 
     }
@@ -143,7 +138,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
         List<CostInvoiceDatabaseEntity> costInvoices = entityManager.createQuery(query, CostInvoiceDatabaseEntity.class)
                 .setParameter("customerId", customerId)
                 .getResultList();
-        entityManager.getTransaction().commit();
 
         List<Invoice> result = new ArrayList<>();
         for (CostInvoiceDatabaseEntity costInvoiceDatabaseEntity : costInvoices) {
@@ -175,7 +169,6 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
         List<IncomeInvoiceDatabaseEntity> incomeInvoices = entityManager.createQuery(query, IncomeInvoiceDatabaseEntity.class)
                 .setParameter("customerId", customerId)
                 .getResultList();
-        entityManager.getTransaction().commit();
 
         List<Invoice> result = new ArrayList<>();
         for (IncomeInvoiceDatabaseEntity incomeInvoiceDatabaseEntity : incomeInvoices) {
