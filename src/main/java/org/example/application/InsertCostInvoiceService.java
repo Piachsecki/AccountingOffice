@@ -41,10 +41,9 @@ public class InsertCostInvoiceService implements InsertCostInvoiceUseCase {
 
         return invoice;
     }
-    @Transactional
     @Override
     public Invoice insertCostInvoice(UUID customerId, CostInvoice invoice) {
-        invoice.getCustomer().getCostInvoices().add(invoice);
+//        invoice.getCustomer().getCostInvoices().add(invoice);
         invoiceRepository.insertInvoice(customerId, invoice);
         return invoice;
     }

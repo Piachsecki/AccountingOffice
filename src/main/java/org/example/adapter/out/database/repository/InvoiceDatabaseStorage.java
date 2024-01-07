@@ -4,13 +4,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.adapter.out.database.entity.CostInvoiceDatabaseEntity;
-import org.example.adapter.out.database.entity.CustomerDatabaseEntity;
-import org.example.adapter.out.database.entity.IncomeInvoiceDatabaseEntity;
+import org.example.adapter.out.database.entity.*;
 import org.example.adapter.out.database.repository.mappers.CustomerInvoiceMapper;
+import org.example.domain.Address;
+import org.example.domain.company.Company;
 import org.example.domain.invoice.CostInvoice;
 import org.example.domain.invoice.IncomeInvoice;
 import org.example.domain.invoice.Invoice;
+import org.example.domain.product.Product;
 import org.example.port.out.InvoiceRepository;
 import org.springframework.stereotype.Repository;
 
@@ -38,53 +39,54 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
         }
 
         if (invoice instanceof CostInvoice) {
-//                Company company = ((CostInvoice) invoice).getCompany();
-//                Product product = ((CostInvoice) invoice).getProduct();
-//                Address address = ((CostInvoice) invoice).getCompany().getAddress();
-//
-//
-//                AddressDatabaseEntity addressDatabaseEntity = AddressDatabaseEntity.builder()
-//                        .city(address.getCity())
-//                        .country(address.getCountry())
-//                        .address(address.getAddress())
-//                        .postalCode(address.getPostalCode())
-//                        .build();
-//
-//
-//                CompanyDatabaseEntity companyDatabaseEntity = CompanyDatabaseEntity.builder()
-//                        .companyName(company.getCompanyName())
-//                        .nip(company.getNip().toString())
-//                        .address(addressDatabaseEntity)
-//                        .build();
-//
-//                ProductDatabaseEntity productDatabaseEntity = ProductDatabaseEntity.builder()
-//                        .productName(product.getProductName())
-//                        .amount(product.getPrice().amount())
-//                        .currency(product.getPrice().currency().toString())
-//                        .build();
+                Company company = ((CostInvoice) invoice).getCompany();
+                Product product = ((CostInvoice) invoice).getProduct();
+                Address address = ((CostInvoice) invoice).getCompany().getAddress();
 
-            CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = customerInvoiceMapper.costInvoiceDomainToCostInvoiceDatabaseEntityMapper((CostInvoice) invoice);
 
-//                CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = CostInvoiceDatabaseEntity.builder()
-//                        .date(invoice.getDate())
-//                        .currency(((CostInvoice) invoice).getAmount().currency().toString())
-//                        .amount(((CostInvoice) invoice).getAmount().amount())
-//                        .company(companyDatabaseEntity)
-//                        .product(productDatabaseEntity)
-//                        .customer(customerToAddInvoices.get())
-//                        .build();
+                AddressDatabaseEntity addressDatabaseEntity = AddressDatabaseEntity.builder()
+                        .city(address.getCity())
+                        .country(address.getCountry())
+                        .address(address.getAddress())
+                        .postalCode(address.getPostalCode())
+                        .build();
+
+
+                CompanyDatabaseEntity companyDatabaseEntity = CompanyDatabaseEntity.builder()
+                        .companyName(company.getCompanyName())
+                        .nip(company.getNip().toString())
+                        .address(addressDatabaseEntity)
+                        .build();
+
+                ProductDatabaseEntity productDatabaseEntity = ProductDatabaseEntity.builder()
+                        .productName(product.getProductName())
+                        .amount(product.getPrice().amount())
+                        .currency(product.getPrice().currency().toString())
+                        .build();
+
+//            CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = customerInvoiceMapper.costInvoiceDomainToCostInvoiceDatabaseEntityMapper((CostInvoice) invoice);
+
+                CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = CostInvoiceDatabaseEntity.builder()
+                        .date(invoice.getDate())
+                        .currency(((CostInvoice) invoice).getAmount().currency().toString())
+                        .amount(((CostInvoice) invoice).getAmount().amount())
+                        .company(companyDatabaseEntity)
+                        .product(productDatabaseEntity)
+                        .customer(customerToAddInvoices.get())
+                        .build();
+                costInvoiceDatabaseEntity.setCustomer(customerToAddInvoices.get());
             entityManager.persist(costInvoiceDatabaseEntity);
             return ((CostInvoice) invoice).withInvoiceId(costInvoiceDatabaseEntity.getInvoiceId());
 
 
         } else if (invoice instanceof IncomeInvoice) {
-//                IncomeInvoiceDatabaseEntity incomeInvoiceDatabaseEntity = IncomeInvoiceDatabaseEntity.builder()
-//                        .date(invoice.getDate())
-//                        .amount(((IncomeInvoice) invoice).getAmount().amount())
-//                        .currency(((IncomeInvoice) invoice).getAmount().currency().toString())
-//                        .customer(customerToAddInvoices.get())
-//                        .build();
-            IncomeInvoiceDatabaseEntity incomeInvoiceDatabaseEntity = customerInvoiceMapper.incomeInvoiceDomainToIncomeInvoiceDatabaseEntityMapper((IncomeInvoice) invoice);
+                IncomeInvoiceDatabaseEntity incomeInvoiceDatabaseEntity = IncomeInvoiceDatabaseEntity.builder()
+                        .date(invoice.getDate())
+                        .amount(((IncomeInvoice) invoice).getAmount().amount())
+                        .currency(((IncomeInvoice) invoice).getAmount().currency().toString())
+                        .customer(customerToAddInvoices.get())
+                        .build();
+//            IncomeInvoiceDatabaseEntity incomeInvoiceDatabaseEntity = customerInvoiceMapper.incomeInvoiceDomainToIncomeInvoiceDatabaseEntityMapper((IncomeInvoice) invoice);
             entityManager.persist(incomeInvoiceDatabaseEntity);
             return ((IncomeInvoice) invoice).withInvoiceId(incomeInvoiceDatabaseEntity.getInvoiceId());
         }

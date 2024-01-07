@@ -31,7 +31,6 @@ import static org.example.domain.customer.TaxPayments.HealthInsuranceRangeForLum
 @Slf4j
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Getter
 public class Customer {
     @EqualsAndHashCode.Include
     private UUID customerId;
@@ -323,6 +322,41 @@ public class Customer {
     }
 
 
+    public UUID getCustomerId() {
+        return this.customerId;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getSurname() {
+        return this.surname;
+    }
+
+    public NIP getNip() {
+        return this.nip;
+    }
+
+    public Address getAddress() {
+        return this.address;
+    }
+
+    public OffsetDateTime getJoinDate() {
+        return this.joinDate;
+    }
+
+    public Entrepreneurship getEntrepreneurshipForm() {
+        return this.entrepreneurshipForm;
+    }
+
+    public List<IncomeInvoice> getIncomeInvoices() {
+        return this.incomeInvoices;
+    }
+
+    public List<CostInvoice> getCostInvoices() {
+        return this.costInvoices;
+    }
 }
 
 

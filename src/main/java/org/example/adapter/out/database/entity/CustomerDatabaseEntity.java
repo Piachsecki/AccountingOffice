@@ -45,10 +45,10 @@ public class CustomerDatabaseEntity {
     @Column(name = "tax_rate")
     private String taxRate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CostInvoiceDatabaseEntity> costInvoices;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
     private Set<IncomeInvoiceDatabaseEntity> incomeInvoices;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
