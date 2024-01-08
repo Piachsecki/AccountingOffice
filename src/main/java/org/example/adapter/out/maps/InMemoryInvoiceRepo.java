@@ -36,14 +36,11 @@ public class InMemoryInvoiceRepo implements InvoiceRepository {
     }
 
     @Override
-    public void deleteCostInvoiceForCustomerId(UUID customerId, UUID invoiceId) {
+    public void deleteInvoice(UUID customerId, UUID invoiceId) {
         invoices.get(customerId).removeIf(invoice -> invoice.getInvoiceId().equals(invoiceId));
     }
 
-    @Override
-    public void deleteIncomeInvoiceForCustomerId(UUID customerId, UUID invoiceId) {
-        invoices.get(customerId).removeIf(invoice -> invoice.getInvoiceId().equals(invoiceId));
-    }
+
 
     @Override
     public List<Invoice> listCostInvoices(UUID customerId) {

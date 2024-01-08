@@ -16,7 +16,7 @@ public class DeleteInvoiceService implements DeleteInvoiceUseCase {
     @Transactional
     @Override
     public void deleteInvoice(UUID customerId, UUID invoiceId) {
-        invoiceRepository.deleteCostInvoiceForCustomerId(customerId, invoiceId);
+        invoiceRepository.deleteInvoice(customerId, invoiceId);
     }
 
 

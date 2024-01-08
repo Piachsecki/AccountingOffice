@@ -64,18 +64,19 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
                         .currency(product.getPrice().currency().toString())
                         .build();
 
-//            CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = customerInvoiceMapper.costInvoiceDomainToCostInvoiceDatabaseEntityMapper((CostInvoice) invoice);
+            CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = customerInvoiceMapper.costInvoiceDomainToCostInvoiceDatabaseEntityMapper((CostInvoice) invoice);
 
-                CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = CostInvoiceDatabaseEntity.builder()
-                        .date(invoice.getDate())
-                        .currency(((CostInvoice) invoice).getAmount().currency().toString())
-                        .amount(((CostInvoice) invoice).getAmount().amount())
-                        .company(companyDatabaseEntity)
-                        .product(productDatabaseEntity)
-                        .customer(customerToAddInvoices.get())
-                        .build();
+//                CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = CostInvoiceDatabaseEntity.builder()
+//                        .date(invoice.getDate())
+//                        .currency(((CostInvoice) invoice).getAmount().currency().toString())
+//                        .amount(((CostInvoice) invoice).getAmount().amount())
+//                        .company(companyDatabaseEntity)
+//                        .product(productDatabaseEntity)
+//                        .customer(customerToAddInvoices.get())
+//                        .build();
                 costInvoiceDatabaseEntity.setCustomer(customerToAddInvoices.get());
             entityManager.persist(costInvoiceDatabaseEntity);
+            System.out.println("######INSERT INVOICE: " + costInvoiceDatabaseEntity.getInvoiceId());
             return ((CostInvoice) invoice).withInvoiceId(costInvoiceDatabaseEntity.getInvoiceId());
 
 
@@ -107,26 +108,12 @@ public class InvoiceDatabaseStorage implements InvoiceRepository {
     }
 
     @Override
-    public void deleteCostInvoiceForCustomerId(UUID customerId, UUID invoiceId) {
-        if (Objects.isNull(entityManager)) {
-            log.error("Session is null");
-
-            throw new RuntimeException("Session is null");
-        }
-        entityManager.remove(entityManager.find(CostInvoiceDatabaseEntity.class, invoiceId));
+    public void deleteInvoice(UUID customerId, UUID invoiceId) {
+        CostInvoiceDatabaseEntity costInvoiceDatabaseEntity = entityManager.find(CostInvoiceDatabaseEntity.class, invoiceId);
+//        System.out.println("###########"+ costInvoiceDatabaseEntity);
+        entityManager.remove(costInvoiceDatabaseEntity);
     }
 
-    @Override
-    public void deleteIncomeInvoiceForCustomerId(UUID customerId, UUID invoiceId) {
-        if (Objects.isNull(entityManager)) {
-            log.error("Session is null");
-
-            throw new RuntimeException("Session is null");
-        }
-        entityManager.remove(entityManager.find(IncomeInvoiceDatabaseEntity.class, invoiceId));
-
-
-    }
 
 
     @Override

@@ -11,9 +11,9 @@ public interface InvoiceRepository {
 
     HashSet<Invoice> listAllInvoicesForCustomerId(UUID customerId);
 
-    void deleteCostInvoiceForCustomerId(UUID customerId, UUID invoiceId);
+    void deleteInvoice(UUID customerId, UUID invoiceId);
 
-    void deleteIncomeInvoiceForCustomerId(UUID customerId, UUID invoiceId);
+
 
     List<Invoice> listCostInvoices(UUID customerId);
 

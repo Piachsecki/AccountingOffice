@@ -127,13 +127,19 @@ public class AccountingOfficeDatabaseTest {
         CostInvoice costInvoice3 = DataCreator.createCostInvoice3().withCustomer(userByNIP);
         CostInvoice costInvoice4 = DataCreator.createCostInvoice4().withCustomer(userByNIP);
         CostInvoice costInvoice5 = DataCreator.createCostInvoice5().withCustomer(userByNIP);
-        invoiceService.insertInvoice(userByNIP.getCustomerId(), costInvoice2);
+        Invoice invoice = invoiceService.insertInvoice(userByNIP.getCustomerId(), costInvoice2);
         invoiceService.insertInvoice(userByNIP.getCustomerId(), costInvoice3);
         invoiceService.insertInvoice(userByNIP.getCustomerId(), costInvoice4);
         invoiceService.insertInvoice(userByNIP.getCustomerId(), costInvoice5);
 
-        List<Invoice> invoices = invoiceService.listCostInvoices(userByNIP.getCustomerId());
-        Assertions.assertEquals(5, invoices.size());
+        List<Invoice> invoices1 = invoiceService.listCostInvoices(userByNIP.getCustomerId());
+        Assertions.assertEquals(5, invoices1.size());
+
+        System.out.println("#######invoice" + invoice.getInvoiceId());
+        deleteInvoiceService.deleteInvoice(userByNIP.getCustomerId(), invoice.getInvoiceId());
+        List<Invoice> invoices2 = invoiceService.listCostInvoices(userByNIP.getCustomerId());
+        Assertions.assertEquals(4, invoices2.size());
     }
+
 
 }
